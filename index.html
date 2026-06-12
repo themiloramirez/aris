@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ecosaeco</title>
+  <title>Aris</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; display: flex; justify-content: center; padding: 2rem 1rem; }
@@ -92,7 +92,7 @@
 <body>
 <div class="container">
   <div id="screen-lang">
-    <h1>ecosaeco</h1>
+    <h1>Aris</h1>
     <p>Name as many members of a category as you can<br>Nombra todos los miembros de una categoría que puedas</p>
     <div class="lang-btns">
       <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
@@ -101,7 +101,7 @@
   </div>
 
   <div id="screen-mode" class="hidden">
-    <h1>ecosaeco</h1>
+    <h1>Aris</h1>
     <p class="mode-sub" id="mode-sub"></p>
     <div class="mode-group">
       <p class="mode-label" id="mode-label-timer"></p>
@@ -125,10 +125,21 @@
         </button>
       </div>
     </div>
+    <div class="mode-group">
+      <p class="mode-label" id="mode-label-lives"></p>
+      <div class="mode-btns">
+        <button class="mode-btn active" id="btn-lifeless" onclick="selectMode('lives','lifeless')">
+          ♾️ Lifeless<div class="mode-btn-sub" id="lifeless-sub"></div>
+        </button>
+        <button class="mode-btn" id="btn-limited" onclick="selectMode('lives','limited')">
+          ❤️ Limited Lives<div class="mode-btn-sub" id="limited-sub"></div>
+        </button>
+      </div>
+    </div>
     <button class="mode-start" id="mode-start-btn" onclick="startFromMode()"></button>
   </div>
   <div id="screen-select" class="hidden">
-    <h1>ecosaeco</h1>
+    <h1>Aris</h1>
     <p class="subtitle" id="select-subtitle"></p>
     <span class="lang-toggle" onclick="goLang()" id="lang-toggle"></span>
     <div id="cat-grid"></div>
@@ -171,7 +182,7 @@
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<footer>© 2026 ecosaeco — all rights reserved</footer>
+<footer>© 2026 Aris — all rights reserved</footer>
 
 <script>
 // ─── LANGUAGE ────────────────────────────────────────────────────────────────
@@ -190,18 +201,20 @@ const T = {
     winTitle:(cat)=>`You completed "${cat}"!`, winSub:(n)=>`You found all ${n} members. Impressive.`,
     winAnother:"Play another", winShare:"Share result",
     winTime:(s)=>`Time: ${fmtTime(s)}`,
-    winOlympiadNext:"Next category →", winOlympiadDone:"Olympiad complete!",
-    winOlympiadSub:(n,s)=>`All ${n} starters completed in ${fmtTime(s)}!`,
-    shareText:(cat,n,total)=>`I found ${n}/${total} in "${cat}" on ecosaeco — can you beat me? https://themiloramirez.github.io/ecosaeco`,
-    shareTimeText:(cat,n,total,s)=>`I found ${n}/${total} in "${cat}" on ecosaeco in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/ecosaeco`,
-    shareOlympiadText:(n,s)=>`I completed all ${n} Starter categories on ecosaeco in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/ecosaeco`,
+    winOlympiadNext:"Next library →", winOlympiadDone:"Olympiad complete! 🏛️",
+    winOlympiadSub:(n,s)=>`All ${n} libraries completed in ${fmtTime(s)}!`,
+    winOlympiadInterim:(i,n,cat,s,total)=>`Library ${i}/${n}: "${cat}" — ${fmtTime(s)}  ·  Total so far: ${fmtTime(total)}`,
+    shareText:(cat,n,total)=>`I found ${n}/${total} in "${cat}" on Aris — can you beat me? https://themiloramirez.github.io/aris`,
+    shareTimeText:(cat,n,total,s)=>`I found ${n}/${total} in "${cat}" on Aris in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/aris`,
+    shareOlympiadText:(n,s)=>`Wait, Monsieur·e la Tortue — Achilles beat you at the Olympiad?!? ${s} seconds, wow! Try to beat me at: https://themiloramirez.github.io/aris`,
     modeTitle:"How do you want to play?",
     modeSub:"Choose your mode, then start",
-    modeLabelTimer:"Speed", modeLabelScope:"Scope",
+    modeLabelTimer:"Speed", modeLabelScope:"Scope", modeLabelLives:"Lives",
     turtleSub:"No timer", achillesSub:"Timer on",
-    localSub:"One category at a time", olympiadSub:"All starters in sequence",
+    localSub:"One library at a time", olympiadSub:"All starters in sequence",
+    lifelessSub:"Infinite attempts", limitedSub:"3 strikes (coming soon)",
     modeStart:"Let's go →",
-    olympiadOf:(i,n)=>`Category ${i} of ${n}`,
+    olympiadOf:(i,n)=>`Library ${i} of ${n}`,
   },
   es: {
     subtitle:"Elige una categoría y nombra todos los miembros que puedas",
@@ -216,18 +229,20 @@ const T = {
     winTitle:(cat)=>`¡Completaste "${cat}"!`, winSub:(n)=>`Encontraste los ${n} miembros. Impresionante.`,
     winAnother:"Jugar otra", winShare:"Compartir resultado",
     winTime:(s)=>`Tiempo: ${fmtTime(s)}`,
-    winOlympiadNext:"Siguiente categoría →", winOlympiadDone:"¡Olimpiada completa!",
-    winOlympiadSub:(n,s)=>`¡Todas las ${n} categorías Principiante completadas en ${fmtTime(s)}!`,
-    shareText:(cat,n,total)=>`Encontré ${n}/${total} en "${cat}" en ecosaeco — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
-    shareTimeText:(cat,n,total,s)=>`Encontré ${n}/${total} en "${cat}" en ecosaeco en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
-    shareOlympiadText:(n,s)=>`Completé las ${n} categorías Principiante en ecosaeco en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
+    winOlympiadNext:"Siguiente biblioteca →", winOlympiadDone:"¡Olimpiada completa! 🏛️",
+    winOlympiadSub:(n,s)=>`¡Todas las ${n} bibliotecas completadas en ${fmtTime(s)}!`,
+    winOlympiadInterim:(i,n,cat,s,total)=>`Biblioteca ${i}/${n}: "${cat}" — ${fmtTime(s)}  ·  Total: ${fmtTime(total)}`,
+    shareText:(cat,n,total)=>`Encontré ${n}/${total} en "${cat}" en Aris — ¿me superás? https://themiloramirez.github.io/aris`,
+    shareTimeText:(cat,n,total,s)=>`Encontré ${n}/${total} en "${cat}" en Aris en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/aris`,
+    shareOlympiadText:(n,s)=>`Espera, Monsieur·e la Tortue — ¿Aquiles te ganó en la Olimpiada?!? ${s} segundos, ¡wow! Superame en: https://themiloramirez.github.io/aris`,
     modeTitle:"¿Cómo querés jugar?",
     modeSub:"Elegí tu modo y empezá",
-    modeLabelTimer:"Velocidad", modeLabelScope:"Alcance",
+    modeLabelTimer:"Velocidad", modeLabelScope:"Alcance", modeLabelLives:"Vidas",
     turtleSub:"Sin cronómetro", achillesSub:"Con cronómetro",
-    localSub:"Una categoría a la vez", olympiadSub:"Todos los Starters seguidos",
+    localSub:"Una biblioteca a la vez", olympiadSub:"Todos los Starters seguidos",
+    lifelessSub:"Intentos infinitos", limitedSub:"3 errores (próximamente)",
     modeStart:"¡Vamos →",
-    olympiadOf:(i,n)=>`Categoría ${i} de ${n}`,
+    olympiadOf:(i,n)=>`Biblioteca ${i} de ${n}`,
   }
 }
 function t(key,...args){ const v=T[LANG][key]; return typeof v==='function'?v(...args):v }
@@ -531,6 +546,7 @@ function norm(str){
 // ─── MODE STATE ──────────────────────────────────────────────────────────────
 let modeTimer = 'turtle'
 let modeScope = 'local'
+let modeLives = 'lifeless'
 let olympiadQueue = []
 let olympiadIndex = 0
 let olympiadTotalTime = 0
@@ -572,16 +588,20 @@ function buildModeScreen(){
   document.getElementById("mode-sub").innerText = t("modeSub")
   document.getElementById("mode-label-timer").innerText = t("modeLabelTimer")
   document.getElementById("mode-label-scope").innerText = t("modeLabelScope")
+  document.getElementById("mode-label-lives").innerText = t("modeLabelLives")
   document.getElementById("turtle-sub").innerText = t("turtleSub")
   document.getElementById("achilles-sub").innerText = t("achillesSub")
   document.getElementById("local-sub").innerText = t("localSub")
   document.getElementById("olympiad-sub").innerText = t("olympiadSub")
+  document.getElementById("lifeless-sub").innerText = t("lifelessSub")
+  document.getElementById("limited-sub").innerText = t("limitedSub")
   document.getElementById("mode-start-btn").innerText = t("modeStart")
-  // re-apply active states
   document.getElementById("btn-turtle").classList.toggle("active", modeTimer === 'turtle')
   document.getElementById("btn-achilles").classList.toggle("active", modeTimer === 'achilles')
   document.getElementById("btn-local").classList.toggle("active", modeScope === 'local')
   document.getElementById("btn-olympiad").classList.toggle("active", modeScope === 'olympiad')
+  document.getElementById("btn-lifeless").classList.toggle("active", modeLives === 'lifeless')
+  document.getElementById("btn-limited").classList.toggle("active", modeLives === 'limited')
 }
 
 function selectMode(axis, val){
@@ -589,10 +609,15 @@ function selectMode(axis, val){
     modeTimer = val
     document.getElementById("btn-turtle").classList.toggle("active", val === 'turtle')
     document.getElementById("btn-achilles").classList.toggle("active", val === 'achilles')
-  } else {
+  } else if(axis === 'scope'){
     modeScope = val
     document.getElementById("btn-local").classList.toggle("active", val === 'local')
     document.getElementById("btn-olympiad").classList.toggle("active", val === 'olympiad')
+  } else if(axis === 'lives'){
+    if(val === 'limited'){ showToast("Coming soon! 🔜"); return }
+    modeLives = val
+    document.getElementById("btn-lifeless").classList.toggle("active", val === 'lifeless')
+    document.getElementById("btn-limited").classList.toggle("active", val === 'limited')
   }
 }
 
@@ -847,11 +872,15 @@ function showVictory(){
   olympiadTotalTime += catElapsed
   document.getElementById("screen-game").classList.add("hidden")
   document.getElementById("win-title").innerText = t("winTitle", currentCat.name)
-  // Sub: time if Achilles
   let sub = t("winSub", currentCat.total)
-  if(modeTimer === 'achilles') sub += `  —  ${t("winTime", catElapsed)}`
+  if(modeTimer === 'achilles'){
+    if(modeScope === 'olympiad'){
+      sub = t("winOlympiadInterim", olympiadIndex+1, olympiadQueue.length, currentCat.name, catElapsed, olympiadTotalTime)
+    } else {
+      sub += `  —  ${t("winTime", catElapsed)}`
+    }
+  }
   document.getElementById("win-sub").innerText = sub
-  // Buttons
   const btnAnother = document.getElementById("win-another")
   const btnNext = document.getElementById("win-olympiad-next")
   if(modeScope === 'olympiad' && olympiadIndex < olympiadQueue.length - 1){
@@ -867,6 +896,31 @@ function showVictory(){
   document.getElementById("win-share").innerText = t("winShare")
   document.getElementById("screen-win").classList.remove("hidden")
   if(modeScope !== 'olympiad') clearProgress(currentCat.id)
+}
+
+function olympiadNext(){
+  olympiadIndex++
+  if(olympiadIndex < olympiadQueue.length){
+    startGame(olympiadQueue[olympiadIndex])
+  } else {
+    document.getElementById("screen-win").classList.add("hidden")
+    document.getElementById("win-emoji").innerText = "🏛️"
+    document.getElementById("win-title").innerText = t("winOlympiadDone")
+    document.getElementById("win-sub").innerText = t("winOlympiadSub", olympiadQueue.length, olympiadTotalTime)
+    const btnAnother = document.getElementById("win-another")
+    btnAnother.classList.remove("hidden")
+    btnAnother.innerText = t("winAnother")
+    btnAnother.onclick = () => {
+      olympiadQueue = []; olympiadTotalTime = 0
+      document.getElementById("win-emoji").innerText = "🎉"
+      buildModeScreen()
+      document.getElementById("screen-mode").classList.remove("hidden")
+      document.getElementById("screen-win").classList.add("hidden")
+    }
+    document.getElementById("win-olympiad-next").classList.add("hidden")
+    document.getElementById("win-share").innerText = t("winShare")
+    document.getElementById("screen-win").classList.remove("hidden")
+  }
 }
 
 function shareResult(){
