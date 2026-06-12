@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ecosaeco</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; display: flex; justify-content: center; padding: 2rem 1rem; }
+    .container { width: 100%; max-width: 580px; }
+    h1 { font-size: 26px; font-weight: 500; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #888; margin-bottom: 2rem; }
+    #screen-lang { text-align: center; padding-top: 4rem; }
+    #screen-lang h1 { font-size: 32px; margin-bottom: 8px; }
+    #screen-lang p { font-size: 14px; color: #888; margin-bottom: 2.5rem; }
+    .lang-btns { display: flex; gap: 16px; justify-content: center; }
+    .lang-btn { padding: 16px 32px; border-radius: 12px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 16px; font-weight: 500; transition: background 0.15s; min-width: 120px; }
+    .lang-btn:hover { background: #222; border-color: #444; }
+    .level-header { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 1.2rem 0 0.5rem; }
+    .cat-btn { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 13px; text-align: left; display: block; margin-bottom: 7px; transition: background 0.15s; }
+    .cat-btn:hover { background: #222; }
+    .cat-btn.beginner { border-color: #1a3a1a; }
+    .cat-btn.completed { border-color: #4ade80; background: #071a07; }
+    .completed-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; background: #4ade80; color: #071a07; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .cat-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .cat-meta { float: right; display: flex; gap: 6px; align-items: center; }
+    .badge-easy { font-size: 11px; background: #1a3a1a; color: #4ade80; padding: 2px 8px; border-radius: 20px; }
+    .badge-info { font-size: 11px; background: #1a2a3a; color: #6ab0f5; padding: 2px 8px; border-radius: 20px; }
+    .cat-count { font-size: 11px; color: #444; }
+    .cat-progress { height: 2px; background: #2a2a2a; border-radius: 1px; margin-top: 6px; overflow: hidden; }
+    .cat-progress-fill { height: 100%; background: #4ade80; border-radius: 1px; transition: width 0.3s; }
+    .cat-pct { font-size: 10px; color: #4ade80; margin-top: 2px; }
+    .game-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+    .game-title { font-size: 17px; font-weight: 500; max-width: 400px; line-height: 1.3; }
+    .score-num { font-size: 28px; font-weight: 500; text-align: right; }
+    .score-label { font-size: 11px; color: #888; text-align: right; }
+    .progress-line { font-size: 12px; color: #555; margin-bottom: 6px; }
+    .progress-line span { color: #4ade80; }
+    .progress-bar-wrap { background: #2a2a2a; border-radius: 4px; height: 4px; margin-bottom: 1rem; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: #4ade80; border-radius: 4px; transition: width 0.4s; }
+    .game-desc { font-size: 12px; color: #888; margin-bottom: 1rem; }
+    .input-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+    input { flex: 1; padding: 10px 14px; background: #181818; border: 1px solid #2a2a2a; border-radius: 10px; color: #e8e8e8; font-size: 14px; outline: none; }
+    input:focus { border-color: #444; }
+    input:disabled { opacity: 0.5; }
+    button { padding: 10px 16px; border-radius: 10px; border: 1px solid #2a2a2a; background: #222; color: #e8e8e8; cursor: pointer; font-size: 13px; white-space: nowrap; }
+    button:hover { background: #2a2a2a; }
+    button:disabled { opacity: 0.4; cursor: default; }
+    .back-btn { color: #888; font-size: 12px; }
+    .result-box { min-height: 64px; background: #181818; border-radius: 10px; padding: 12px 16px; margin-bottom: 1rem; }
+    #res { font-size: 14px; color: #888; }
+    #res-tip { font-size: 12px; color: #888; margin-top: 4px; display: none; font-style: italic; }
+    #res-flavor { font-size: 12px; color: #6ab0f5; margin-top: 6px; display: none; }
+    #res-wiki { font-size: 12px; margin-top: 6px; display: none; }
+    #res-wiki a { color: #6ab0f5; text-decoration: none; }
+    #screen-win { text-align: center; padding-top: 3rem; }
+    .win-emoji { font-size: 48px; margin-bottom: 1rem; }
+    .win-title { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+    .win-sub { font-size: 14px; color: #888; margin-bottom: 2rem; }
+    .win-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .win-btn { padding: 12px 24px; border-radius: 10px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 13px; }
+    .win-btn.primary { background: #1a3a1a; border-color: #4ade80; color: #4ade80; }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #1a3a1a; color: #4ade80; border: 1px solid #4ade80; border-radius: 10px; padding: 10px 20px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
+    .toast.show { opacity: 1; }
+    .used-label { font-size: 12px; color: #888; margin-bottom: 6px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 12px; background: #0f2a1a; color: #4ade80; }
+    .tag-easter { background: #2a1a0f; color: #f59e0b; }
+    .hidden { display: none; }
+    .lang-toggle { font-size: 11px; color: #555; cursor: pointer; margin-bottom: 1rem; display: inline-block; }
+    .lang-toggle:hover { color: #888; }
+    footer { text-align: center; padding: 2rem 0 1rem; font-size: 11px; color: #333; }
+    #screen-mode { text-align: center; padding-top: 3rem; }
+    #screen-mode h1 { font-size: 28px; margin-bottom: 6px; }
+    .mode-sub { font-size: 13px; color: #888; margin-bottom: 2.5rem; }
+    .mode-group { margin-bottom: 2rem; }
+    .mode-label { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .mode-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .mode-btn { padding: 14px 22px; border-radius: 12px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.15s; min-width: 130px; }
+    .mode-btn:hover { background: #222; border-color: #444; }
+    .mode-btn.active { border-color: #4ade80; background: #0a1a0a; color: #4ade80; }
+    .mode-btn-sub { font-size: 11px; color: #666; margin-top: 3px; font-weight: 400; }
+    .mode-btn.active .mode-btn-sub { color: #4ade80; opacity: 0.7; }
+    .mode-start { margin-top: 1rem; padding: 14px 40px; border-radius: 12px; border: 1px solid #4ade80; background: #0a1a0a; color: #4ade80; cursor: pointer; font-size: 15px; font-weight: 600; }
+    .mode-start:hover { background: #0f2a0f; }
+    .timer-display { font-size: 12px; color: #888; text-align: right; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+    .timer-display span { color: #f59e0b; }
+    .olympiad-status { font-size: 12px; color: #888; margin-bottom: 6px; }
+    .olympiad-status span { color: #6ab0f5; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="screen-lang">
+    <h1>ecosaeco</h1>
+    <p>Name as many members of a category as you can<br>Nombra todos los miembros de una categoría que puedas</p>
+    <div class="lang-btns">
+      <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
+      <button class="lang-btn" onclick="setLang('es')">🇪🇸 Español</button>
+    </div>
+  </div>
+
+  <div id="screen-mode" class="hidden">
+    <h1>ecosaeco</h1>
+    <p class="mode-sub" id="mode-sub"></p>
+    <div class="mode-group">
+      <p class="mode-label" id="mode-label-timer"></p>
+      <div class="mode-btns">
+        <button class="mode-btn active" id="btn-turtle" onclick="selectMode('timer','turtle')">
+          🐢 Turtle<div class="mode-btn-sub" id="turtle-sub"></div>
+        </button>
+        <button class="mode-btn" id="btn-achilles" onclick="selectMode('timer','achilles')">
+          ⚡ Achilles<div class="mode-btn-sub" id="achilles-sub"></div>
+        </button>
+      </div>
+    </div>
+    <div class="mode-group">
+      <p class="mode-label" id="mode-label-scope"></p>
+      <div class="mode-btns">
+        <button class="mode-btn active" id="btn-local" onclick="selectMode('scope','local')">
+          🎯 Local Games<div class="mode-btn-sub" id="local-sub"></div>
+        </button>
+        <button class="mode-btn" id="btn-olympiad" onclick="selectMode('scope','olympiad')">
+          🏛️ Olympiad<div class="mode-btn-sub" id="olympiad-sub"></div>
+        </button>
+      </div>
+    </div>
+    <button class="mode-start" id="mode-start-btn" onclick="startFromMode()"></button>
+  </div>
+  <div id="screen-select" class="hidden">
+    <h1>ecosaeco</h1>
+    <p class="subtitle" id="select-subtitle"></p>
+    <span class="lang-toggle" onclick="goLang()" id="lang-toggle"></span>
+    <div id="cat-grid"></div>
+  </div>
+  <div id="screen-game" class="hidden">
+    <div class="game-header">
+      <p class="game-title" id="game-title"></p>
+      <div><p class="score-num" id="pts">0</p><p class="score-label" id="pts-label">points</p></div>
+    </div>
+    <p class="olympiad-status hidden" id="olympiad-status"></p>
+    <p class="timer-display hidden" id="timer-display">⏱ <span id="timer-val">0:00</span></p>
+    <p class="progress-line" id="progress-line"></p>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
+    <p class="game-desc" id="game-desc"></p>
+    <div class="input-row">
+      <input id="resp" placeholder="..." onkeydown="if(event.key==='Enter')verificar()"/>
+      <button onclick="verificar()">✓</button>
+      <button class="back-btn" onclick="resetGame()">↩</button>
+    </div>
+    <div class="result-box">
+      <p id="res"></p>
+      <p id="res-tip"></p>
+      <p id="res-flavor"></p>
+      <p id="res-wiki"></p>
+    </div>
+    <div id="usados-box" class="hidden">
+      <p class="used-label" id="used-label"></p>
+      <div class="tags" id="usados"></div>
+    </div>
+  </div>
+  <div id="screen-win" class="hidden">
+    <div class="win-emoji">🎉</div>
+    <p class="win-title" id="win-title"></p>
+    <p class="win-sub" id="win-sub"></p>
+    <div class="win-btns">
+      <button class="win-btn primary" onclick="resetGame()" id="win-another"></button>
+      <button class="win-btn primary hidden" onclick="olympiadNext()" id="win-olympiad-next"></button>
+      <button class="win-btn" onclick="shareResult()" id="win-share"></button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<footer>© 2026 ecosaeco — all rights reserved</footer>
+
+<script>
+// ─── LANGUAGE ────────────────────────────────────────────────────────────────
+let LANG = 'en'
+const T = {
+  en: {
+    subtitle:"Choose a category and name as many members as you can",
+    langToggle:"🌐 Cambiar a Español",
+    beginner:"Starter", normal:"Normal", open:"open", points:"points",
+    startNaming:"Start naming...", alreadyUsed:"Already used that one!",
+    notFound:"Not found. Check spelling or try the full name.",
+    notSouthern:"Not entirely southern!", notRecognized:"Not recognized — try another name or spelling.",
+    valid:"Valid!", easterEgg:"🥚 Easter egg! Valid — but doesn't count toward your score.",
+    toGo:"to go", foundSoFar:"found so far", usedLabel:"Used",
+    savePoint:"✓ Progress saved!", completed:"Completed ✓", completed_short:"Done",
+    winTitle:(cat)=>`You completed "${cat}"!`, winSub:(n)=>`You found all ${n} members. Impressive.`,
+    winAnother:"Play another", winShare:"Share result",
+    winTime:(s)=>`Time: ${fmtTime(s)}`,
+    winOlympiadNext:"Next category →", winOlympiadDone:"Olympiad complete!",
+    winOlympiadSub:(n,s)=>`All ${n} starters completed in ${fmtTime(s)}!`,
+    shareText:(cat,n,total)=>`I found ${n}/${total} in "${cat}" on ecosaeco — can you beat me? https://themiloramirez.github.io/ecosaeco`,
+    shareTimeText:(cat,n,total,s)=>`I found ${n}/${total} in "${cat}" on ecosaeco in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/ecosaeco`,
+    shareOlympiadText:(n,s)=>`I completed all ${n} Starter categories on ecosaeco in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/ecosaeco`,
+    modeTitle:"How do you want to play?",
+    modeSub:"Choose your mode, then start",
+    modeLabelTimer:"Speed", modeLabelScope:"Scope",
+    turtleSub:"No timer", achillesSub:"Timer on",
+    localSub:"One category at a time", olympiadSub:"All starters in sequence",
+    modeStart:"Let's go →",
+    olympiadOf:(i,n)=>`Category ${i} of ${n}`,
+  },
+  es: {
+    subtitle:"Elige una categoría y nombra todos los miembros que puedas",
+    langToggle:"🌐 Switch to English",
+    beginner:"Principiante", normal:"Normal", open:"abierta", points:"puntos",
+    startNaming:"Empieza a nombrar...", alreadyUsed:"¡Esa ya la usaste!",
+    notFound:"No encontrado. Revisa la ortografía o prueba el nombre completo.",
+    notSouthern:"¡No está enteramente en el hemisferio sur!", notRecognized:"No reconocido — prueba otro nombre o grafía.",
+    valid:"¡Válido!", easterEgg:"🥚 ¡Easter egg! Válido — pero no cuenta para tu puntaje.",
+    toGo:"restantes", foundSoFar:"encontrados", usedLabel:"Usados",
+    savePoint:"✓ ¡Progreso guardado!", completed:"Completado ✓", completed_short:"Listo",
+    winTitle:(cat)=>`¡Completaste "${cat}"!`, winSub:(n)=>`Encontraste los ${n} miembros. Impresionante.`,
+    winAnother:"Jugar otra", winShare:"Compartir resultado",
+    winTime:(s)=>`Tiempo: ${fmtTime(s)}`,
+    winOlympiadNext:"Siguiente categoría →", winOlympiadDone:"¡Olimpiada completa!",
+    winOlympiadSub:(n,s)=>`¡Todas las ${n} categorías Principiante completadas en ${fmtTime(s)}!`,
+    shareText:(cat,n,total)=>`Encontré ${n}/${total} en "${cat}" en ecosaeco — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
+    shareTimeText:(cat,n,total,s)=>`Encontré ${n}/${total} en "${cat}" en ecosaeco en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
+    shareOlympiadText:(n,s)=>`Completé las ${n} categorías Principiante en ecosaeco en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/ecosaeco`,
+    modeTitle:"¿Cómo querés jugar?",
+    modeSub:"Elegí tu modo y empezá",
+    modeLabelTimer:"Velocidad", modeLabelScope:"Alcance",
+    turtleSub:"Sin cronómetro", achillesSub:"Con cronómetro",
+    localSub:"Una categoría a la vez", olympiadSub:"Todos los Starters seguidos",
+    modeStart:"¡Vamos →",
+    olympiadOf:(i,n)=>`Categoría ${i} de ${n}`,
+  }
+}
+function t(key,...args){ const v=T[LANG][key]; return typeof v==='function'?v(...args):v }
+
+// ─── STORAGE ─────────────────────────────────────────────────────────────────
+function saveProgress(catId,found,total){ try{ localStorage.setItem(`eco_${catId}`,JSON.stringify({found:[...found],total,ts:Date.now()})) }catch(e){} }
+function loadProgress(catId){ try{ const r=localStorage.getItem(`eco_${catId}`); return r?JSON.parse(r):null }catch(e){return null} }
+function clearProgress(catId){ try{ localStorage.removeItem(`eco_${catId}`) }catch(e){} }
+
+// ─── SYNONYMS ────────────────────────────────────────────────────────────────
+// Maps any variant to its canonical form (normalized)
+const SYNONYMS = {
+  // ── ES: Huesos del oído ──────────────────────────────────────────────────
+  "malleus":"martillo","incus":"yunque","stapes":"estribo","estapedio":"estribo",
+  // ── EN: Bones of the ear ─────────────────────────────────────────────────
+  "hammer":"malleus","anvil":"incus","stirrup":"stapes",
+  // ── ES: Estómagos vaca ───────────────────────────────────────────────────
+  "rumen":"panza","reticulo":"bonete","reticulum":"bonete","omaso":"librillo","omasum":"librillo","abomaso":"cuajar","abomasum":"cuajar",
+  // ── ES: Océanos ──────────────────────────────────────────────────────────
+  "antartico":"austral",
+  // ── EN: Oceans ───────────────────────────────────────────────────────────
+  "antarctic":"southern","antarctic ocean":"southern","pacific ocean":"pacific","atlantic ocean":"atlantic","indian ocean":"indian","arctic ocean":"arctic","southern ocean":"southern",
+  // ── EN: Continents ───────────────────────────────────────────────────────
+  "australasia":"oceania","the americas":"north america",
+  // ── EN: Cow stomachs ─────────────────────────────────────────────────────
+  "honeycomb stomach":"reticulum","bible stomach":"omasum","true stomach":"abomasum","fermentation chamber":"rumen",
+  // ── EN: Deadly sins ──────────────────────────────────────────────────────
+  "anger":"wrath","rage":"wrath","ire":"wrath","avarice":"greed","covetousness":"greed","jealousy":"envy","laziness":"sloth","acedia":"sloth","idleness":"sloth","lust":"lust","lechery":"lust","gluttony":"gluttony","hubris":"pride","vanity":"pride",
+  // ── EN: Spectrum / rainbow colors ────────────────────────────────────────
+  "purple":"violet","violet":"violet","indigo":"indigo","teal":"green","cyan":"green",
+  // ── EN: Macronutrients ───────────────────────────────────────────────────
+  "protein":"proteins","carbs":"carbohydrates","carbohydrate":"carbohydrates","fat":"fats","lipids":"fats","lipid":"fats","sugars":"carbohydrates",
+  // ── EN: Romance languages ────────────────────────────────────────────────
+  "castilian":"spanish","castellan":"spanish","moldovan":"romanian","moldavian":"romanian",
+  // ── EN: Germanic languages ───────────────────────────────────────────────
+  "flemish":"dutch","netherlandish":"dutch","afrikaans":"afrikaans","yiddish":"yiddish","scots":"english",
+  // ── EN: Seven Wonders ────────────────────────────────────────────────────
+  "great pyramid":"great pyramid of giza","pyramid of giza":"great pyramid of giza","pyramid of cheops":"great pyramid of giza","pyramid of khufu":"great pyramid of giza","pyramids of giza":"great pyramid of giza","hanging gardens":"hanging gardens of babylon","statue of zeus":"statue of zeus at olympia","temple of artemis":"temple of artemis at ephesus","temple of diana":"temple of artemis at ephesus","mausoleum of halicarnassus":"mausoleum at halicarnassus","mausoleum of mausolus":"mausoleum at halicarnassus","colossus":"colossus of rhodes","pharos":"lighthouse of alexandria","pharos of alexandria":"lighthouse of alexandria",
+  // ── EN: Labours of Heracles ──────────────────────────────────────────────
+  "nemean lion":"nemean lion","lernaean hydra":"lernean hydra","lernean hydra":"lernean hydra","ceryneian hind":"ceryneian hind","cerynean hind":"ceryneian hind","ceryneian deer":"ceryneian hind","golden hind":"ceryneian hind","erymanthian boar":"erymanthian boar","stables of augeas":"augean stables","stymphalian birds":"stymphalian birds","stymphalian bird":"stymphalian birds","cattle of geryon":"cattle of geryon","girdle of hippolyta":"girdle of hippolyta","belt of hippolyta":"girdle of hippolyta","golden apples":"apples of the hesperides","apples of hesperides":"apples of the hesperides","kerberos":"cerberus","cerberus":"cerberus","cretan bull":"cretan bull","bull of crete":"cretan bull","mares of diomedes":"mares of diomedes","horses of diomedes":"mares of diomedes",
+  // ── EN: Greek architectural orders ──────────────────────────────────────
+  "dorian":"doric","ionic order":"ionic","corinthian order":"corinthian","doric order":"doric",
+  // ── EN: Galilean moons ───────────────────────────────────────────────────
+  "jupiter i":"io","jupiter ii":"europa","jupiter iii":"ganymede","jupiter iv":"callisto",
+  // ── EN: Planets ──────────────────────────────────────────────────────────
+  "the earth":"earth","terra":"earth","ares":"mars","zeus":"jupiter","poseidon":"neptune",
+  // ── EN: Greek numerical prefixes ─────────────────────────────────────────
+  "monos":"mono","deca":"deca","hex":"hexa","hept":"hepta","oct":"octa","pent":"penta","tet":"tetra",
+  // ── EN: Nine Muses ───────────────────────────────────────────────────────
+  "polyhymnia":"polyhymnia","polymnia":"polyhymnia","terpsikhore":"terpsichore","melpomeni":"melpomene",
+  // ── EN: Oscar winners (common variants) ─────────────────────────────────
+  "the godfather":"godfather","the sting":"sting","the apartment":"apartment","the artist":"artist","the hurt locker":"hurt locker","the departed":"departed","the revenant":"revenant","crash 2005":"crash","the godfather part 2":"godfather part ii","godfather 2":"godfather part ii","schindler s list":"schindlers list","schindlers list":"schindlers list","one flew over the cuckoo s nest":"one flew over the cuckoos nest","no country for old men":"no country for old men","everything everywhere":"everything everywhere all at once","all quiet on western front":"all quiet on the western front","sound of music":"sound of music","the silence of the lambs":"silence of the lambs","silence of lambs":"silence of the lambs","braveheart":"braveheart","lords of the rings":"lord of the rings the return of the king","lord of the rings":"lord of the rings the return of the king","return of the king":"lord of the rings the return of the king","12 years a slave":"12 years a slave","twelve years a slave":"12 years a slave","million dollar baby":"million dollar baby","kings speech":"kings speech","the kings speech":"kings speech","beautiful mind":"beautiful mind","a beautiful mind":"beautiful mind","shape of water":"shape of water","the shape of water":"shape of water","green book":"green book","nomadland":"nomadland","coda":"coda","parasite":"parasite","anora":"anora","oppenheimer":"oppenheimer","zone of interest":"zone of interest","the zone of interest":"zone of interest","moonlight":"moonlight","spotlight":"spotlight","argo":"argo","birdman":"birdman","american beauty":"american beauty","shakespeare in love":"shakespeare in love","titanic":"titanic","english patient":"english patient","the english patient":"english patient","unforgiven":"unforgiven","dances with wolves":"dances with wolves","driving miss daisy":"driving miss daisy","rain man":"rain man","last emperor":"last emperor","platoon":"platoon","out of africa":"out of africa","amadeus":"amadeus","gandhi":"gandhi","chariots of fire":"chariots of fire","ordinary people":"ordinary people","kramer vs kramer":"kramer vs kramer","deer hunter":"deer hunter","annie hall":"annie hall","rocky":"rocky","godfather part ii":"godfather part ii","godfather 2":"godfather part ii","french connection":"french connection","patton":"patton","midnight cowboy":"midnight cowboy","oliver":"oliver","in the heat of the night":"in the heat of the night","man for all seasons":"man for all seasons","my fair lady":"my fair lady","tom jones":"tom jones","gigi":"gigi","bridge on the river kwai":"bridge on the river kwai","around the world in 80 days":"around the world in 80 days","marty":"marty","west side story":"west side story","greatest show on earth":"greatest show on earth","from here to eternity":"from here to eternity","on the waterfront":"on the waterfront","all about eve":"all about eve","hamlet":"hamlet","gentleman s agreement":"gentlemens agreement","gentlemens agreement":"gentlemens agreement","all the king s men":"all the kings men","all the kings men":"all the kings men","best years of our lives":"best years of our lives","lost weekend":"lost weekend","going my way":"going my way","casablanca":"casablanca","mrs miniver":"mrs miniver","how green was my valley":"how green was my valley","rebecca":"rebecca","grand hotel":"grand hotel","cavalcade":"cavalcade","it happened one night":"it happened one night","mutiny on the bounty":"mutiny on the bounty","great ziegfeld":"great ziegfeld","life of emile zola":"life of emile zola","you can t take it with you":"you cant take it with you","cimarron":"cimarron","broadway melody":"broadway melody","wings":"wings","ben hur":"ben-hur","ben-hur":"ben-hur","slumdog millionaire":"slumdog millionaire","hurt locker":"hurt locker","artist":"artist","12 years":"12 years a slave",
+  // ── EN: Landlocked countries (common variants) ──────────────────────────
+  "czech republic":"czech republic","czechia":"czechia","eswatini":"eswatini","swaziland":"eswatini","north macedonia":"north macedonia","fyrom":"north macedonia","republic of north macedonia":"north macedonia","holy see":"vatican city","holy see vatican":"vatican city","kyrgyzstan":"kyrgyzstan","kirghizstan":"kyrgyzstan","kyrgyz republic":"kyrgyzstan","tajikistan":"tajikistan","tadjikistan":"tajikistan","turkmenistan":"turkmenistan","burkina faso":"burkina faso","upper volta":"burkina faso","central african republic":"central african republic","car":"central african republic","south sudan":"south sudan",
+  // ── ES: Acentos ──────────────────────────────────────────────────────────
+  "grave":"llana","paroxitona":"llana","proparoxitona":"esdrujula",
+  // ── ES: Spice Girls ──────────────────────────────────────────────────────
+  "scary spice":"melanie brown","mel b":"melanie brown",
+  "sporty spice":"melanie chisholm","mel c":"melanie chisholm",
+  "baby spice":"emma bunton",
+  "ginger spice":"geri halliwell","geri horner":"geri halliwell",
+  "posh spice":"victoria beckham","victoria adams":"victoria beckham",
+  // ── ES: Pecados capitales ────────────────────────────────────────────────
+  "orgullo":"soberbia","lascivia":"lujuria","indolencia":"pereza","acedia":"pereza","codicia":"avaricia",
+  // ── ES: Colores espectro ─────────────────────────────────────────────────
+  "naranja":"naranjado","anaranjado":"naranjado","violeta":"morado","purpura":"morado","indigo":"anil",
+  // ── ES: Macronutrientes ──────────────────────────────────────────────────
+  "lipidos":"grasas","hidratos de carbono":"carbohidratos",
+  // ── ES: Meses ────────────────────────────────────────────────────────────
+  "setiembre":"septiembre",
+  // ── ES: Lenguas romances ─────────────────────────────────────────────────
+  "castellano":"espanol",
+  // ── ES: Lenguas germánicas ───────────────────────────────────────────────
+  "neerlandes":"holandes","flamenko":"holandes",
+  // ── ES: Maravillas ───────────────────────────────────────────────────────
+  "la gran piramide":"gran piramide de giza","piramide de keops":"gran piramide de giza","piramide de gizeh":"gran piramide de giza","gran piramide de gizeh":"gran piramide de giza","piramide de giza":"gran piramide de giza",
+  "jardines de babilonia":"jardines colgantes de babilonia","jardines colgantes":"jardines colgantes de babilonia",
+  "estatua de zeus":"estatua de zeus en olimpia",
+  "templo de artemisa":"templo de artemis en efeso","templo de diana":"templo de artemis en efeso","templo de artemisa en efeso":"templo de artemis en efeso",
+  "mausoleo de halicarnaso":"mausoleo de halicarnaso",
+  "faro de alejandria":"faro de alejandria",
+  "coloso de rodas":"coloso de rodas",
+  // ── ES: Labores Heracles ─────────────────────────────────────────────────
+  "leon nemeo":"leon de nemea","matar al leon":"leon de nemea","leon de nemea":"leon de nemea",
+  "hidra lernea":"hidra de lerna","matar a la hidra":"hidra de lerna",
+  "pajaros estinfalicos":"pajaros del lago estinfalo","aves estinfalidas":"pajaros del lago estinfalo",
+  "cierva de cerinia":"cierva de cerinea","cierva dorada":"cierva de cerinea",
+  "jabali de erimanto":"jabali de erimanto",
+  "establos de augias":"establos del rey augias","establos augias":"establos del rey augias",
+  "toro de maraton":"toro de creta",
+  "yeguas carnivoras":"yeguas de diomedes",
+  "cinto de hipolita":"cinturon de hipolita","ceinturon":"cinturon de hipolita",
+  "ganado de gerion":"bueyes de gerion","vacas de gerion":"bueyes de gerion",
+  "manzanas doradas":"manzanas de las hesperides","manzanas del jardin":"manzanas de las hesperides",
+  "can cerbero":"cerbero","cancerbero":"cerbero",
+  // ── ES: Columnas griegas ─────────────────────────────────────────────────
+  "dorico":"dorica","jonico":"jonica","corintio":"corintia",
+}
+
+function resolveCanonical(n){
+  return SYNONYMS[n] || n
+}
+
+// ─── CATEGORIES ──────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  // ── STARTER EN ───────────────────────────────────────────────────────────
+  { id:"planets",level:"beginner",lang:"en",name:"Planets of the solar system",desc:"Name all 8 planets",total:8,
+    list:new Set(["mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"]),
+    flavors:{"mercury":"The fastest planet — a year lasts only 88 Earth days.","venus":"The hottest planet, despite not being the closest to the Sun.","earth":"The only known planet with life, oceans, and decent coffee.","mars":"Has the largest volcano in the solar system: Olympus Mons.","jupiter":"Its Great Red Spot is a storm that has lasted over 350 years.","saturn":"Its rings are mostly ice and rock, yet only about 10 meters thick.","uranus":"Rotates on its side — its axis is tilted 98 degrees.","neptune":"Was predicted mathematically before anyone observed it through a telescope."}},
+  { id:"oceans",level:"beginner",lang:"en",name:"Oceans of the world",desc:"Name all 5 oceans",total:5,
+    list:new Set(["pacific","atlantic","indian","arctic","southern"]),
+    tips:{"southern":"'Antarctic' also accepted — recognized as the 5th ocean by the IHO in 2000."},
+    flavors:{"pacific":"The largest ocean — covers more area than all land on Earth combined.","atlantic":"Still widening by about 2.5cm per year.","indian":"The warmest ocean in the world.","arctic":"The shallowest and smallest ocean.","southern":"Officially recognized as the 5th ocean in 2000."}},
+  { id:"continents",level:"beginner",lang:"en",name:"Continents of the world",desc:"Name all 7 continents",total:7,
+    list:new Set(["africa","antarctica","asia","australia","oceania","europe","north america","south america"]),
+    tips:{"oceania":"Also accepted as alternative name for the Australia continent."},
+    flavors:{"antarctica":"The coldest, driest, windiest continent. No permanent human population.","australia":"The smallest continent and the largest country on it share the same name."}},
+  { id:"galilean",level:"beginner",lang:"en",name:"Galilean moons of Jupiter",desc:"Name the 4 large moons Galileo discovered in 1610",total:4,
+    list:new Set(["io","europa","ganymede","callisto"]),
+    flavors:{"io":"The most volcanically active body in the solar system.","europa":"Has a subsurface ocean that may harbor life.","ganymede":"The largest moon in the solar system — bigger than Mercury.","callisto":"The most heavily cratered object in the solar system."}},
+  { id:"earear",level:"beginner",lang:"en",name:"Bones of the human ear",desc:"Name the 3 tiny bones of the middle ear",total:3,
+    list:new Set(["malleus","incus","stapes"]),
+    tips:{"hammer":"Malleus also accepted.","anvil":"Incus also accepted.","stirrup":"Stapes also accepted — the smallest bone in the human body."},
+    flavors:{"stapes":"The stirrup (stapes) is the smallest bone in the human body — about 3mm long.","malleus":"Transmits vibrations from the eardrum inward."}},
+  { id:"cowstomachs",level:"beginner",lang:"en",name:"Stomachs of a cow",desc:"Name the 4 compartments of a cow's stomach",total:4,
+    list:new Set(["rumen","reticulum","omasum","abomasum"]),
+    flavors:{"rumen":"The largest compartment — where fermentation happens. Holds up to 95 liters.","abomasum":"The 'true stomach' — equivalent to a human stomach.","reticulum":"Also called the honeycomb stomach for its texture.","omasum":"Also called the bible for its many layered folds."}},
+  { id:"spicegirls",level:"beginner",lang:"en",name:"The Spice Girls",desc:"Name all 5 Spice Girls (nicknames or real names accepted)",total:5,
+    list:new Set(["victoria beckham","melanie chisholm","melanie brown","emma bunton","geri halliwell"]),
+    tips:{"scary spice":"Melanie Brown also accepted.","sporty spice":"Melanie Chisholm also accepted.","baby spice":"Emma Bunton also accepted.","ginger spice":"Geri Halliwell also accepted.","posh spice":"Victoria Beckham also accepted."},
+    flavors:{"victoria beckham":"Posh Spice became arguably more famous after the band than during it.","geri halliwell":"Left the group in 1998 — the most dramatic Spice exit."}},
+  { id:"sins",level:"beginner",lang:"en",name:"The seven deadly sins",desc:"Name all 7",total:7,
+    list:new Set(["pride","greed","lust","envy","gluttony","wrath","sloth"]),
+    flavors:{"sloth":"The only sin that's also an animal — and the animal was named after the sin.","pride":"Considered the original and most serious of the seven.","wrath":"The only sin directed entirely outward."}},
+  { id:"spectrum",level:"beginner",lang:"en",name:"Colors of the visible spectrum",desc:"Name all 7 colors of the rainbow",total:7,
+    list:new Set(["red","orange","yellow","green","blue","indigo","violet"]),
+    tips:{"indigo":"Newton added indigo to make 7 — many physicists think it doesn't belong."},
+    flavors:{"indigo":"Newton insisted on 7 colors to match the 7 notes of the musical scale. His most controversial choice."}},
+  { id:"macronutrients",level:"beginner",lang:"en",name:"Macronutrients",desc:"Name the 3 macronutrients",total:3,
+    list:new Set(["proteins","carbohydrates","fats"]),
+    tips:{"protein":"Proteins also accepted.","carbs":"Carbohydrates also accepted.","lipids":"Fats also accepted."},
+    flavors:{}},
+  { id:"months30",level:"beginner",lang:"en",name:"Months with 30 days",desc:"Name the 4 months with exactly 30 days",total:4,
+    list:new Set(["april","june","september","november"]),
+    flavors:{}},
+  { id:"romance",level:"beginner",lang:"en",name:"Most widely spoken Romance languages",desc:"Name the 5 major Romance languages",total:5,
+    list:new Set(["spanish","french","portuguese","italian","romanian"]),
+    flavors:{"romanian":"The easternmost Romance language — a linguistic island surrounded by Slavic languages.","portuguese":"More spoken outside its origin country than inside."}},
+  { id:"germanic",level:"beginner",lang:"en",name:"Most widely spoken Germanic languages",desc:"Name 5 major Germanic languages",total:5,
+    list:new Set(["english","german","dutch","swedish","norwegian","danish"]),
+    tips:{"afrikaans":"Also valid — a Germanic language from South Africa.","yiddish":"Also valid — a Germanic language with Hebrew and Slavic influences."},
+    flavors:{"english":"The most widely spoken Germanic language — and history's greatest borrower.","dutch":"Also called Netherlandish — spoken in the Netherlands and Belgium (Flemish)."}},
+  { id:"wonders",level:"beginner",lang:"en",name:"Seven Wonders of the Ancient World",desc:"Name all 7 Wonders of the Ancient World",total:7,
+    list:new Set(["great pyramid of giza","hanging gardens of babylon","statue of zeus at olympia","temple of artemis at ephesus","mausoleum at halicarnassus","colossus of rhodes","lighthouse of alexandria"]),
+    flavors:{"great pyramid of giza":"The only Wonder still standing today.","hanging gardens of babylon":"May never have existed — no Babylonian texts mention them.","colossus of rhodes":"Stood for only 54 years before an earthquake toppled it in 226 BC."}},
+  // ── STARTER ES ───────────────────────────────────────────────────────────
+  { id:"planets_es",level:"beginner",lang:"es",name:"Planetas del sistema solar",desc:"Nombra los 8 planetas",total:8,
+    list:new Set(["mercurio","venus","tierra","marte","jupiter","saturno","urano","neptuno"]),
+    flavors:{"mercurio":"El planeta más rápido — un año dura solo 88 días terrestres.","venus":"El planeta más caliente, aunque no es el más cercano al Sol.","tierra":"El único planeta conocido con vida, océanos y buen café.","marte":"Tiene el volcán más grande del sistema solar: el Olympus Mons.","jupiter":"Su Gran Mancha Roja es una tormenta que lleva más de 350 años activa.","saturno":"Sus anillos tienen solo unos 10 metros de grosor.","urano":"Rota de lado — su eje está inclinado 98 grados.","neptuno":"Fue predicho matemáticamente antes de ser observado por un telescopio."}},
+  { id:"oceans_es",level:"beginner",lang:"es",name:"Océanos del mundo",desc:"Nombra los 5 océanos",total:5,
+    list:new Set(["pacifico","atlantico","indico","artico","austral"]),
+    tips:{"antartico":"'Antártico' también aceptado."},
+    flavors:{"pacifico":"El océano más grande — cubre más área que toda la tierra del planeta combinada.","atlantico":"Sigue ensanchándose unos 2,5 cm por año.","indico":"El océano más cálido del mundo.","artico":"El océano más pequeño y superficial.","austral":"Reconocido oficialmente como el 5° océano en 2000."}},
+  { id:"continents_es",level:"beginner",lang:"es",name:"Continentes del mundo",desc:"Nombra los 6 continentes",total:6,
+    list:new Set(["africa","antartida","asia","america","europa","oceania"]),
+    tips:{"australia":"En el modelo anglosajón Australia es un continente — acá usamos el modelo hispano de 6 continentes."},
+    flavors:{"antartida":"El continente más frío, seco y ventoso. Sin población permanente.","oceania":"El continente más pequeño del modelo hispano."}},
+  { id:"galilean_es",level:"beginner",lang:"es",name:"Lunas galileanas de Júpiter",desc:"Nombra las 4 grandes lunas que Galileo descubrió en 1610",total:4,
+    list:new Set(["io","europa","ganimedes","calisto"]),
+    flavors:{"io":"El cuerpo más volcánicamente activo del sistema solar.","europa":"Tiene un océano subterráneo que podría albergar vida.","ganimedes":"La luna más grande del sistema solar — más grande que Mercurio.","calisto":"El objeto con más cráteres del sistema solar."}},
+  { id:"earear_es",level:"beginner",lang:"es",name:"Huesos del oído humano",desc:"Nombra los 3 pequeños huesos del oído medio",total:3,
+    list:new Set(["martillo","yunque","estribo"]),
+    tips:{"malleus":"También aceptado en latín.","incus":"También aceptado en latín.","stapes":"También aceptado en latín — el hueso más pequeño del cuerpo humano.","estapedio":"También aceptado."},
+    flavors:{"estribo":"El estribo (stapes) es el hueso más pequeño del cuerpo humano — unos 3 mm.","martillo":"Transmite las vibraciones del tímpano hacia el interior."}},
+  { id:"cowstomachs_es",level:"beginner",lang:"es",name:"Estómagos de la vaca",desc:"Nombra los 4 compartimentos del estómago de la vaca",total:4,
+    list:new Set(["panza","bonete","librillo","cuajar"]),
+    tips:{"rumen":"Panza también aceptado.","reticulo":"Bonete también aceptado.","omaso":"Librillo también aceptado.","abomaso":"Cuajar también aceptado."},
+    flavors:{"panza":"El compartimento más grande — donde ocurre la fermentación. Puede contener hasta 95 litros.","cuajar":"El 'estómago verdadero' — equivalente al estómago humano.","bonete":"También llamado retículo — tiene textura de panal.","librillo":"También llamado omaso — tiene muchos pliegues en capas."}},
+  { id:"spicegirls_es",level:"beginner",lang:"es",name:"Las Spice Girls",desc:"Nombra a las 5 Spice Girls (apodos o nombres reales)",total:5,
+    list:new Set(["victoria beckham","melanie chisholm","melanie brown","emma bunton","geri halliwell"]),
+    tips:{"scary spice":"Melanie Brown también aceptado.","sporty spice":"Melanie Chisholm también aceptado.","baby spice":"Emma Bunton también aceptado.","ginger spice":"Geri Halliwell también aceptado.","posh spice":"Victoria Beckham también aceptado."},
+    flavors:{"victoria beckham":"Posh Spice se volvió quizás más famosa después del grupo que durante él.","geri halliwell":"Abandonó el grupo en 1998 — la salida más dramática de las Spice."}},
+  { id:"sins_es",level:"beginner",lang:"es",name:"Los siete pecados capitales",desc:"Nombra los 7 pecados capitales",total:7,
+    list:new Set(["soberbia","avaricia","lujuria","envidia","gula","ira","pereza"]),
+    tips:{"orgullo":"Soberbia también aceptado.","lascivia":"Lujuria también aceptado.","acedia":"Pereza también aceptado.","indolencia":"Pereza también aceptado.","codicia":"Avaricia también aceptado."},
+    flavors:{"pereza":"El único pecado que también es un animal — y el animal recibió su nombre por el pecado.","soberbia":"Considerado el pecado original y más grave de los siete. El que cayó a Lucifer.","ira":"El único pecado que puede dirigirse completamente hacia afuera.","gula":"De los siete, el único que Dante ubicó en el tercer círculo del Infierno — sorprendentemente bajo."}},
+  { id:"spectrum_es",level:"beginner",lang:"es",name:"Colores del espectro visible",desc:"Nombra los 7 colores del arcoíris",total:7,
+    list:new Set(["rojo","naranjado","amarillo","verde","azul","anil","morado"]),
+    tips:{"naranja":"Naranjado también aceptado.","anaranjado":"Naranjado también aceptado.","violeta":"Morado también aceptado.","purpura":"Morado también aceptado.","indigo":"Añil también aceptado."},
+    flavors:{"anil":"Newton insistió en 7 colores para que coincidieran con las 7 notas musicales. El añil es su elección más controvertida."}},
+  { id:"macronutrients_es",level:"beginner",lang:"es",name:"Macronutrientes",desc:"Nombra los 3 macronutrientes",total:3,
+    list:new Set(["proteinas","carbohidratos","grasas"]),
+    tips:{"lipidos":"Grasas también aceptado.","hidratos de carbono":"Carbohidratos también aceptado."},
+    flavors:{}},
+  { id:"months30_es",level:"beginner",lang:"es",name:"Meses con 30 días",desc:"Nombra los 4 meses que tienen exactamente 30 días",total:4,
+    list:new Set(["abril","junio","septiembre","noviembre"]),
+    tips:{"setiembre":"Septiembre también aceptado (variante rioplatense y peruana)."},
+    flavors:{}},
+  { id:"romance_es",level:"beginner",lang:"es",name:"Lenguas romances más habladas",desc:"Nombra las 5 principales lenguas romances",total:5,
+    list:new Set(["espanol","frances","portugues","italiano","rumano"]),
+    tips:{"castellano":"Español también aceptado."},
+    flavors:{"rumano":"La lengua romance más oriental — una isla lingüística rodeada de lenguas eslavas.","portugues":"Más hablado fuera de su país de origen que dentro."}},
+  { id:"germanic_es",level:"beginner",lang:"es",name:"Lenguas germánicas más habladas",desc:"Nombra 5 lenguas germánicas principales",total:5,
+    list:new Set(["ingles","aleman","holandes","sueco","noruego","danes"]),
+    tips:{"neerlandes":"Holandés también aceptado.","bokmal":"Noruego también aceptado.","nynorsk":"Noruego también aceptado."},
+    flavors:{"ingles":"La lengua germánica más hablada — e históricamente la que más palabras ha tomado prestadas.","holandes":"También llamado neerlandés — hablado en Países Bajos y en Bélgica como flamenco."}},
+  { id:"wonders_es",level:"beginner",lang:"es",name:"Las Siete Maravillas del Mundo Antiguo",desc:"Nombra las 7 Maravillas del Mundo Antiguo",total:7,
+    list:new Set(["gran piramide de giza","jardines colgantes de babilonia","estatua de zeus en olimpia","templo de artemis en efeso","mausoleo de halicarnaso","coloso de rodas","faro de alejandria"]),
+    flavors:{"gran piramide de giza":"La única Maravilla que sigue en pie hoy.","jardines colgantes de babilonia":"Puede que nunca hayan existido — ningún texto babilónico los menciona.","coloso de rodas":"Se mantuvo solo 54 años antes de que un terremoto lo derribara en el 226 aC."}},
+  { id:"accentotypes",level:"beginner",lang:"es",name:"Palabras según posición del acento",desc:"Nombra los 4 tipos de palabras según la posición del acento",total:4,
+    list:new Set(["aguda","llana","esdrujula","sobreesdrujula"]),
+    tips:{"grave":"Llana también aceptado.","paroxitona":"Llana también aceptado.","proparoxitona":"Esdrújula también aceptado."},
+    flavors:{"sobreesdrujula":"La más rara — acento en la cuarta sílaba o antes. Suelen ser verbos con pronombres: 'dígamelo'.","llana":"La más común en español — aproximadamente el 80% de las palabras son llanas."}},
+  // ── NORMAL EN ────────────────────────────────────────────────────────────
+  { id:"capitals",level:"normal",lang:"en",name:"World capitals",desc:"Name any capital city in the world — some countries have more than one!",total:195,
+    list:new Set(["kabul","tirana","algiers","andorra la vella","luanda","buenos aires","yerevan","canberra","vienna","baku","nassau","manama","dhaka","bridgetown","minsk","brussels","belmopan","porto-novo","thimphu","sucre","la paz","sarajevo","gaborone","brasilia","bandar seri begawan","sofia","ouagadougou","naypyidaw","bujumbura","phnom penh","yaounde","ottawa","praia","bangui","ndjamena","santiago","beijing","bogota","moroni","kinshasa","brazzaville","san jose","zagreb","havana","nicosia","prague","copenhagen","djibouti","roseau","santo domingo","dili","quito","cairo","san salvador","malabo","asmara","tallinn","mbabane","lobamba","addis ababa","suva","helsinki","paris","libreville","banjul","tbilisi","berlin","accra","athens","nuuk","st georges","guatemala city","conakry","bissau","georgetown","port au prince","tegucigalpa","budapest","reykjavik","new delhi","jakarta","tehran","baghdad","dublin","jerusalem","rome","kingston","tokyo","amman","astana","nairobi","tarawa","pyongyang","seoul","pristina","kuwait city","bishkek","vientiane","riga","beirut","maseru","monrovia","tripoli","vaduz","vilnius","luxembourg","skopje","antananarivo","lilongwe","kuala lumpur","putrajaya","male","bamako","valletta","majuro","nouakchott","port louis","mexico city","palikir","chisinau","monaco","ulaanbaatar","ulan bator","podgorica","rabat","maputo","windhoek","kathmandu","amsterdam","the hague","wellington","managua","niamey","abuja","oslo","muscat","islamabad","ngerulmud","panama city","port moresby","asuncion","lima","manila","warsaw","lisbon","bucharest","moscow","kigali","basseterre","castries","kingstown","apia","san marino","sao tome","riyadh","dakar","belgrade","victoria","freetown","singapore","bratislava","ljubljana","honiara","mogadishu","pretoria","cape town","bloemfontein","juba","madrid","colombo","sri jayawardenepura kotte","khartoum","paramaribo","stockholm","bern","damascus","taipei","dushanbe","dodoma","dar es salaam","bangkok","lome","nukualofa","port of spain","tunis","ankara","ashgabat","funafuti","kampala","kyiv","abu dhabi","london","washington dc","washington","montevideo","tashkent","port vila","vatican city","caracas","hanoi","sanaa","lusaka","harare","yamoussoukro","abidjan"]),
+    tips:{"washington":"Washington D.C. — D.C. stands for District of Columbia.","ulan bator":"Ulaanbaatar is the modern spelling; Ulan Bator the older transliteration.","bloemfontein":"South Africa's judicial capital — and J.R.R. Tolkien's birthplace.","cape town":"South Africa's legislative capital.","sucre":"Bolivia's constitutional capital; La Paz is the seat of government."}},
+  { id:"southern",level:"normal",lang:"en",name:"Countries entirely in the Southern Hemisphere",desc:"Every part of the country must lie south of the equator. No partial credit!",total:35,
+    list:new Set(["angola","argentina","australia","bolivia","botswana","burundi","chile","comoros","eswatini","fiji","lesotho","madagascar","malawi","mauritius","mozambique","namibia","new zealand","paraguay","peru","rwanda","seychelles","solomon islands","south africa","tanzania","timor-leste","east timor","tonga","uruguay","vanuatu","zambia","zimbabwe","papua new guinea","samoa","tuvalu","nauru"]),
+    notValid:new Set(["brazil","kenya","indonesia","colombia","ecuador","gabon","cameroon","nigeria","ethiopia","somalia","democratic republic of the congo","congo","india","malaysia","maldives","singapore","philippines","ghana","senegal","guinea","sierra leone","liberia","cote divoire","ivory coast","burkina faso","mali","niger","chad","sudan","south sudan"]),
+    notValidReasons:{"brazil":"Brazil's northernmost tip crosses the equator — so close, yet no.","kenya":"Kenya straddles the equator almost perfectly.","indonesia":"Indonesia spans both hemispheres across thousands of islands.","colombia":"Colombia extends well north of the equator.","ecuador":"Ecuador sits right on the equator — its name means exactly that."},
+    flavors:{"nauru":"The world's smallest republic — and the only country with no official capital.","lesotho":"One of only three countries completely surrounded by another.","tuvalu":"One of the lowest-lying nations on Earth.","bolivia":"Lost its coastline to Chile in the War of the Pacific (1879). Still has a navy — on Lake Titicaca."}},
+  { id:"oscars",level:"normal",lang:"en",name:"Best Picture Oscar winners",desc:"Name any Best Picture winner — full title required",total:97,
+    list:new Set(["wings","broadway melody","all quiet on the western front","cimarron","grand hotel","cavalcade","it happened one night","mutiny on the bounty","great ziegfeld","life of emile zola","you cant take it with you","gone with the wind","rebecca","how green was my valley","mrs miniver","casablanca","going my way","lost weekend","best years of our lives","gentlemens agreement","hamlet","all the kings men","all about eve","american in paris","greatest show on earth","from here to eternity","on the waterfront","marty","around the world in 80 days","bridge on the river kwai","gigi","ben-hur","apartment","west side story","lawrence of arabia","tom jones","my fair lady","sound of music","man for all seasons","in the heat of the night","oliver","midnight cowboy","patton","french connection","godfather","sting","godfather part ii","one flew over the cuckoos nest","rocky","annie hall","deer hunter","kramer vs kramer","ordinary people","chariots of fire","gandhi","terms of endearment","amadeus","out of africa","platoon","last emperor","rain man","driving miss daisy","dances with wolves","silence of the lambs","unforgiven","schindlers list","forrest gump","braveheart","english patient","titanic","shakespeare in love","american beauty","gladiator","beautiful mind","chicago","lord of the rings the return of the king","million dollar baby","crash","departed","no country for old men","slumdog millionaire","hurt locker","kings speech","artist","argo","12 years a slave","birdman","spotlight","moonlight","shape of water","green book","parasite","nomadland","coda","everything everywhere all at once","zone of interest","oppenheimer","anora"]),
+    flavors:{"casablanca":"Shot almost entirely on a studio lot in Burbank. Bergman never knew which man her character would choose.","parasite":"First non-English film to win Best Picture.","moonlight":"Announced after La La Land had already begun its acceptance speech.","annie hall":"Beat Star Wars in 1977. The universe never fully recovered.","everything everywhere all at once":"Made for $14.3 million. Won seven Oscars."}},
+  { id:"primes",level:"normal",lang:"en",name:"Prime numbers up to 100",desc:"Name any prime between 2 and 97",total:25,
+    list:new Set(["2","3","5","7","11","13","17","19","23","29","31","37","41","43","47","53","59","61","67","71","73","79","83","89","97"]),
+    flavors:{"2":"The only even prime.","97":"The largest prime under 100.","47":"Appears in almost every episode of Star Trek: TNG — a writers' tradition.","89":"A Fibonacci prime."}},
+  { id:"defunct",level:"normal",lang:"en",name:"Countries that no longer exist",desc:"Name a country that was once sovereign but is now gone",total:null,
+    facts:{"soviet union":"Dissolved in 1991 into 15 independent republics.","ussr":"Dissolved in 1991 into 15 independent republics.","yugoslavia":"Broke apart 1991–1992 into Slovenia, Croatia, Bosnia, Serbia, Montenegro, North Macedonia, and later Kosovo.","czechoslovakia":"Peacefully split in 1993 — the Velvet Divorce.","east germany":"Reunified with West Germany in 1990.","west germany":"Reunified with East Germany in 1990.","ottoman empire":"Collapsed after WWI, giving rise to modern Turkey and many Middle Eastern states.","austro-hungarian empire":"Dissolved after WWI into Austria, Hungary, Czechoslovakia, Yugoslavia and more.","austria-hungary":"Dissolved after WWI.","persian empire":"Conquered by Alexander the Great in 330 BC.","byzantine empire":"Fell in 1453 when Constantinople was taken by the Ottomans.","byzantium":"The eastern continuation of Rome — fell in 1453 when Constantinople was taken by the Ottomans.","eastern roman empire":"The Byzantine Empire — fell in 1453.","roman empire":"Fell in 476 AD in the West; survived as Byzantium until 1453.","holy roman empire":"Dissolved in 1806. Voltaire: 'neither holy, nor Roman, nor an empire.'","prussia":"Abolished by the Allied Control Council in 1947.","south vietnam":"Fell to North Vietnam in 1975.","north vietnam":"Unified with South Vietnam in 1975.","south yemen":"Unified with North Yemen in 1990.","confederate states of america":"Defeated in the US Civil War, 1865.","confederacy":"Defeated in the US Civil War, 1865.","ceylon":"Renamed Sri Lanka in 1972.","rhodesia":"Became Zimbabwe in 1980.","gold coast":"Became Ghana in 1957 — the first sub-Saharan country to gain independence.","abyssinia":"Renamed Ethiopia; Italian occupation 1936–1941.","persia":"Renamed Iran in 1935 by Reza Shah Pahlavi.","mesopotamia":"Now modern Iraq. Cradle of writing, law, and the wheel.","gran colombia":"Bolívar's republic dissolved in 1831 into Colombia, Venezuela, and Ecuador.","republic of texas":"Independent 1836–1846, then annexed by the US.","burma":"Renamed Myanmar in 1989.","belgian congo":"Became the DRC in 1960.","biafra":"Attempted secession from Nigeria 1967–1970.","manchuria":"Puppet state Manchukuo dissolved 1945.","manchukuo":"Japanese puppet state — dissolved 1945.","tanganyika":"Merged with Zanzibar in 1964 to form Tanzania.","zanzibar":"Merged with Tanganyika in 1964 to form Tanzania.","nyasaland":"Became Malawi in 1964.","northern rhodesia":"Became Zambia in 1964.","bechuanaland":"Became Botswana in 1966.","basutoland":"Became Lesotho in 1966.","dahomey":"Renamed Benin in 1975.","upper volta":"Renamed Burkina Faso in 1984 — 'Land of Incorruptible People.'","sikkim":"Merged with India in 1975.","sumer":"First known writing system emerged here around 3200 BC.","akkad":"First empire in history — collapsed around 2154 BC.","babylon":"Fell to Cyrus the Great in 539 BC.","assyria":"Fell in 612 BC when Nineveh was sacked.","carthage":"Destroyed by Rome in 146 BC. Carthago delenda est.","phoenicia":"Gave the world the alphabet — absorbed by Alexander in 332 BC.","dutch east indies":"Became Indonesia in 1945.","french indochina":"Dissolved into Vietnam, Laos, and Cambodia in 1954.","tannu tuva":"Absorbed into the USSR in 1944. Feynman was obsessed with visiting it.","republic of china":"Retreated to Taiwan in 1949.","weimar republic":"Ended when Hitler became chancellor in 1933.","nazi germany":"Collapsed May 1945.","third reich":"Collapsed May 1945.","mughal empire":"Formally ended by the British in 1858.","british raj":"Ended with Indian independence in 1947.","republic of venice":"Absorbed by Napoleon in 1797 after 1,000 years.","papal states":"Ended when Rome was annexed by Italy in 1870.","kingdom of hawaii":"Overthrown 1893 — became a US state in 1959.","mali empire":"Mansa Musa was so wealthy his pilgrimage to Mecca crashed Mediterranean gold markets.","mongol empire":"The largest contiguous land empire in history — 24 million km².","german empire":"Ended with WWI defeat in 1918.","lydia":"Possibly the first civilization to use coined money.","bophuthatswana":"Apartheid Bantustan — reintegrated 1994.","transkei":"Apartheid Bantustan — reintegrated 1994.",
+    "vichy france":"The collaborationist French state under Pétain, 1940–1944. Capital: Vichy.","vichy":"The collaborationist French state under Pétain, 1940–1944.",
+    "polish-lithuanian commonwealth":"One of the largest states in 16th–17th century Europe — a pioneering experiment in parliamentary democracy.","polish lithuanian commonwealth":"One of the largest states in 16th–17th century Europe.",
+    "kingdom of the two sicilies":"The Bourbon kingdom uniting Sicily and southern Italy — dissolved when Garibaldi's Expedition of the Thousand swept through in 1860.","two sicilies":"The Bourbon kingdom uniting Sicily and southern Italy — dissolved 1861.",
+    "new spain":"The viceroyalty that covered Mexico, Central America, and much of the American Southwest for three centuries. Capital: Mexico City.","viceroyalty of new spain":"The viceroyalty that covered Mexico, Central America, and much of the American Southwest.",
+    "new granada":"Bolívar's republic dissolved in 1831 into Colombia, Venezuela, and Ecuador — precursor to Gran Colombia.","viceroyalty of new granada":"The Spanish viceroyalty covering Colombia, Venezuela, Panama, and Ecuador.",
+    "songhai empire":"The largest empire in West African history — at its peak larger than Western Europe. Fell to Moroccan invasion in 1591.","songhai":"The largest empire in West African history. Fell to Moroccan invasion in 1591.",
+    "axum":"The ancient Ethiopian empire that adopted Christianity in the 4th century and controlled Red Sea trade for centuries.","aksum":"The ancient Ethiopian empire that adopted Christianity in the 4th century — one of the great powers of the ancient world.",
+    "kingdom of kush":"The Nubian kingdom that once conquered and ruled Egypt as the 25th Dynasty.","kush":"The Nubian kingdom that once conquered and ruled Egypt as the 25th Dynasty.",
+    "carolingian empire":"Charlemagne's empire — reunited much of Western Europe for the first time since Rome. Divided by the Treaty of Verdun in 843.","frankish empire":"Charlemagne's empire — the Carolingian consolidation of the Frankish kingdoms.",
+    "kalmar union":"The Scandinavian union of Denmark, Sweden, and Norway under one crown, 1397–1523. Sweden broke away first.",
+    "khwarazmian empire":"The Central Asian empire annihilated by Genghis Khan in 1220–1221 — one of history's most total destructions.","khwarezm":"The Central Asian sultanate annihilated by Genghis Khan.",
+    "republic of ragusa":"The maritime republic centered on Dubrovnik — sovereign for over four centuries, absorbed by Napoleon in 1808.","ragusa":"The maritime republic centered on Dubrovnik — sovereign for over four centuries.",
+    "empire of trebizond":"The last splinter of Byzantium — fell to the Ottomans in 1461, eight years after Constantinople.","trebizond":"The last splinter of Byzantium — fell to the Ottomans in 1461.",
+    "ptolemaic egypt":"The Greek-Egyptian kingdom founded by Ptolemy I after Alexander's death. Cleopatra was its last ruler.","ptolemaic kingdom":"The Greek-Egyptian kingdom founded by Ptolemy I. Cleopatra was its last ruler.",
+    "kingdom of bohemia":"A major Central European power for centuries — absorbed into the Habsburg crown in 1526.","bohemia":"A major Central European power for centuries — absorbed into the Habsburg crown in 1526.",
+    "duchy of savoy":"The Alpine state that became the nucleus of unified Italy — its king became Italy's first monarch.","savoy":"The Alpine state that became the nucleus of unified Italy.",
+    "republic of genoa":"The great maritime rival of Venice — controlled trade routes across the Mediterranean for centuries.","genoa":"The great maritime rival of Venice — sovereign republic until Napoleon dissolved it in 1797.",
+    "grand duchy of tuscany":"The Medici-and-Habsburg state that made Florence its capital — dissolved into unified Italy in 1861.","tuscany":"The Medici-and-Habsburg grand duchy — dissolved into unified Italy in 1861.",
+    "sukhothai kingdom":"The first Thai kingdom — its script and culture became the foundation of modern Thailand.","sukhothai":"The first Thai kingdom, 13th–15th century.",
+    "ayutthaya kingdom":"The Thai kingdom that followed Sukhothai — one of the wealthiest trading cities in Asia before Burmese sack in 1767.","ayutthaya":"The Thai kingdom sacked by Burma in 1767 after four centuries of dominance.",
+    "volga bulgaria":"The medieval Muslim Turkic state on the Volga — predecessor to modern Tatarstan. Destroyed by the Mongols in 1236.","volga-bulgaria":"The medieval Muslim Turkic state on the Volga — destroyed by the Mongols in 1236.",
+    "great moravia":"The first major Slavic state — introduced the Cyrillic alphabet's predecessor, the Glagolitic script.","great moravian empire":"The first major Slavic state, 9th century.",
+    "hanseatic league":"The medieval trading network of North Sea and Baltic cities — more powerful than most kingdoms, yet never a state.","hansa":"The medieval trading network of North Sea and Baltic cities.",
+    "achaemenid empire":"The first Persian Empire — the largest empire the world had seen at its time, stretching from Egypt to India.","achaemenid persia":"The first Persian Empire under Cyrus, Darius, and Xerxes.",
+    "seleucid empire":"The Macedonian successor state to Alexander — ruled from Syria to Persia for two centuries.","seleucid persia":"The Macedonian successor state to Alexander the Great in the East.",
+    "parthian empire":"The Iranian empire that succeeded the Seleucids and held Rome at bay for centuries.","parthia":"The Iranian empire that held Rome at bay for centuries — victors at Carrhae in 53 BC.",
+    "greco-bactrian kingdom":"The extraordinary Greek state in Central Asia — the easternmost Hellenistic kingdom, neighbor to India.","bactria":"The extraordinary Greek state in Central Asia — the easternmost Hellenistic kingdom.",
+    "kingdom of macedon":"The kingdom of Philip II and Alexander the Great — briefly the center of the known world.","macedon":"The kingdom of Philip II and Alexander the Great.",
+    "lotharingia":"The short-lived middle kingdom carved out of Charlemagne's empire — its memory survives in the name Lorraine.","kingdom of lotharingia":"The middle kingdom of the Carolingian partition — ancestor of modern Lorraine.",
+    "merovingian kingdom":"The Frankish dynasty that preceded the Carolingians — Clovis was their greatest king.","merovingian dynasty":"The Frankish dynasty that preceded the Carolingians.",
+    "vinland":"The Norse settlement in North America — established around 1000 AD, abandoned within years. L'Anse aux Meadows is its only confirmed site."}},
+  { id:"french",level:"normal",lang:"en",name:"French expressions used in English",desc:"Name a French expression used in English — no accents needed",total:90,
+    list:new Set(["a propos","agent provocateur","aide de camp","ancien regime","art nouveau","au fait","au gratin","au pair","avant garde","beau monde","beaux arts","bete noire","bien pensant","blase","bon mot","bon vivant","boulevard","bouquet","boutique","brunette","cachet","carte blanche","cause celebre","chaise longue","chef doeuvre","chic","cinema verite","cliche","comme ci comme ca","connoisseur","cordon bleu","coup detat","coup de grace","cuisine","debacle","debut","decollete","deja vu","denouement","detente","double entendre","elite","emigre","en masse","en passant","en route","encore","entrepreneur","esprit de corps","etiquette","facade","fait accompli","faux ami","faux pas","femme fatale","fiance","filet mignon","film noir","fin de siecle","force majeure","genre","gourmet","haute couture","haute cuisine","hors doeuvre","hors doeuvres","hors de combat","idee fixe","impasse","je ne sais quoi","joie de vivre","laissez faire","liaison","lingerie","macabre","malaise","melee","menage a trois","milieu","mise en scene","mot juste","naive","noblesse oblige","nom de plume","nonchalance","nonchalant","nouveau riche","nouvelle vague","objet dart","papier mache","par excellence","passe","petite bourgeoisie","piece de resistance","plateau","pot pourri","pret a porter","prestige","protege","raison detre","renaissance","repertoire","resume","revue","roman a clef","ruse","sabotage","sang froid","savoir faire","silhouette","soiree","souvenir","sous chef","surveillance","tableau vivant","tete a tete","touche","tour de force","trompe loeil","vignette","vis a vis","voila"]),
+    easter:new Set(["cest la vie","tant pis","tant mieux","au contraire","nest ce pas","au fond"]),
+    easterFlavors:{"cest la vie":"'That's life' — the philosophical shrug, exported worldwide.","tant pis":"'So much the worse' — France has a shrug for every occasion."},
+    flavors:{"avant garde":"Originally a military term — the troops sent ahead. Art borrowed it around 1910.","cliche":"From the sound of a printing press stamp hitting the plate.","deja vu":"'Already seen.' Coined by philosopher Émile Boirac in 1876.","double entendre":"Ironically, this phrase doesn't exist in modern French.","film noir":"Invented by French critics watching American crime films in the 1940s.","je ne sais quoi":"The untranslatable quality. The phrase is its own example.","sabotage":"Workers allegedly threw wooden shoes (sabots) into machinery during labor disputes.","silhouette":"Named after Étienne de Silhouette — a notoriously cheap French minister.","nonchalant":"From chaloir, to be concerned. Non-chalant: literally 'not warmed.'","prestige":"Originally meant juggler's trick or illusion. The word knows something."}},
+  { id:"landlocked",level:"normal",lang:"en",name:"Landlocked countries",desc:"Name any country with no coastline",total:44,
+    list:new Set(["afghanistan","andorra","armenia","austria","azerbaijan","belarus","bhutan","bolivia","botswana","burkina faso","burundi","central african republic","chad","czech republic","czechia","ethiopia","hungary","kazakhstan","kosovo","kyrgyzstan","laos","lesotho","liechtenstein","luxembourg","malawi","mali","moldova","mongolia","nepal","niger","north macedonia","paraguay","rwanda","san marino","serbia","slovakia","south sudan","eswatini","switzerland","tajikistan","turkmenistan","uganda","uzbekistan","vatican city","zambia","zimbabwe"]),
+    flavors:{"liechtenstein":"One of only two doubly landlocked countries — surrounded entirely by other landlocked countries.","uzbekistan":"The other doubly landlocked country.","bolivia":"Lost its coastline to Chile in the War of the Pacific (1879). Still has a navy — on Lake Titicaca.","lesotho":"Completely surrounded by South Africa.","vatican city":"The world's smallest internationally recognized country — landlocked within Rome."}},
+  { id:"latin",level:"normal",lang:"en",name:"Latin expressions used in English",desc:"Name a Latin expression still used in English",total:60,
+    list:new Set(["ad hoc","ad hominem","ad infinitum","ad nauseam","alma mater","alter ego","bona fide","carpe diem","carte blanche","caveat emptor","cogito ergo sum","corpus delicti","cum laude","de facto","de jure","erratum","et al","et cetera","ex libris","ex nihilo","ex post facto","habeas corpus","homo sapiens","honoris causa","id est","in absentia","in loco parentis","in memoriam","in situ","in vitro","in vivo","ipso facto","mea culpa","mens rea","modus operandi","modus vivendi","non sequitur","nota bene","per annum","per capita","per diem","per se","persona non grata","post mortem","prima facie","pro bono","pro forma","quid pro quo","qed","quod erat demonstrandum","requiescat in pace","rip","sine qua non","status quo","subpoena","sui generis","summa cum laude","tabula rasa","terra firma","terra incognita","veni vidi vici","verbatim","vice versa","vox populi"]),
+    flavors:{"carpe diem":"From Horace's Odes. Full quote: 'carpe diem, quam minimum credula postero.'","cogito ergo sum":"Descartes — 'I think therefore I am.' The foundation of modern Western philosophy.","habeas corpus":"'You shall have the body' — the legal right to be brought before a judge.","mea culpa":"'Through my fault' — from the Catholic confessional prayer.","veni vidi vici":"Caesar's dispatch after the Battle of Zela, 47 BC. Three words, three tenses, one empire.","sine qua non":"'Without which not' — the indispensable condition.","tabula rasa":"'Blank slate' — Locke's idea that the mind at birth is shaped entirely by experience."}},
+  { id:"euphemisms",level:"normal",lang:"en",name:"Euphemisms for death in English",desc:"Name any English euphemism for dying or death",total:40,
+    list:new Set(["pass away","passed away","pass on","passed on","kick the bucket","bite the dust","meet your maker","buy the farm","six feet under","push up daisies","pushing up daisies","go to a better place","breathe your last","give up the ghost","cash in your chips","check out","cross the rainbow bridge","depart","expire","join the choir invisible","kick it","leave this world","lose your life","meet your end","no longer with us","peg out","perish","pop your clogs","rest in peace","rip","shuffle off this mortal coil","sleep with the fishes","snuff it","succumb","take your last breath","the big sleep","turn up your toes","go the way of all flesh","croak","depart this world"]),
+    flavors:{"shuffle off this mortal coil":"Shakespeare, Hamlet — 'To die, to sleep / To sleep, perchance to dream...'","kick the bucket":"Possibly from Old French 'buquet' (a balance) — not the container.","buy the farm":"US military slang — when a pilot crashed on a farm, the government paid the damages.","six feet under":"Standard grave depth in England since the Great Plague of 1665.","join the choir invisible":"From George Eliot's poem — one of the most literary euphemisms in English."}},
+  // ── NORMAL EN — moved from starter ───────────────────────────────────────
+  { id:"greekprefixes",level:"normal",lang:"en",name:"Greek numerical prefixes 1–10",desc:"Name the 10 Greek numerical prefixes (mono, di, tri...)",total:10,
+    list:new Set(["mono","di","tri","tetra","penta","hexa","hepta","octa","ennea","deca"]),
+    flavors:{"ennea":"The least remembered — ennea (9). Appears in 'enneagram'.","mono":"From monos, alone. Monologue, monotone, monopoly.","deca":"From deka, ten. Decade, decathlon, decimal."}},
+  { id:"muses",level:"normal",lang:"en",name:"The Nine Muses",desc:"Name the 9 Muses of Greek mythology",total:9,
+    list:new Set(["calliope","clio","erato","euterpe","melpomene","polyhymnia","terpsichore","thalia","urania"]),
+    flavors:{"calliope":"Muse of epic poetry — the most important. Homer invoked her at the start of the Iliad.","terpsichore":"Muse of dance — her name lives on in 'terpsichorean.'","urania":"Muse of astronomy — the most scientific of the nine."}},
+  { id:"heracles",level:"normal",lang:"en",name:"The 12 Labours of Heracles",desc:"Name any of the 12 Labours of Heracles",total:12,
+    list:new Set(["nemean lion","lernean hydra","lernaean hydra","ceryneian hind","erymanthian boar","augean stables","stymphalian birds","cretan bull","mares of diomedes","girdle of hippolyta","cattle of geryon","apples of the hesperides","cerberus"]),
+    flavors:{"nemean lion":"Its skin was impervious to weapons — Heracles strangled it.","lernean hydra":"Cut off one head and two grew back. Heracles cauterized each stump.","augean stables":"3,000 cattle, 30 years of dung, cleaned in one day by rerouting two rivers.","cerberus":"The final labour — retrieving the three-headed guardian of the Underworld."}},
+  { id:"columns",level:"normal",lang:"en",name:"Classical Greek architectural orders",desc:"Name the 3 Greek orders of architecture",total:3,
+    list:new Set(["doric","ionic","corinthian"]),
+    flavors:{"doric":"The oldest and simplest. No base, plain capital. The Parthenon is Doric.","ionic":"Recognizable by its scroll-shaped volutes.","corinthian":"The most ornate — decorated with acanthus leaves. Favored by the Romans."}},
+]
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentCat = null, usados = new Set(), puntos = 0
+
+// ─── NORMALIZE ───────────────────────────────────────────────────────────────
+function norm(str){
+  return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/^the\s+/,"").replace(/^(el|la|los|las)\s+/,"")
+    .replace(/[^a-z0-9\s]/g,"").replace(/\s+/g," ").trim()
+}
+
+// ─── MODE STATE ──────────────────────────────────────────────────────────────
+let modeTimer = 'turtle'
+let modeScope = 'local'
+let olympiadQueue = []
+let olympiadIndex = 0
+let olympiadTotalTime = 0
+let catStartTime = null
+let catElapsed = 0
+let timerInterval = null
+
+function fmtTime(s){
+  const m = Math.floor(s/60), sec = s%60
+  return `${m}:${sec.toString().padStart(2,'0')}`
+}
+
+function startTimer(){
+  if(modeTimer !== 'achilles') return
+  catStartTime = Date.now()
+  catElapsed = 0
+  const disp = document.getElementById("timer-display")
+  disp.classList.remove("hidden")
+  timerInterval = setInterval(() => {
+    catElapsed = Math.floor((Date.now() - catStartTime) / 1000)
+    document.getElementById("timer-val").innerText = fmtTime(catElapsed)
+  }, 500)
+}
+
+function stopTimer(){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null }
+  if(catStartTime) catElapsed = Math.floor((Date.now() - catStartTime) / 1000)
+}
+
+// ─── LANGUAGE ────────────────────────────────────────────────────────────────
+function setLang(lang){
+  LANG = lang
+  document.getElementById("screen-lang").classList.add("hidden")
+  buildModeScreen()
+  document.getElementById("screen-mode").classList.remove("hidden")
+}
+
+function buildModeScreen(){
+  document.getElementById("mode-sub").innerText = t("modeSub")
+  document.getElementById("mode-label-timer").innerText = t("modeLabelTimer")
+  document.getElementById("mode-label-scope").innerText = t("modeLabelScope")
+  document.getElementById("turtle-sub").innerText = t("turtleSub")
+  document.getElementById("achilles-sub").innerText = t("achillesSub")
+  document.getElementById("local-sub").innerText = t("localSub")
+  document.getElementById("olympiad-sub").innerText = t("olympiadSub")
+  document.getElementById("mode-start-btn").innerText = t("modeStart")
+  // re-apply active states
+  document.getElementById("btn-turtle").classList.toggle("active", modeTimer === 'turtle')
+  document.getElementById("btn-achilles").classList.toggle("active", modeTimer === 'achilles')
+  document.getElementById("btn-local").classList.toggle("active", modeScope === 'local')
+  document.getElementById("btn-olympiad").classList.toggle("active", modeScope === 'olympiad')
+}
+
+function selectMode(axis, val){
+  if(axis === 'timer'){
+    modeTimer = val
+    document.getElementById("btn-turtle").classList.toggle("active", val === 'turtle')
+    document.getElementById("btn-achilles").classList.toggle("active", val === 'achilles')
+  } else {
+    modeScope = val
+    document.getElementById("btn-local").classList.toggle("active", val === 'local')
+    document.getElementById("btn-olympiad").classList.toggle("active", val === 'olympiad')
+  }
+}
+
+function startFromMode(){
+  document.getElementById("screen-mode").classList.add("hidden")
+  if(modeScope === 'olympiad'){
+    olympiadQueue = CATEGORIES.filter(c => c.level === "beginner" && c.lang === LANG)
+    olympiadIndex = 0
+    olympiadTotalTime = 0
+    startGame(olympiadQueue[0])
+  } else {
+    buildGrid()
+    document.getElementById("screen-select").classList.remove("hidden")
+  }
+}
+
+function goLang(){
+  stopTimer()
+  document.getElementById("screen-select").classList.add("hidden")
+  buildModeScreen()
+  document.getElementById("screen-mode").classList.remove("hidden")
+}
+
+// ─── BUILD GRID ───────────────────────────────────────────────────────────────
+function buildGrid(){
+  const grid = document.getElementById("cat-grid")
+  grid.innerHTML = ""
+  document.getElementById("select-subtitle").innerText = t("subtitle")
+  document.getElementById("lang-toggle").innerText = t("langToggle")
+  const beginners = CATEGORIES.filter(c => c.level === "beginner" && c.lang === LANG)
+  const normals = CATEGORIES.filter(c => c.level === "normal" && c.lang === "en")
+  const h1 = document.createElement("p"); h1.className = "level-header"; h1.innerText = t("beginner"); grid.appendChild(h1)
+  beginners.forEach(cat => grid.appendChild(makeBtn(cat)))
+  const h2 = document.createElement("p"); h2.className = "level-header"; h2.innerText = t("normal"); grid.appendChild(h2)
+  normals.forEach(cat => grid.appendChild(makeBtn(cat)))
+}
+
+function makeBtn(cat){
+  const btn = document.createElement("button")
+  const prog = loadProgress(cat.id)
+  const found = prog ? prog.found.length : 0
+  const pct = prog && cat.total ? Math.round((found / cat.total) * 100) : 0
+  const completed = cat.total && found >= cat.total
+  btn.className = "cat-btn" + (cat.level === "beginner" ? " beginner" : "") + (completed ? " completed" : "")
+  btn.id = "btn-" + cat.id
+  const countStr = cat.total ? `<span class="cat-count">${cat.total}</span>` : `<span class="cat-count">${t("open")}</span>`
+  const starterBadge = cat.level === "beginner" ? `<span class="badge-easy">${t("beginner")}</span>` : ""
+  const completedBadge = completed ? `<span class="completed-badge">✓ ${t("completed_short")}</span>` : ""
+  let progressHtml = ""
+  if(completed){
+    progressHtml = `<div class="cat-progress"><div class="cat-progress-fill" style="width:100%"></div></div>`
+  } else if(pct > 0){
+    progressHtml = `<div class="cat-progress"><div class="cat-progress-fill" style="width:${pct}%"></div></div><div class="cat-pct">${pct}%</div>`
+  }
+  btn.innerHTML = `<div class="cat-name-row"><span>${cat.name}</span>${completedBadge}</div><span class="cat-meta">${countStr}${starterBadge}</span>${progressHtml}`
+  btn.onclick = () => startGame(cat)
+  return btn
+}
+
+// ─── GAME ─────────────────────────────────────────────────────────────────────
+function startGame(cat){
+  stopTimer()
+  currentCat = cat
+  // In olympiad mode, always start fresh (no saved progress)
+  const prog = modeScope === 'olympiad' ? null : loadProgress(cat.id)
+  usados = prog ? new Set(prog.found) : new Set()
+  puntos = usados.size
+  document.getElementById("pts").innerText = puntos
+  document.getElementById("pts-label").innerText = t("points")
+  document.getElementById("game-title").innerText = cat.name
+  document.getElementById("game-desc").innerText = cat.desc
+  document.getElementById("usados").innerHTML = ""
+  document.getElementById("usados-box").classList.add("hidden")
+  document.getElementById("used-label").innerText = t("usedLabel") + " (0):"
+  // Olympiad status
+  const olStatus = document.getElementById("olympiad-status")
+  if(modeScope === 'olympiad'){
+    olStatus.classList.remove("hidden")
+    olStatus.innerHTML = `<span>${t("olympiadOf", olympiadIndex+1, olympiadQueue.length)}</span> — ${olympiadQueue[olympiadIndex].name}`
+  } else {
+    olStatus.classList.add("hidden")
+  }
+  // Timer
+  const timerDisp = document.getElementById("timer-display")
+  timerDisp.classList.toggle("hidden", modeTimer !== 'achilles')
+  document.getElementById("timer-val").innerText = "0:00"
+  if(usados.size > 0){
+    usados.forEach(n => addTag(n, false))
+    document.getElementById("used-label").innerText = t("usedLabel") + " (" + puntos + "):"
+    document.getElementById("usados-box").classList.remove("hidden")
+  }
+  updateProgress()
+  setRes(t("startNaming"), "#888", null, null)
+  document.getElementById("screen-select").classList.add("hidden")
+  document.getElementById("screen-win").classList.add("hidden")
+  document.getElementById("screen-game").classList.remove("hidden")
+  document.getElementById("resp").value = ""
+  document.getElementById("resp").focus()
+  startTimer()
+}
+
+function resetGame(){
+  stopTimer()
+  document.getElementById("screen-game").classList.add("hidden")
+  document.getElementById("screen-win").classList.add("hidden")
+  if(modeScope === 'olympiad'){
+    // Abort olympiad → back to mode screen
+    olympiadQueue = []
+    buildModeScreen()
+    document.getElementById("screen-mode").classList.remove("hidden")
+  } else {
+    buildGrid()
+    document.getElementById("screen-select").classList.remove("hidden")
+  }
+}
+
+function olympiadNext(){
+  olympiadIndex++
+  if(olympiadIndex < olympiadQueue.length){
+    startGame(olympiadQueue[olympiadIndex])
+  } else {
+    // All done
+    document.getElementById("screen-win").classList.add("hidden")
+    document.getElementById("win-title").innerText = t("winOlympiadDone")
+    document.getElementById("win-sub").innerText = t("winOlympiadSub", olympiadQueue.length, olympiadTotalTime)
+    document.getElementById("win-another").innerText = t("winAnother")
+    document.getElementById("win-another").onclick = () => {
+      olympiadQueue=[]; buildModeScreen()
+      document.getElementById("screen-mode").classList.remove("hidden")
+      document.getElementById("screen-win").classList.add("hidden")
+    }
+    document.getElementById("win-olympiad-next").classList.add("hidden")
+    document.getElementById("win-share").innerText = t("winShare")
+    document.getElementById("screen-win").classList.remove("hidden")
+  }
+}
+
+function updateProgress(){
+  const pl = document.getElementById("progress-line")
+  const bar = document.getElementById("progress-bar")
+  if(currentCat.total){
+    pl.innerHTML = `<span>${puntos}</span> / ${currentCat.total} — ${currentCat.total - puntos} ${t("toGo")}`
+    bar.style.width = Math.round((puntos / currentCat.total) * 100) + "%"
+  } else {
+    pl.innerHTML = `<span>${puntos}</span> ${t("foundSoFar")}`
+    bar.style.width = "0%"
+  }
+}
+
+function checkSavePoint(prev, curr, total){
+  if(!total) return
+  for(const cp of [0.25,0.5,0.75,1.0]){
+    const threshold = Math.floor(total * cp)
+    if(prev < threshold && curr >= threshold){
+      if(cp < 1.0) showToast(t("savePoint") + " " + Math.round(cp*100) + "%")
+      break
+    }
+  }
+}
+
+function showToast(msg){
+  const toast = document.getElementById("toast")
+  toast.innerText = msg; toast.classList.add("show")
+  setTimeout(() => toast.classList.remove("show"), 2500)
+}
+
+function setRes(main, color, flavor, wiki){
+  document.getElementById("res").innerText = main
+  document.getElementById("res").style.color = color
+  document.getElementById("res-tip").style.display = "none"
+  const fl = document.getElementById("res-flavor")
+  if(flavor){ fl.innerText = flavor; fl.style.display = "block" } else { fl.style.display = "none" }
+  const wk = document.getElementById("res-wiki")
+  if(wiki){ wk.innerHTML = `<a href="${wiki}" target="_blank" rel="noopener">→ Wikipedia</a>`; wk.style.display = "block" } else { wk.style.display = "none" }
+}
+
+function showTip(tip){
+  const ft = document.getElementById("res-tip")
+  if(tip){ ft.innerText = "💡 " + tip; ft.style.display = "block" }
+}
+
+// ─── VERIFY ───────────────────────────────────────────────────────────────────
+function verificar(){
+  const input = document.getElementById("resp").value.trim()
+  if(!input) return
+  let n = norm(input)
+  if(!n) return
+
+  // Resolve synonym to canonical form
+  const canonical = resolveCanonical(n)
+
+  if(usados.has(canonical)){
+    setRes(t("alreadyUsed"), "#d97706", null, null)
+    return
+  }
+
+  if(currentCat.id === "french" && currentCat.easter && currentCat.easter.has(n)){
+    const fl = currentCat.easterFlavors && currentCat.easterFlavors[n]
+    setRes(t("easterEgg"), "#f59e0b", fl, null)
+    addTag(input, true); return
+  }
+
+  if(currentCat.id === "defunct"){
+    const fact = currentCat.facts[canonical] || currentCat.facts[n]
+    if(fact){ accept(input, canonical, fact, "https://en.wikipedia.org/wiki/" + toWikiTitle(canonical)) }
+    else { setRes(t("notRecognized"), "#ef4444", null, null) }
+    return
+  }
+
+  if(currentCat.id === "southern" && currentCat.notValid && currentCat.notValid.has(n)){
+    const r = currentCat.notValidReasons && currentCat.notValidReasons[n]
+    setRes(t("notSouthern") + " " + (r||""), "#ef4444", null, null)
+    return
+  }
+
+  // Check canonical in list, then original
+  const inList = (currentCat.list && (currentCat.list.has(canonical) || currentCat.list.has(n)))
+  if(inList){
+    const key = currentCat.list.has(canonical) ? canonical : n
+    const tip = currentCat.tips && (currentCat.tips[n] || currentCat.tips[canonical])
+    const flavor = currentCat.flavors && (currentCat.flavors[key] || currentCat.flavors[canonical])
+    const wiki = ["capitals","oscars","landlocked"].includes(currentCat.id)
+      ? "https://en.wikipedia.org/wiki/" + toWikiTitle(key) : null
+    accept(input, canonical, flavor, wiki)
+    if(tip) showTip(tip)
+    return
+  }
+
+  setRes(t("notFound"), "#ef4444", null, null)
+}
+
+function accept(input, canonical, flavor, wiki){
+  const prev = puntos
+  usados.add(canonical); puntos++
+  document.getElementById("pts").innerText = puntos
+  document.getElementById("resp").value = ""
+  setRes(t("valid"), "#4ade80", flavor, wiki)
+  updateProgress()
+  addTag(input, false)
+  document.getElementById("used-label").innerText = t("usedLabel") + " (" + puntos + "):"
+  document.getElementById("usados-box").classList.remove("hidden")
+  document.getElementById("resp").focus()
+  if(modeScope !== 'olympiad') saveProgress(currentCat.id, usados, currentCat.total)
+  checkSavePoint(prev, puntos, currentCat.total)
+  if(currentCat.total && puntos >= currentCat.total){
+    setTimeout(() => showVictory(), 600)
+  }
+}
+
+function showVictory(){
+  stopTimer()
+  olympiadTotalTime += catElapsed
+  document.getElementById("screen-game").classList.add("hidden")
+  document.getElementById("win-title").innerText = t("winTitle", currentCat.name)
+  // Sub: time if Achilles
+  let sub = t("winSub", currentCat.total)
+  if(modeTimer === 'achilles') sub += `  —  ${t("winTime", catElapsed)}`
+  document.getElementById("win-sub").innerText = sub
+  // Buttons
+  const btnAnother = document.getElementById("win-another")
+  const btnNext = document.getElementById("win-olympiad-next")
+  if(modeScope === 'olympiad' && olympiadIndex < olympiadQueue.length - 1){
+    btnAnother.classList.add("hidden")
+    btnNext.classList.remove("hidden")
+    btnNext.innerText = t("winOlympiadNext")
+  } else {
+    btnAnother.classList.remove("hidden")
+    btnAnother.innerText = t("winAnother")
+    btnAnother.onclick = resetGame
+    btnNext.classList.add("hidden")
+  }
+  document.getElementById("win-share").innerText = t("winShare")
+  document.getElementById("screen-win").classList.remove("hidden")
+  if(modeScope !== 'olympiad') clearProgress(currentCat.id)
+}
+
+function shareResult(){
+  let text
+  if(modeScope === 'olympiad' && olympiadIndex >= olympiadQueue.length - 1){
+    text = t("shareOlympiadText", olympiadQueue.length, olympiadTotalTime)
+  } else if(modeTimer === 'achilles'){
+    text = t("shareTimeText", currentCat.name, puntos, currentCat.total || "?", catElapsed)
+  } else {
+    text = t("shareText", currentCat.name, puntos, currentCat.total || "?")
+  }
+  if(navigator.share){ navigator.share({text}) }
+  else { navigator.clipboard.writeText(text).then(() => showToast("Copied!")) }
+}
+
+function addTag(nombre, isEaster){
+  const tag = document.createElement("span")
+  tag.className = "tag" + (isEaster ? " tag-easter" : "")
+  tag.innerText = nombre
+  document.getElementById("usados").appendChild(tag)
+}
+
+function toWikiTitle(n){
+  return n.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join("_")
+}
+</script>
+</body>
+</html>
