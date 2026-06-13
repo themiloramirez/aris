@@ -5,120 +5,298 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aris</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+    /* ── THEME VARIABLES ── */
+    :root {
+      --bg:       #f5f0e8;
+      --bg2:      #ede8dc;
+      --bg3:      #e4ddd0;
+      --fg:       #1a1814;
+      --fg2:      #5a5448;
+      --fg3:      #9a9080;
+      --border:   #c8bfb0;
+      --border2:  #b0a898;
+      --green:    #2d6a4f;
+      --green-bg: #e8f3ed;
+      --green-lt: #d0e8da;
+      --blue:     #2563a8;
+      --blue-bg:  #e8eef8;
+      --amber:    #92610a;
+      --purple:   #5b3a8a;
+      --purple-bg:#f0eaf8;
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+    body.dark {
+      --bg:       #0f0f0d;
+      --bg2:      #181814;
+      --bg3:      #222218;
+      --fg:       #e8e4d8;
+      --fg2:      #a09880;
+      --fg3:      #606050;
+      --border:   #2a2a20;
+      --border2:  #3a3a2a;
+      --green:    #4ade80;
+      --green-bg: #071a0f;
+      --green-lt: #0f2a18;
+      --blue:     #60a5fa;
+      --blue-bg:  #0a1830;
+      --amber:    #f59e0b;
+      --purple:   #c084fc;
+      --purple-bg:#1a0a30;
+    }
+
+    /* ── BASE ── */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; display: flex; justify-content: center; padding: 2rem 1rem; }
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--bg);
+      background-image: var(--grain);
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
     .container { width: 100%; max-width: 580px; }
-    h1 { font-size: 26px; font-weight: 500; margin-bottom: 4px; }
-    .subtitle { font-size: 13px; color: #888; margin-bottom: 2rem; }
+
+    /* ── ARIS LOGO ── */
+    .aris-logo { text-align: center; margin-bottom: 0.5rem; }
+    .aris-wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      line-height: 1;
+    }
+    .aris-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 64px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--fg);
+      letter-spacing: -1px;
+    }
+    .aris-column {
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0.55;
+      vertical-align: middle;
+      margin-bottom: 6px;
+    }
+    .aris-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--fg3);
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .aris-logo-sm { text-align: center; margin-bottom: 1rem; }
+    .aris-text-sm {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 38px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--fg);
+    }
+
+    /* ── DARK TOGGLE ── */
+    .theme-toggle {
+      position: fixed; top: 1rem; right: 1rem;
+      background: var(--bg2); border: 1px solid var(--border);
+      color: var(--fg2); border-radius: 20px;
+      padding: 4px 12px; font-size: 12px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      cursor: pointer; z-index: 200;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: var(--bg3); }
+
+    /* ── LANG SCREEN ── */
     #screen-lang { text-align: center; padding-top: 4rem; }
-    #screen-lang h1 { font-size: 32px; margin-bottom: 8px; }
-    #screen-lang p { font-size: 14px; color: #888; margin-bottom: 2.5rem; }
-    .lang-btns { display: flex; gap: 16px; justify-content: center; }
-    .lang-btn { padding: 16px 32px; border-radius: 12px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 16px; font-weight: 500; transition: background 0.15s; min-width: 120px; }
-    .lang-btn:hover { background: #222; border-color: #444; }
-    .level-header { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 1.2rem 0 0.5rem; }
-    .cat-btn { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 13px; text-align: left; display: block; margin-bottom: 7px; transition: background 0.15s; }
-    .cat-btn:hover { background: #222; }
-    .cat-btn.beginner { border-color: #1a3a1a; }
-    .cat-btn.completed { border-color: #4ade80; background: #071a07; }
-    .completed-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; background: #4ade80; color: #071a07; padding: 2px 9px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .lang-btns { display: flex; gap: 16px; justify-content: center; margin-bottom: 1rem; }
+    .lang-btn {
+      padding: 14px 32px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2); color: var(--fg);
+      cursor: pointer; font-size: 16px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      transition: background 0.15s; min-width: 130px;
+    }
+    .lang-btn:hover { background: var(--bg3); border-color: var(--border2); }
+
+    /* ── LEVEL HEADERS ── */
+    .level-header {
+      font-size: 11px; font-weight: 600; color: var(--fg3);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin: 1.4rem 0 0.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .level-header.level-locked { color: var(--border2); }
+    .level-desc { font-weight: 400; font-size: 11px; color: var(--border2); text-transform: none; letter-spacing: 0; margin-left: 6px; }
+
+    /* ── CATEGORY BUTTONS ── */
+    .cat-btn {
+      width: 100%; padding: 11px 14px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2); color: var(--fg);
+      cursor: pointer; font-size: 13px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      text-align: left; display: block; margin-bottom: 7px;
+      transition: background 0.15s;
+    }
+    .cat-btn:hover { background: var(--bg3); }
+    .cat-btn.beginner { border-color: var(--green-lt); }
+    .cat-btn.hard { border-color: var(--purple-bg); }
+    .cat-btn.completed { border-color: var(--green); background: var(--green-bg); }
+    .completed-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700;
+      background: var(--green); color: var(--bg);
+      padding: 2px 8px; border-radius: 20px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
     .cat-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .cat-meta { float: right; display: flex; gap: 6px; align-items: center; }
-    .badge-easy { font-size: 11px; background: #1a3a1a; color: #4ade80; padding: 2px 8px; border-radius: 20px; }
-    .badge-info { font-size: 11px; background: #1a2a3a; color: #6ab0f5; padding: 2px 8px; border-radius: 20px; }
-    .cat-count { font-size: 11px; color: #444; }
-    .cat-progress { height: 2px; background: #2a2a2a; border-radius: 1px; margin-top: 6px; overflow: hidden; }
-    .cat-progress-fill { height: 100%; background: #4ade80; border-radius: 1px; transition: width 0.3s; }
-    .cat-pct { font-size: 10px; color: #4ade80; margin-top: 2px; }
+    .badge-easy   { font-size: 10px; background: var(--green-lt); color: var(--green); padding: 2px 7px; border-radius: 20px; font-family: -apple-system, sans-serif; }
+    .badge-normal { font-size: 10px; background: var(--blue-bg);  color: var(--blue);  padding: 2px 7px; border-radius: 20px; font-family: -apple-system, sans-serif; }
+    .badge-hard   { font-size: 10px; background: var(--purple-bg);color: var(--purple);padding: 2px 7px; border-radius: 20px; font-family: -apple-system, sans-serif; }
+    .level-unavailable { opacity: 0.3; cursor: not-allowed; }
+    .cat-count { font-size: 11px; color: var(--fg3); font-family: -apple-system, sans-serif; }
+    .cat-progress { height: 2px; background: var(--bg3); border-radius: 1px; margin-top: 6px; overflow: hidden; }
+    .cat-progress-fill { height: 100%; background: var(--green); border-radius: 1px; transition: width 0.3s; }
+    .cat-pct { font-size: 10px; color: var(--green); margin-top: 2px; font-family: -apple-system, sans-serif; }
+
+    /* ── GAME SCREEN ── */
+    h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-weight: 400; font-style: italic; margin-bottom: 4px; }
+    .subtitle { font-size: 12px; color: var(--fg3); margin-bottom: 2rem; letter-spacing: 0.05em; font-family: -apple-system, sans-serif; }
     .game-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-    .game-title { font-size: 17px; font-weight: 500; max-width: 400px; line-height: 1.3; }
-    .score-num { font-size: 28px; font-weight: 500; text-align: right; }
-    .score-label { font-size: 11px; color: #888; text-align: right; }
-    .progress-line { font-size: 12px; color: #555; margin-bottom: 6px; }
-    .progress-line span { color: #4ade80; }
-    .progress-bar-wrap { background: #2a2a2a; border-radius: 4px; height: 4px; margin-bottom: 1rem; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: #4ade80; border-radius: 4px; transition: width 0.4s; }
-    .game-desc { font-size: 12px; color: #888; margin-bottom: 1rem; }
+    .game-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-style: italic; font-weight: 400; max-width: 400px; line-height: 1.3; color: var(--fg); }
+    .score-num { font-size: 28px; font-weight: 400; text-align: right; font-family: 'Cormorant Garamond', Georgia, serif; }
+    .score-label { font-size: 11px; color: var(--fg3); text-align: right; font-family: -apple-system, sans-serif; }
+    .progress-line { font-size: 12px; color: var(--fg3); margin-bottom: 6px; font-family: -apple-system, sans-serif; }
+    .progress-line span { color: var(--green); }
+    .progress-bar-wrap { background: var(--bg3); border-radius: 4px; height: 3px; margin-bottom: 1rem; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: var(--green); border-radius: 4px; transition: width 0.4s; }
+    .game-desc { font-size: 13px; color: var(--fg2); margin-bottom: 1rem; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
     .input-row { display: flex; gap: 8px; margin-bottom: 1rem; }
-    input { flex: 1; padding: 10px 14px; background: #181818; border: 1px solid #2a2a2a; border-radius: 10px; color: #e8e8e8; font-size: 14px; outline: none; }
-    input:focus { border-color: #444; }
-    input:disabled { opacity: 0.5; }
-    button { padding: 10px 16px; border-radius: 10px; border: 1px solid #2a2a2a; background: #222; color: #e8e8e8; cursor: pointer; font-size: 13px; white-space: nowrap; }
-    button:hover { background: #2a2a2a; }
+    input {
+      flex: 1; padding: 10px 14px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--fg);
+      font-size: 15px; font-family: 'Cormorant Garamond', Georgia, serif;
+      outline: none; transition: border-color 0.15s;
+    }
+    input:focus { border-color: var(--border2); }
+    input:disabled { opacity: 0.4; }
+    button {
+      padding: 10px 16px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2); color: var(--fg);
+      cursor: pointer; font-size: 13px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      white-space: nowrap; transition: background 0.15s;
+    }
+    button:hover { background: var(--bg3); }
     button:disabled { opacity: 0.4; cursor: default; }
-    .back-btn { color: #888; font-size: 12px; }
-    .result-box { min-height: 64px; background: #181818; border-radius: 10px; padding: 12px 16px; margin-bottom: 1rem; }
-    #res { font-size: 14px; color: #888; }
-    #res-tip { font-size: 12px; color: #888; margin-top: 4px; display: none; font-style: italic; }
-    #res-flavor { font-size: 12px; color: #6ab0f5; margin-top: 6px; display: none; }
-    #res-wiki { font-size: 12px; margin-top: 6px; display: none; }
-    #res-wiki a { color: #6ab0f5; text-decoration: none; }
+    .back-btn { color: var(--fg3); font-size: 12px; font-family: -apple-system, sans-serif; }
+    .result-box { min-height: 64px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 1rem; }
+    #res { font-size: 14px; color: var(--fg3); font-family: 'Cormorant Garamond', Georgia, serif; }
+    #res-tip { font-size: 12px; color: var(--fg3); margin-top: 4px; display: none; font-style: italic; }
+    #res-flavor { font-size: 13px; color: var(--blue); margin-top: 6px; display: none; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
+    #res-wiki { font-size: 12px; margin-top: 6px; display: none; font-family: -apple-system, sans-serif; }
+    #res-wiki a { color: var(--blue); text-decoration: none; }
+
+    /* ── WIN SCREEN ── */
     #screen-win { text-align: center; padding-top: 3rem; }
     .win-emoji { font-size: 48px; margin-bottom: 1rem; }
-    .win-title { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
-    .win-sub { font-size: 14px; color: #888; margin-bottom: 2rem; }
+    .win-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-style: italic; font-weight: 400; margin-bottom: 8px; }
+    .win-sub { font-size: 14px; color: var(--fg2); margin-bottom: 2rem; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
+    .win-fanfare { font-size: 13px; color: var(--fg3); margin: 0.5rem 0 1.2rem; font-style: italic; white-space: pre-line; line-height: 1.6; font-family: 'Cormorant Garamond', Georgia, serif; }
     .win-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .win-btn { padding: 12px 24px; border-radius: 10px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 13px; }
-    .win-btn.primary { background: #1a3a1a; border-color: #4ade80; color: #4ade80; }
-    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #1a3a1a; color: #4ade80; border: 1px solid #4ade80; border-radius: 10px; padding: 10px 20px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
-    .toast.show { opacity: 1; }
-    .used-label { font-size: 12px; color: #888; margin-bottom: 6px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { padding: 3px 10px; border-radius: 20px; font-size: 12px; background: #0f2a1a; color: #4ade80; }
-    .tag-easter { background: #2a1a0f; color: #f59e0b; }
-    .hidden { display: none; }
-    .lang-toggle { font-size: 11px; color: #555; cursor: pointer; margin-bottom: 1rem; display: inline-block; }
-    .lang-toggle:hover { color: #888; }
-    footer { text-align: center; padding: 2rem 0 1rem; font-size: 11px; color: #333; }
-    #screen-mode { text-align: center; padding-top: 3rem; }
-    #screen-mode h1 { font-size: 28px; margin-bottom: 6px; }
-    .mode-sub { font-size: 13px; color: #888; margin-bottom: 2.5rem; }
-    .mode-group { margin-bottom: 2rem; }
-    .mode-label { font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
-    .mode-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .mode-btn { padding: 14px 22px; border-radius: 12px; border: 1px solid #2a2a2a; background: #181818; color: #e8e8e8; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.15s; min-width: 130px; }
-    .mode-btn:hover { background: #222; border-color: #444; }
-    .mode-btn.active { border-color: #4ade80; background: #0a1a0a; color: #4ade80; }
-    .mode-btn-sub { font-size: 11px; color: #666; margin-top: 3px; font-weight: 400; }
-    .mode-btn.active .mode-btn-sub { color: #4ade80; opacity: 0.7; }
-    .mode-start { margin-top: 1rem; padding: 14px 40px; border-radius: 12px; border: 1px solid #4ade80; background: #0a1a0a; color: #4ade80; cursor: pointer; font-size: 15px; font-weight: 600; }
-    .mode-start:hover { background: #0f2a0f; }
-    .timer-display { font-size: 12px; color: #888; text-align: right; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
-    .timer-display span { color: #f59e0b; }
-    .olympiad-status { font-size: 12px; color: #888; margin-bottom: 6px; }
-    .olympiad-status span { color: #6ab0f5; }
+    .win-btn { padding: 12px 24px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg2); color: var(--fg); cursor: pointer; font-size: 14px; font-family: 'Cormorant Garamond', Georgia, serif; }
+    .win-btn.primary { background: var(--green-bg); border-color: var(--green); color: var(--green); }
 
-    .cat-btn.hard { border-color: #3b1f6e44; }
-    .badge-normal { font-size: 10px; font-weight: 600; background: #1e3a5f; color: #60a5fa; padding: 2px 7px; border-radius: 20px; }
-    .badge-hard  { font-size: 10px; font-weight: 600; background: #3b1f6e; color: #c084fc; padding: 2px 7px; border-radius: 20px; }
-    .level-header { font-size: 12px; font-weight: 700; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 1.4rem 0 0.5rem; }
-    .level-header.level-locked { color: #333; }
-    .level-desc { font-weight: 400; font-size: 11px; color: #444; text-transform: none; letter-spacing: 0; margin-left: 6px; }
-    .level-unavailable { opacity: 0.35; cursor: not-allowed; }
-    .win-fanfare { font-size: 13px; color: #888; margin: 0.5rem 0 1.2rem; font-style: italic; white-space: pre-line; line-height: 1.6; }
+    /* ── MODE SCREEN ── */
+    #screen-mode { text-align: center; padding-top: 3rem; }
+    .mode-sub { font-size: 13px; color: var(--fg3); margin-bottom: 2.5rem; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
+    .mode-group { margin-bottom: 2rem; }
+    .mode-label { font-size: 11px; font-weight: 600; color: var(--fg3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; font-family: -apple-system, sans-serif; }
+    .mode-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .mode-btn {
+      padding: 14px 22px; border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg2); color: var(--fg);
+      cursor: pointer; font-size: 15px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      transition: background 0.15s; min-width: 130px;
+    }
+    .mode-btn:hover { background: var(--bg3); border-color: var(--border2); }
+    .mode-btn.active { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+    .mode-btn-sub { font-size: 11px; color: var(--fg3); margin-top: 3px; font-family: -apple-system, sans-serif; }
+    .mode-btn.active .mode-btn-sub { color: var(--green); opacity: 0.8; }
+    .mode-start {
+      margin-top: 1rem; padding: 14px 40px; border-radius: 10px;
+      border: 1px solid var(--green);
+      background: var(--green-bg); color: var(--green);
+      cursor: pointer; font-size: 16px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+    }
+    .mode-start:hover { background: var(--green-lt); }
+
+    /* ── TIMER / OLYMPIAD ── */
+    .timer-display { font-size: 12px; color: var(--fg3); text-align: right; margin-bottom: 4px; font-variant-numeric: tabular-nums; font-family: -apple-system, sans-serif; }
+    .timer-display span { color: var(--amber); }
+    .olympiad-status { font-size: 12px; color: var(--fg3); margin-bottom: 6px; font-family: -apple-system, sans-serif; }
+    .olympiad-status span { color: var(--blue); }
+
+    /* ── TOAST / TAGS ── */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--green-bg); color: var(--green); border: 1px solid var(--green); border-radius: 10px; padding: 10px 20px; font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; font-family: 'Cormorant Garamond', Georgia, serif; }
+    .toast.show { opacity: 1; }
+    .used-label { font-size: 12px; color: var(--fg3); margin-bottom: 6px; font-family: -apple-system, sans-serif; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 12px; background: var(--green-bg); color: var(--green); font-family: 'Cormorant Garamond', Georgia, serif; }
+    .tag-easter { background: var(--blue-bg); color: var(--blue); }
+
+    /* ── MISC ── */
+    .hidden { display: none; }
+    .lang-toggle { font-size: 11px; color: var(--fg3); cursor: pointer; margin-bottom: 1rem; display: inline-block; font-family: -apple-system, sans-serif; }
+    .lang-toggle:hover { color: var(--fg2); }
+    footer { text-align: center; padding: 2rem 0 1rem; font-size: 11px; color: var(--border2); font-family: -apple-system, sans-serif; }
+
+    /* ── ALELUYAS ── */
     .aleluyas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; overflow: hidden; z-index: 999; }
     .aleluya { position: absolute; top: -2em; font-size: 18px; animation: fall linear forwards; }
     @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
-    .aris-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 0.2rem; }
-    .aris-logo svg { width: 38px; height: 38px; opacity: 0.75; }
-    .aris-logo h1 { margin: 0; }
+
+    /* ── SELECT SUBTITLE ── */
+    #select-subtitle { font-size: 12px; color: var(--fg3); margin-bottom: 1.2rem; font-family: -apple-system, sans-serif; letter-spacing: 0.02em; }
   </style>
 </head>
 <body>
+<button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀ light</button>
 <div class="container">
   <div id="screen-lang">
     <div class="aris-logo">
-      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="30" width="34" height="3" rx="1.5" fill="#4ade80"/>
-        <rect x="4"  y="10" width="5" height="20" rx="1.5" fill="#60a5fa"/>
-        <rect x="11" y="15" width="5" height="15" rx="1.5" fill="#a78bfa"/>
-        <rect x="18" y="6"  width="5" height="24" rx="1.5" fill="#4ade80"/>
-        <rect x="25" y="13" width="5" height="17" rx="1.5" fill="#f59e0b"/>
-        <rect x="32" y="18" width="4" height="12" rx="1.5" fill="#f472b6"/>
-      </svg>
-      <h1>Aris</h1>
+      <div class="aris-wordmark">
+        <span class="aris-text">Aris</span><svg class="aris-column" viewBox="0 0 36 62" width="28" height="44" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <rect x="0"  y="0"  width="36" height="5"  rx="1"/>
+          <rect x="3"  y="7"  width="30" height="3"  rx="1"/>
+          <rect x="7"  y="12" width="7"  height="36" rx="1.5"/>
+          <rect x="15" y="12" width="7"  height="36" rx="1.5"/>
+          <rect x="23" y="12" width="7"  height="36" rx="1.5"/>
+          <rect x="3"  y="50" width="30" height="3"  rx="1"/>
+          <rect x="0"  y="55" width="36" height="5"  rx="1"/>
+        </svg>
+      </div>
     </div>
-    <p>Name as many members of a category as you can<br>Nombra todos los miembros de una categoría que puedas</p>
+    <p class="aris-subtitle" id="aris-tagline">The best libraries are messy · The best players are not</p>
     <div class="lang-btns">
       <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
       <button class="lang-btn" onclick="setLang('es')">🇪🇸 Español</button>
@@ -126,7 +304,7 @@
   </div>
 
   <div id="screen-mode" class="hidden">
-    <h1>Aris</h1>
+    <div class="aris-logo-sm"><span class="aris-text-sm">Aris</span></div>
     <p class="mode-sub" id="mode-sub"></p>
     <div class="mode-group">
       <p class="mode-label" id="mode-label-timer"></p>
@@ -164,7 +342,7 @@
     <button class="mode-start" id="mode-start-btn" onclick="startFromMode()"></button>
   </div>
   <div id="screen-select" class="hidden">
-    <h1>Aris</h1>
+    <div class="aris-logo-sm"><span class="aris-text-sm">Aris</span></div>
     <p class="subtitle" id="select-subtitle"></p>
     <span class="lang-toggle" onclick="goLang()" id="lang-toggle"></span>
     <div id="cat-grid"></div>
@@ -1233,6 +1411,20 @@ document.addEventListener('keydown', e => {
     if(another && !another.classList.contains('hidden')){ another.click() }
   }
 })
+
+// ─── THEME TOGGLE ────────────────────────────────────────────────────────────
+function toggleTheme(){
+  const isDark = document.body.classList.toggle('dark')
+  document.getElementById('theme-btn').innerText = isDark ? '☀ light' : '☾ dark'
+  try { localStorage.setItem('aris_theme', isDark ? 'dark' : 'light') } catch(e){}
+}
+// Load saved theme
+try {
+  if(localStorage.getItem('aris_theme') === 'dark'){
+    document.body.classList.add('dark')
+    document.getElementById('theme-btn').innerText = '☀ light'
+  }
+} catch(e){}
 </script>
 </body>
 </html>
