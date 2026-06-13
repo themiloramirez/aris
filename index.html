@@ -132,10 +132,10 @@
       <p class="mode-label" id="mode-label-timer"></p>
       <div class="mode-btns">
         <button class="mode-btn active" id="btn-turtle" onclick="selectMode('timer','turtle')">
-          🐢 Turtle<div class="mode-btn-sub" id="turtle-sub"></div>
+          <span id="turtle-label">🐢 Turtle</span><div class="mode-btn-sub" id="turtle-sub"></div>
         </button>
         <button class="mode-btn" id="btn-achilles" onclick="selectMode('timer','achilles')">
-          ⚡ Achilles<div class="mode-btn-sub" id="achilles-sub"></div>
+          <span id="achilles-label">⚡ Achilles</span><div class="mode-btn-sub" id="achilles-sub"></div>
         </button>
       </div>
     </div>
@@ -143,10 +143,10 @@
       <p class="mode-label" id="mode-label-scope"></p>
       <div class="mode-btns">
         <button class="mode-btn active" id="btn-local" onclick="selectMode('scope','local')">
-          🎯 Local Games<div class="mode-btn-sub" id="local-sub"></div>
+          <span id="local-label">🎯 Local Games</span><div class="mode-btn-sub" id="local-sub"></div>
         </button>
         <button class="mode-btn" id="btn-olympiad" onclick="selectMode('scope','olympiad')">
-          🏛️ Olympiad<div class="mode-btn-sub" id="olympiad-sub"></div>
+          <span id="olympiad-label">🏛️ Olympiad</span><div class="mode-btn-sub" id="olympiad-sub"></div>
         </button>
       </div>
     </div>
@@ -154,10 +154,10 @@
       <p class="mode-label" id="mode-label-lives"></p>
       <div class="mode-btns">
         <button class="mode-btn active" id="btn-lifeless" onclick="selectMode('lives','lifeless')">
-          ♾️ Lifeless<div class="mode-btn-sub" id="lifeless-sub"></div>
+          <span id="lifeless-label">♾️ Lifeless</span><div class="mode-btn-sub" id="lifeless-sub"></div>
         </button>
         <button class="mode-btn" id="btn-limited" onclick="selectMode('lives','limited')">
-          ❤️ Limited Lives<div class="mode-btn-sub" id="limited-sub"></div>
+          <span id="limited-label">❤️ Limited Lives</span><div class="mode-btn-sub" id="limited-sub"></div>
         </button>
       </div>
     </div>
@@ -243,6 +243,9 @@ const T = {
     modeSub:"Choose your mode, then start",
     modeLabelTimer:"Speed", modeLabelScope:"Scope", modeLabelLives:"Lives",
     turtleSub:"No timer", achillesSub:"Timer on",
+    turtleLabel:"🐢 Turtle", achillesLabel:"⚡ Achilles",
+    localLabel:"🎯 Local Games", olympiadLabel:"🏛️ Olympiad",
+    lifelessLabel:"♾️ Lifeless", limitedLabel:"❤️ Limited Lives",
     localSub:"One library at a time", olympiadSub:"All Paperbacks in sequence",
     lifelessSub:"Infinite attempts", limitedSub:"3 strikes (coming soon)",
     modeStart:"Open the library →",
@@ -277,6 +280,9 @@ const T = {
     modeSub:"Elegí tu modo y empezá",
     modeLabelTimer:"Velocidad", modeLabelScope:"Alcance", modeLabelLives:"Vidas",
     turtleSub:"Sin cronómetro", achillesSub:"Con cronómetro",
+    turtleLabel:"🐢 Tortuga", achillesLabel:"⚡ Aquiles",
+    localLabel:"🎯 Juegos locales", olympiadLabel:"🏛️ Olimpiada",
+    lifelessLabel:"♾️ Sin vidas", limitedLabel:"❤️ Vidas limitadas",
     localSub:"Una biblioteca a la vez", olympiadSub:"Todas las De bolsillo seguidas",
     lifelessSub:"Intentos infinitos", limitedSub:"3 errores (próximamente)",
     modeStart:"Abrir la biblioteca →",
@@ -636,6 +642,12 @@ function buildModeScreen(){
   document.getElementById("mode-label-timer").innerText = t("modeLabelTimer")
   document.getElementById("mode-label-scope").innerText = t("modeLabelScope")
   document.getElementById("mode-label-lives").innerText = t("modeLabelLives")
+  document.getElementById("turtle-label").innerText = t("turtleLabel")
+  document.getElementById("achilles-label").innerText = t("achillesLabel")
+  document.getElementById("local-label").innerText = t("localLabel")
+  document.getElementById("olympiad-label").innerText = t("olympiadLabel")
+  document.getElementById("lifeless-label").innerText = t("lifelessLabel")
+  document.getElementById("limited-label").innerText = t("limitedLabel")
   document.getElementById("turtle-sub").innerText = t("turtleSub")
   document.getElementById("achilles-sub").innerText = t("achillesSub")
   document.getElementById("local-sub").innerText = t("localSub")
@@ -753,8 +765,9 @@ function makeBtn(cat, locked){
 function startGame(cat){
   stopTimer()
   currentCat = cat
-  // In olympiad mode, always start fresh (no saved progress)
-  const prog = modeScope === 'olympiad' ? null : loadProgress(cat.id)
+  // In olympiad mode, start fresh unless already completed
+  const prog = (modeScope === 'olympiad' && !(loadProgress(cat.id)?.found?.length >= cat.total))
+    ? null : loadProgress(cat.id)
   usados = prog ? new Set(prog.found) : new Set()
   puntos = usados.size
   document.getElementById("pts").innerText = puntos
@@ -933,7 +946,7 @@ function accept(input, canonical, flavor, wiki){
   document.getElementById("used-label").innerText = t("usedLabel") + " (" + puntos + "):"
   document.getElementById("usados-box").classList.remove("hidden")
   document.getElementById("resp").focus()
-  if(modeScope !== 'olympiad') saveProgress(currentCat.id, usados, currentCat.total)
+  saveProgress(currentCat.id, usados, currentCat.total)
   checkSavePoint(prev, puntos, currentCat.total)
   playSound('shelve')
   if(currentCat.total && puntos >= currentCat.total){
