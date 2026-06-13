@@ -87,12 +87,37 @@
     .timer-display span { color: #f59e0b; }
     .olympiad-status { font-size: 12px; color: #888; margin-bottom: 6px; }
     .olympiad-status span { color: #6ab0f5; }
+
+    .cat-btn.hard { border-color: #3b1f6e44; }
+    .badge-normal { font-size: 10px; font-weight: 600; background: #1e3a5f; color: #60a5fa; padding: 2px 7px; border-radius: 20px; }
+    .badge-hard  { font-size: 10px; font-weight: 600; background: #3b1f6e; color: #c084fc; padding: 2px 7px; border-radius: 20px; }
+    .level-header { font-size: 12px; font-weight: 700; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin: 1.4rem 0 0.5rem; }
+    .level-header.level-locked { color: #333; }
+    .level-desc { font-weight: 400; font-size: 11px; color: #444; text-transform: none; letter-spacing: 0; margin-left: 6px; }
+    .level-unavailable { opacity: 0.35; cursor: not-allowed; }
+    .win-fanfare { font-size: 13px; color: #888; margin: 0.5rem 0 1.2rem; font-style: italic; white-space: pre-line; line-height: 1.6; }
+    .aleluyas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; overflow: hidden; z-index: 999; }
+    .aleluya { position: absolute; top: -2em; font-size: 18px; animation: fall linear forwards; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+    .aris-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 0.2rem; }
+    .aris-logo svg { width: 38px; height: 38px; opacity: 0.75; }
+    .aris-logo h1 { margin: 0; }
   </style>
 </head>
 <body>
 <div class="container">
   <div id="screen-lang">
-    <h1>Aris</h1>
+    <div class="aris-logo">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="30" width="34" height="3" rx="1.5" fill="#4ade80"/>
+        <rect x="4"  y="10" width="5" height="20" rx="1.5" fill="#60a5fa"/>
+        <rect x="11" y="15" width="5" height="15" rx="1.5" fill="#a78bfa"/>
+        <rect x="18" y="6"  width="5" height="24" rx="1.5" fill="#4ade80"/>
+        <rect x="25" y="13" width="5" height="17" rx="1.5" fill="#f59e0b"/>
+        <rect x="32" y="18" width="4" height="12" rx="1.5" fill="#f472b6"/>
+      </svg>
+      <h1>Aris</h1>
+    </div>
     <p>Name as many members of a category as you can<br>Nombra todos los miembros de una categoría que puedas</p>
     <div class="lang-btns">
       <button class="lang-btn" onclick="setLang('en')">🇬🇧 English</button>
@@ -171,9 +196,10 @@
     </div>
   </div>
   <div id="screen-win" class="hidden">
-    <div class="win-emoji">🎉</div>
+    <div class="win-emoji" id="win-emoji">🎉</div>
     <p class="win-title" id="win-title"></p>
     <p class="win-sub" id="win-sub"></p>
+    <p class="win-fanfare hidden" id="win-fanfare"></p>
     <div class="win-btns">
       <button class="win-btn primary" onclick="resetGame()" id="win-another"></button>
       <button class="win-btn primary hidden" onclick="olympiadNext()" id="win-olympiad-next"></button>
@@ -189,59 +215,71 @@
 let LANG = 'en'
 const T = {
   en: {
-    subtitle:"Choose a category and name as many members as you can",
+    subtitle:"Choose a library and name as many books as you can",
     langToggle:"🌐 Cambiar a Español",
-    beginner:"Starter", normal:"Normal", open:"open", points:"points",
-    startNaming:"Start naming...", alreadyUsed:"Already used that one!",
+    beginner:"Paperback", normal:"Hardcover", hard:"Incunable", open:"open", points:"books found", books:"books",
+    levelPaperback:"📗 Paperback", levelPaperbackDesc:"starter libraries",
+    levelHardcover:"📘 Hardcover", levelHardcoverDesc:"intermediate libraries",
+    levelIncunable:"📕 Incunable", levelIncunableDesc:"expert libraries",
+    levelLockedDesc:(prev)=>`complete all ${prev} libraries to unlock`,
+    levelLocked:"Complete all Paperback libraries to unlock!",
+    startNaming:"Name a book...", alreadyUsed:"Already shelved that one!",
     notFound:"Not found. Check spelling or try the full name.",
     notSouthern:"Not entirely southern!", notRecognized:"Not recognized — try another name or spelling.",
-    valid:"Valid!", easterEgg:"🥚 Easter egg! Valid — but doesn't count toward your score.",
-    toGo:"to go", foundSoFar:"found so far", usedLabel:"Used",
-    savePoint:"✓ Progress saved!", completed:"Completed ✓", completed_short:"Done",
-    winTitle:(cat)=>`You completed "${cat}"!`, winSub:(n)=>`You found all ${n} members. Impressive.`,
-    winAnother:"Play another", winShare:"Share result",
+    valid:"📖 Shelved!", easterEgg:"🥚 Easter egg! Valid — but doesn't count toward your score.",
+    toGo:"to go", foundSoFar:"shelved so far", usedLabel:"Shelved",
+    savePoint:"✓ Progress saved!", completed:"Complete ✓", completed_short:"Complete",
+    winTitle:(cat)=>`You completed "${cat}"!`, winSub:(n)=>`You shelved all ${n} books. Impressive.`,
+    winAnother:"Browse another library", winShare:"Share result",
     winTime:(s)=>`Time: ${fmtTime(s)}`,
     winOlympiadNext:"Next library →", winOlympiadDone:"Olympiad complete! 🏛️",
-    winOlympiadSub:(n,s)=>`All ${n} libraries completed in ${fmtTime(s)}!`,
-    winOlympiadInterim:(i,n,cat,s,total)=>`Library ${i}/${n}: "${cat}" — ${fmtTime(s)}  ·  Total so far: ${fmtTime(total)}`,
-    shareText:(cat,n,total)=>`I found ${n}/${total} in "${cat}" on Aris — can you beat me? https://themiloramirez.github.io/aris`,
-    shareTimeText:(cat,n,total,s)=>`I found ${n}/${total} in "${cat}" on Aris in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/aris`,
+    winOlympiadSub:(n,s)=>`All ${n} libraries shelved in ${fmtTime(s)}!`,
+    winOlympiadInterim:(i,n,cat,s,total)=>`Library ${i}/${n}: "${cat}" — ${fmtTime(s)}  ·  Total: ${fmtTime(total)}`,
+    winOlympiadFanfare:`You've speed-run the Library of Alexandria.\nIf this isn't worth bragging about, I don't know what is.`,
+    shareText:(cat,n,total)=>`I shelved ${n}/${total} books in "${cat}" on Aris — can you beat me? https://themiloramirez.github.io/aris`,
+    shareTimeText:(cat,n,total,s)=>`I shelved ${n}/${total} books in "${cat}" on Aris in ${fmtTime(s)} ⏱ — can you beat me? https://themiloramirez.github.io/aris`,
     shareOlympiadText:(n,s)=>`Wait, Monsieur·e la Tortue — Achilles beat you at the Olympiad?!? ${s} seconds, wow! Try to beat me at: https://themiloramirez.github.io/aris`,
     modeTitle:"How do you want to play?",
     modeSub:"Choose your mode, then start",
     modeLabelTimer:"Speed", modeLabelScope:"Scope", modeLabelLives:"Lives",
     turtleSub:"No timer", achillesSub:"Timer on",
-    localSub:"One library at a time", olympiadSub:"All starters in sequence",
+    localSub:"One library at a time", olympiadSub:"All Paperbacks in sequence",
     lifelessSub:"Infinite attempts", limitedSub:"3 strikes (coming soon)",
-    modeStart:"Let's go →",
+    modeStart:"Open the library →",
     olympiadOf:(i,n)=>`Library ${i} of ${n}`,
   },
   es: {
-    subtitle:"Elige una categoría y nombra todos los miembros que puedas",
+    subtitle:"Elige una biblioteca y nombra todos los libros que puedas",
     langToggle:"🌐 Switch to English",
-    beginner:"Principiante", normal:"Normal", open:"abierta", points:"puntos",
-    startNaming:"Empieza a nombrar...", alreadyUsed:"¡Esa ya la usaste!",
+    beginner:"De bolsillo", normal:"Pasta dura", hard:"Incunable", open:"abierta", points:"libros hallados", books:"libros",
+    levelPaperback:"📗 De bolsillo", levelPaperbackDesc:"bibliotecas iniciales",
+    levelHardcover:"📘 Pasta dura", levelHardcoverDesc:"bibliotecas intermedias",
+    levelIncunable:"📕 Incunable", levelIncunableDesc:"bibliotecas expertas",
+    levelLockedDesc:(prev)=>`completa todas las ${prev} para desbloquear`,
+    levelLocked:"¡Completa todas las De bolsillo para desbloquear este nivel!",
+    startNaming:"Nombra un libro...", alreadyUsed:"¡Ese ya está en el estante!",
     notFound:"No encontrado. Revisa la ortografía o prueba el nombre completo.",
     notSouthern:"¡No está enteramente en el hemisferio sur!", notRecognized:"No reconocido — prueba otro nombre o grafía.",
-    valid:"¡Válido!", easterEgg:"🥚 ¡Easter egg! Válido — pero no cuenta para tu puntaje.",
-    toGo:"restantes", foundSoFar:"encontrados", usedLabel:"Usados",
-    savePoint:"✓ ¡Progreso guardado!", completed:"Completado ✓", completed_short:"Listo",
-    winTitle:(cat)=>`¡Completaste "${cat}"!`, winSub:(n)=>`Encontraste los ${n} miembros. Impresionante.`,
-    winAnother:"Jugar otra", winShare:"Compartir resultado",
+    valid:"📖 ¡Archivado!", easterEgg:"🥚 ¡Easter egg! Válido — pero no cuenta para tu puntaje.",
+    toGo:"restantes", foundSoFar:"archivados", usedLabel:"Archivados",
+    savePoint:"✓ ¡Progreso guardado!", completed:"Completo ✓", completed_short:"Completo",
+    winTitle:(cat)=>`¡Completaste "${cat}"!`, winSub:(n)=>`Archivaste los ${n} libros. Impresionante.`,
+    winAnother:"Explorar otra biblioteca", winShare:"Compartir resultado",
     winTime:(s)=>`Tiempo: ${fmtTime(s)}`,
     winOlympiadNext:"Siguiente biblioteca →", winOlympiadDone:"¡Olimpiada completa! 🏛️",
-    winOlympiadSub:(n,s)=>`¡Todas las ${n} bibliotecas completadas en ${fmtTime(s)}!`,
+    winOlympiadSub:(n,s)=>`¡Todas las ${n} bibliotecas archivadas en ${fmtTime(s)}!`,
     winOlympiadInterim:(i,n,cat,s,total)=>`Biblioteca ${i}/${n}: "${cat}" — ${fmtTime(s)}  ·  Total: ${fmtTime(total)}`,
-    shareText:(cat,n,total)=>`Encontré ${n}/${total} en "${cat}" en Aris — ¿me superás? https://themiloramirez.github.io/aris`,
-    shareTimeText:(cat,n,total,s)=>`Encontré ${n}/${total} en "${cat}" en Aris en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/aris`,
+    winOlympiadFanfare:`Has hecho un speedrun de la Biblioteca de Alejandría.\nSi esto no merece fanfarria, no sé qué la merece.`,
+    shareText:(cat,n,total)=>`Archivé ${n}/${total} libros en "${cat}" en Aris — ¿me superás? https://themiloramirez.github.io/aris`,
+    shareTimeText:(cat,n,total,s)=>`Archivé ${n}/${total} libros en "${cat}" en Aris en ${fmtTime(s)} ⏱ — ¿me superás? https://themiloramirez.github.io/aris`,
     shareOlympiadText:(n,s)=>`Espera, Monsieur·e la Tortue — ¿Aquiles te ganó en la Olimpiada?!? ${s} segundos, ¡wow! Superame en: https://themiloramirez.github.io/aris`,
     modeTitle:"¿Cómo querés jugar?",
     modeSub:"Elegí tu modo y empezá",
     modeLabelTimer:"Velocidad", modeLabelScope:"Alcance", modeLabelLives:"Vidas",
     turtleSub:"Sin cronómetro", achillesSub:"Con cronómetro",
-    localSub:"Una biblioteca a la vez", olympiadSub:"Todos los Starters seguidos",
+    localSub:"Una biblioteca a la vez", olympiadSub:"Todas las De bolsillo seguidas",
     lifelessSub:"Intentos infinitos", limitedSub:"3 errores (próximamente)",
-    modeStart:"¡Vamos →",
+    modeStart:"Abrir la biblioteca →",
     olympiadOf:(i,n)=>`Biblioteca ${i} de ${n}`,
   }
 }
@@ -297,6 +335,8 @@ const SYNONYMS = {
   "the godfather":"godfather","the sting":"sting","the apartment":"apartment","the artist":"artist","the hurt locker":"hurt locker","the departed":"departed","the revenant":"revenant","crash 2005":"crash","the godfather part 2":"godfather part ii","godfather 2":"godfather part ii","schindler s list":"schindlers list","schindlers list":"schindlers list","one flew over the cuckoo s nest":"one flew over the cuckoos nest","no country for old men":"no country for old men","everything everywhere":"everything everywhere all at once","all quiet on western front":"all quiet on the western front","sound of music":"sound of music","the silence of the lambs":"silence of the lambs","silence of lambs":"silence of the lambs","braveheart":"braveheart","lords of the rings":"lord of the rings the return of the king","lord of the rings":"lord of the rings the return of the king","return of the king":"lord of the rings the return of the king","12 years a slave":"12 years a slave","twelve years a slave":"12 years a slave","million dollar baby":"million dollar baby","kings speech":"kings speech","the kings speech":"kings speech","beautiful mind":"beautiful mind","a beautiful mind":"beautiful mind","shape of water":"shape of water","the shape of water":"shape of water","green book":"green book","nomadland":"nomadland","coda":"coda","parasite":"parasite","anora":"anora","oppenheimer":"oppenheimer","zone of interest":"zone of interest","the zone of interest":"zone of interest","moonlight":"moonlight","spotlight":"spotlight","argo":"argo","birdman":"birdman","american beauty":"american beauty","shakespeare in love":"shakespeare in love","titanic":"titanic","english patient":"english patient","the english patient":"english patient","unforgiven":"unforgiven","dances with wolves":"dances with wolves","driving miss daisy":"driving miss daisy","rain man":"rain man","last emperor":"last emperor","platoon":"platoon","out of africa":"out of africa","amadeus":"amadeus","gandhi":"gandhi","chariots of fire":"chariots of fire","ordinary people":"ordinary people","kramer vs kramer":"kramer vs kramer","deer hunter":"deer hunter","annie hall":"annie hall","rocky":"rocky","godfather part ii":"godfather part ii","godfather 2":"godfather part ii","french connection":"french connection","patton":"patton","midnight cowboy":"midnight cowboy","oliver":"oliver","in the heat of the night":"in the heat of the night","man for all seasons":"man for all seasons","my fair lady":"my fair lady","tom jones":"tom jones","gigi":"gigi","bridge on the river kwai":"bridge on the river kwai","around the world in 80 days":"around the world in 80 days","marty":"marty","west side story":"west side story","greatest show on earth":"greatest show on earth","from here to eternity":"from here to eternity","on the waterfront":"on the waterfront","all about eve":"all about eve","hamlet":"hamlet","gentleman s agreement":"gentlemens agreement","gentlemens agreement":"gentlemens agreement","all the king s men":"all the kings men","all the kings men":"all the kings men","best years of our lives":"best years of our lives","lost weekend":"lost weekend","going my way":"going my way","casablanca":"casablanca","mrs miniver":"mrs miniver","how green was my valley":"how green was my valley","rebecca":"rebecca","grand hotel":"grand hotel","cavalcade":"cavalcade","it happened one night":"it happened one night","mutiny on the bounty":"mutiny on the bounty","great ziegfeld":"great ziegfeld","life of emile zola":"life of emile zola","you can t take it with you":"you cant take it with you","cimarron":"cimarron","broadway melody":"broadway melody","wings":"wings","ben hur":"ben-hur","ben-hur":"ben-hur","slumdog millionaire":"slumdog millionaire","hurt locker":"hurt locker","artist":"artist","12 years":"12 years a slave",
   // ── EN: Landlocked countries (common variants) ──────────────────────────
   "czech republic":"czech republic","czechia":"czechia","eswatini":"eswatini","swaziland":"eswatini","north macedonia":"north macedonia","fyrom":"north macedonia","republic of north macedonia":"north macedonia","holy see":"vatican city","holy see vatican":"vatican city","kyrgyzstan":"kyrgyzstan","kirghizstan":"kyrgyzstan","kyrgyz republic":"kyrgyzstan","tajikistan":"tajikistan","tadjikistan":"tajikistan","turkmenistan":"turkmenistan","burkina faso":"burkina faso","upper volta":"burkina faso","central african republic":"central african republic","car":"central african republic","south sudan":"south sudan",
+  // ── EN: Byzantium variants
+  "byzantium":"byzantine empire","eastern roman empire":"byzantine empire","new rome":"byzantine empire",
   // ── ES: Acentos ──────────────────────────────────────────────────────────
   "grave":"llana","paroxitona":"llana","proparoxitona":"esdrujula",
   // ── ES: Spice Girls ──────────────────────────────────────────────────────
@@ -471,7 +511,7 @@ const CATEGORIES = [
   { id:"primes",level:"normal",lang:"en",name:"Prime numbers up to 100",desc:"Name any prime between 2 and 97",total:25,
     list:new Set(["2","3","5","7","11","13","17","19","23","29","31","37","41","43","47","53","59","61","67","71","73","79","83","89","97"]),
     flavors:{"2":"The only even prime.","97":"The largest prime under 100.","47":"Appears in almost every episode of Star Trek: TNG — a writers' tradition.","89":"A Fibonacci prime."}},
-  { id:"defunct",level:"normal",lang:"en",name:"Countries that no longer exist",desc:"Name a country that was once sovereign but is now gone",total:null,
+  { id:"defunct",level:"hard",lang:"en",name:"Vanished States",desc:"Name any sovereign polity — kingdom, empire, republic, confederation — that has passed into history",total:null,
     facts:{"soviet union":"Dissolved in 1991 into 15 independent republics.","ussr":"Dissolved in 1991 into 15 independent republics.","yugoslavia":"Broke apart 1991–1992 into Slovenia, Croatia, Bosnia, Serbia, Montenegro, North Macedonia, and later Kosovo.","czechoslovakia":"Peacefully split in 1993 — the Velvet Divorce.","east germany":"Reunified with West Germany in 1990.","west germany":"Reunified with East Germany in 1990.","ottoman empire":"Collapsed after WWI, giving rise to modern Turkey and many Middle Eastern states.","austro-hungarian empire":"Dissolved after WWI into Austria, Hungary, Czechoslovakia, Yugoslavia and more.","austria-hungary":"Dissolved after WWI.","persian empire":"Conquered by Alexander the Great in 330 BC.","byzantine empire":"Fell in 1453 when Constantinople was taken by the Ottomans.","byzantium":"The eastern continuation of Rome — fell in 1453 when Constantinople was taken by the Ottomans.","eastern roman empire":"The Byzantine Empire — fell in 1453.","roman empire":"Fell in 476 AD in the West; survived as Byzantium until 1453.","holy roman empire":"Dissolved in 1806. Voltaire: 'neither holy, nor Roman, nor an empire.'","prussia":"Abolished by the Allied Control Council in 1947.","south vietnam":"Fell to North Vietnam in 1975.","north vietnam":"Unified with South Vietnam in 1975.","south yemen":"Unified with North Yemen in 1990.","confederate states of america":"Defeated in the US Civil War, 1865.","confederacy":"Defeated in the US Civil War, 1865.","ceylon":"Renamed Sri Lanka in 1972.","rhodesia":"Became Zimbabwe in 1980.","gold coast":"Became Ghana in 1957 — the first sub-Saharan country to gain independence.","abyssinia":"Renamed Ethiopia; Italian occupation 1936–1941.","persia":"Renamed Iran in 1935 by Reza Shah Pahlavi.","mesopotamia":"Now modern Iraq. Cradle of writing, law, and the wheel.","gran colombia":"Bolívar's republic dissolved in 1831 into Colombia, Venezuela, and Ecuador.","republic of texas":"Independent 1836–1846, then annexed by the US.","burma":"Renamed Myanmar in 1989.","belgian congo":"Became the DRC in 1960.","biafra":"Attempted secession from Nigeria 1967–1970.","manchuria":"Puppet state Manchukuo dissolved 1945.","manchukuo":"Japanese puppet state — dissolved 1945.","tanganyika":"Merged with Zanzibar in 1964 to form Tanzania.","zanzibar":"Merged with Tanganyika in 1964 to form Tanzania.","nyasaland":"Became Malawi in 1964.","northern rhodesia":"Became Zambia in 1964.","bechuanaland":"Became Botswana in 1966.","basutoland":"Became Lesotho in 1966.","dahomey":"Renamed Benin in 1975.","upper volta":"Renamed Burkina Faso in 1984 — 'Land of Incorruptible People.'","sikkim":"Merged with India in 1975.","sumer":"First known writing system emerged here around 3200 BC.","akkad":"First empire in history — collapsed around 2154 BC.","babylon":"Fell to Cyrus the Great in 539 BC.","assyria":"Fell in 612 BC when Nineveh was sacked.","carthage":"Destroyed by Rome in 146 BC. Carthago delenda est.","phoenicia":"Gave the world the alphabet — absorbed by Alexander in 332 BC.","dutch east indies":"Became Indonesia in 1945.","french indochina":"Dissolved into Vietnam, Laos, and Cambodia in 1954.","tannu tuva":"Absorbed into the USSR in 1944. Feynman was obsessed with visiting it.","republic of china":"Retreated to Taiwan in 1949.","weimar republic":"Ended when Hitler became chancellor in 1933.","nazi germany":"Collapsed May 1945.","third reich":"Collapsed May 1945.","mughal empire":"Formally ended by the British in 1858.","british raj":"Ended with Indian independence in 1947.","republic of venice":"Absorbed by Napoleon in 1797 after 1,000 years.","papal states":"Ended when Rome was annexed by Italy in 1870.","kingdom of hawaii":"Overthrown 1893 — became a US state in 1959.","mali empire":"Mansa Musa was so wealthy his pilgrimage to Mecca crashed Mediterranean gold markets.","mongol empire":"The largest contiguous land empire in history — 24 million km².","german empire":"Ended with WWI defeat in 1918.","lydia":"Possibly the first civilization to use coined money.","bophuthatswana":"Apartheid Bantustan — reintegrated 1994.","transkei":"Apartheid Bantustan — reintegrated 1994.",
     "vichy france":"The collaborationist French state under Pétain, 1940–1944. Capital: Vichy.","vichy":"The collaborationist French state under Pétain, 1940–1944.",
     "polish-lithuanian commonwealth":"One of the largest states in 16th–17th century Europe — a pioneering experiment in parliamentary democracy.","polish lithuanian commonwealth":"One of the largest states in 16th–17th century Europe.",
@@ -504,7 +544,7 @@ const CATEGORIES = [
     "lotharingia":"The short-lived middle kingdom carved out of Charlemagne's empire — its memory survives in the name Lorraine.","kingdom of lotharingia":"The middle kingdom of the Carolingian partition — ancestor of modern Lorraine.",
     "merovingian kingdom":"The Frankish dynasty that preceded the Carolingians — Clovis was their greatest king.","merovingian dynasty":"The Frankish dynasty that preceded the Carolingians.",
     "vinland":"The Norse settlement in North America — established around 1000 AD, abandoned within years. L'Anse aux Meadows is its only confirmed site."}},
-  { id:"french",level:"normal",lang:"en",name:"French expressions used in English",desc:"Name a French expression used in English — no accents needed",total:90,
+  { id:"french",level:"hard",lang:"en",name:"French expressions used in English",desc:"Name a French expression used in English — no accents needed",total:90,
     list:new Set(["a propos","agent provocateur","aide de camp","ancien regime","art nouveau","au fait","au gratin","au pair","avant garde","beau monde","beaux arts","bete noire","bien pensant","blase","bon mot","bon vivant","boulevard","bouquet","boutique","brunette","cachet","carte blanche","cause celebre","chaise longue","chef doeuvre","chic","cinema verite","cliche","comme ci comme ca","connoisseur","cordon bleu","coup detat","coup de grace","cuisine","debacle","debut","decollete","deja vu","denouement","detente","double entendre","elite","emigre","en masse","en passant","en route","encore","entrepreneur","esprit de corps","etiquette","facade","fait accompli","faux ami","faux pas","femme fatale","fiance","filet mignon","film noir","fin de siecle","force majeure","genre","gourmet","haute couture","haute cuisine","hors doeuvre","hors doeuvres","hors de combat","idee fixe","impasse","je ne sais quoi","joie de vivre","laissez faire","liaison","lingerie","macabre","malaise","melee","menage a trois","milieu","mise en scene","mot juste","naive","noblesse oblige","nom de plume","nonchalance","nonchalant","nouveau riche","nouvelle vague","objet dart","papier mache","par excellence","passe","petite bourgeoisie","piece de resistance","plateau","pot pourri","pret a porter","prestige","protege","raison detre","renaissance","repertoire","resume","revue","roman a clef","ruse","sabotage","sang froid","savoir faire","silhouette","soiree","souvenir","sous chef","surveillance","tableau vivant","tete a tete","touche","tour de force","trompe loeil","vignette","vis a vis","voila"]),
     easter:new Set(["cest la vie","tant pis","tant mieux","au contraire","nest ce pas","au fond"]),
     easterFlavors:{"cest la vie":"'That's life' — the philosophical shrug, exported worldwide.","tant pis":"'So much the worse' — France has a shrug for every occasion."},
@@ -512,10 +552,10 @@ const CATEGORIES = [
   { id:"landlocked",level:"normal",lang:"en",name:"Landlocked countries",desc:"Name any country with no coastline",total:44,
     list:new Set(["afghanistan","andorra","armenia","austria","azerbaijan","belarus","bhutan","bolivia","botswana","burkina faso","burundi","central african republic","chad","czech republic","czechia","ethiopia","hungary","kazakhstan","kosovo","kyrgyzstan","laos","lesotho","liechtenstein","luxembourg","malawi","mali","moldova","mongolia","nepal","niger","north macedonia","paraguay","rwanda","san marino","serbia","slovakia","south sudan","eswatini","switzerland","tajikistan","turkmenistan","uganda","uzbekistan","vatican city","zambia","zimbabwe"]),
     flavors:{"liechtenstein":"One of only two doubly landlocked countries — surrounded entirely by other landlocked countries.","uzbekistan":"The other doubly landlocked country.","bolivia":"Lost its coastline to Chile in the War of the Pacific (1879). Still has a navy — on Lake Titicaca.","lesotho":"Completely surrounded by South Africa.","vatican city":"The world's smallest internationally recognized country — landlocked within Rome."}},
-  { id:"latin",level:"normal",lang:"en",name:"Latin expressions used in English",desc:"Name a Latin expression still used in English",total:60,
+  { id:"latin",level:"hard",lang:"en",name:"Latin expressions used in English",desc:"Name a Latin expression still used in English",total:60,
     list:new Set(["ad hoc","ad hominem","ad infinitum","ad nauseam","alma mater","alter ego","bona fide","carpe diem","carte blanche","caveat emptor","cogito ergo sum","corpus delicti","cum laude","de facto","de jure","erratum","et al","et cetera","ex libris","ex nihilo","ex post facto","habeas corpus","homo sapiens","honoris causa","id est","in absentia","in loco parentis","in memoriam","in situ","in vitro","in vivo","ipso facto","mea culpa","mens rea","modus operandi","modus vivendi","non sequitur","nota bene","per annum","per capita","per diem","per se","persona non grata","post mortem","prima facie","pro bono","pro forma","quid pro quo","qed","quod erat demonstrandum","requiescat in pace","rip","sine qua non","status quo","subpoena","sui generis","summa cum laude","tabula rasa","terra firma","terra incognita","veni vidi vici","verbatim","vice versa","vox populi"]),
     flavors:{"carpe diem":"From Horace's Odes. Full quote: 'carpe diem, quam minimum credula postero.'","cogito ergo sum":"Descartes — 'I think therefore I am.' The foundation of modern Western philosophy.","habeas corpus":"'You shall have the body' — the legal right to be brought before a judge.","mea culpa":"'Through my fault' — from the Catholic confessional prayer.","veni vidi vici":"Caesar's dispatch after the Battle of Zela, 47 BC. Three words, three tenses, one empire.","sine qua non":"'Without which not' — the indispensable condition.","tabula rasa":"'Blank slate' — Locke's idea that the mind at birth is shaped entirely by experience."}},
-  { id:"euphemisms",level:"normal",lang:"en",name:"Euphemisms for death in English",desc:"Name any English euphemism for dying or death",total:40,
+  { id:"euphemisms",level:"hard",lang:"en",name:"Euphemisms for death in English",desc:"Name any English euphemism for dying or death",total:40,
     list:new Set(["pass away","passed away","pass on","passed on","kick the bucket","bite the dust","meet your maker","buy the farm","six feet under","push up daisies","pushing up daisies","go to a better place","breathe your last","give up the ghost","cash in your chips","check out","cross the rainbow bridge","depart","expire","join the choir invisible","kick it","leave this world","lose your life","meet your end","no longer with us","peg out","perish","pop your clogs","rest in peace","rip","shuffle off this mortal coil","sleep with the fishes","snuff it","succumb","take your last breath","the big sleep","turn up your toes","go the way of all flesh","croak","depart this world"]),
     flavors:{"shuffle off this mortal coil":"Shakespeare, Hamlet — 'To die, to sleep / To sleep, perchance to dream...'","kick the bucket":"Possibly from Old French 'buquet' (a balance) — not the container.","buy the farm":"US military slang — when a pilot crashed on a farm, the government paid the damages.","six feet under":"Standard grave depth in England since the Great Plague of 1665.","join the choir invisible":"From George Eliot's poem — one of the most literary euphemisms in English."}},
   // ── NORMAL EN — moved from starter ───────────────────────────────────────
@@ -531,6 +571,13 @@ const CATEGORIES = [
   { id:"columns",level:"normal",lang:"en",name:"Classical Greek architectural orders",desc:"Name the 3 Greek orders of architecture",total:3,
     list:new Set(["doric","ionic","corinthian"]),
     flavors:{"doric":"The oldest and simplest. No base, plain capital. The Parthenon is Doric.","ionic":"Recognizable by its scroll-shaped volutes.","corinthian":"The most ornate — decorated with acanthus leaves. Favored by the Romans."}},
+  // ── HARD ES ──────────────────────────────────────────────────────────────
+  { id:"french_es",level:"hard",lang:"es",name:"Expresiones francesas en español",desc:"Nombra expresiones o palabras de origen francés de uso común en español",total:null,
+    facts:{"debut":"Estreno — del francés 'débuter', hacer el primer golpe en billar.","chef":"Del francés 'jefe' — en cocina, el cocinero principal.","buffet":"Aparador, y por extensión el banquete de pie.","hotel":"Del francés 'hôtel' — originalmente una mansión urbana.","restaurant":"De 'restaurer'. El primer restaurante moderno abrió en París en 1765.","menu":"Del francés 'menu' — pequeño, detallado.","ballet":"Del francés, del italiano 'balletto'.","boulevard":"Avenida ancha arbolada — del neerlandés via francés.","elite":"Lo seleccionado, lo elegido.","amateur":"El que ama algo sin cobrar por ello.","garage":"De 'garer' — guardar, aparcar.","gourmet":"Del antiguo francés 'gromet' — mozo de taberna, luego apreciador del buen comer.","cliche":"El sonido de la plancha de imprenta al caer. Lo que se repite mecánicamente.","naive":"Natural, sin artificio, ingenuo.","detour":"Rodeo, desvío.","deja vu":"'Ya visto'. Fenómeno descrito por Émile Boirac en 1876.","souvenir":"De 'se souvenir' — recordar.","avant garde":"Vanguardia militar, luego artística.","faux pas":"Paso en falso. Error social.","rsvp":"Sigla de 'Répondez s'il vous plaît'.","potpourri":"'Pot pourri' — literalmente 'puchero podrido'. Mezcla heterogénea.","silhouette":"Por Étienne de Silhouette, ministro de finanzas del XVIII.","croissant":"'Creciente', por su forma de media luna.","champagne":"De la región de Champagne, Francia.","baguette":"Varita, bastón.","rendezvous":"'Presentaos' — cita, encuentro acordado.","sabotaje":"De 'saboter' — trabajar mal, quizás de 'sabot', zueco.","complot":"Conspiración.","reportaje":"Crónica periodística.","personaje":"Persona de importancia o ficticia.","maquillaje":"Caracterización, pintura.","equipaje":"Lo que se lleva en el viaje.","peaje":"Pago por paso.","coraje":"Valor, ánimo.","homenaje":"Acto de honor a alguien.","viaje":"Del catalán 'viatge', del francés antiguo 'voiage'.","mensaje":"Comunicación enviada.","pasaje":"Paso, fragmento, billete."}},
+  { id:"latin_es",level:"hard",lang:"es",name:"Expresiones latinas en español",desc:"Nombra expresiones latinas de uso común en español culto o cotidiano",total:null,
+    facts:{"per se":"Por sí mismo — en sí, intrínsecamente.","ad hoc":"Para esto — solución improvisada para un caso específico.","status quo":"La situación actual que se quiere mantener.","vice versa":"Cambiados los términos — y al revés.","in situ":"En el lugar — donde ocurrió o debe ocurrir algo.","a priori":"Conocimiento independiente de la experiencia.","a posteriori":"Conocimiento derivado de la experiencia.","alma mater":"Madre nutricia — la universidad donde uno estudió.","alter ego":"Otro yo — un segundo ser o personalidad.","curriculum vitae":"Carrera de la vida — el historial personal y profesional.","de facto":"En la práctica, aunque no sea oficial.","de jure":"Oficialmente reconocido.","et cetera":"Y lo demás — y así sucesivamente.","ex aequo":"Con igualdad — empate.","in extremis":"En el último momento, al borde de la muerte.","ipso facto":"Por el hecho mismo — automáticamente.","mea culpa":"Mi culpa — reconocimiento de error propio.","per capita":"Por cabeza — por persona.","quid pro quo":"Algo por algo — intercambio de favores.","sine qua non":"Sin la cual no — condición indispensable.","vox populi":"Voz del pueblo — la opinión pública.","post mortem":"Después de la muerte — examen o análisis tras el hecho.","habeas corpus":"Derecho a no ser detenido arbitrariamente.","in memoriam":"En memoria — dedicatoria a un difunto.","opus":"Obra — en música, número de obra de un compositor.","versus":"Contra — en oposición a.","honoris causa":"Por razón de honor — título universitario honorífico.","summa cum laude":"Con la más alta alabanza — máxima distinción académica.","lapsus":"Error involuntario, especialmente en el habla.","nota bene":"Observa bien — N.B., presta atención.","ergo":"Por tanto — conclusión lógica.","carpe diem":"Cosecha el día — Horacio.","tempus fugit":"El tiempo huye.","cogito ergo sum":"Pienso luego existo — Descartes."}},
+  { id:"euphemisms_es",level:"hard",lang:"es",name:"Eufemismos para la muerte en español",desc:"Nombra cualquier eufemismo para morir o la muerte en español",total:null,
+    facts:{"pasar a mejor vida":"El más universal y más desgastado de todos.","estirar la pata":"Coloquial — quizás de los animales al morir.","irse al otro barrio":"La muerte como emigración a un vecindario desconocido.","chupar gladiolo":"Colombiano y particularmente paisa — fasciniestro en su concreción floral.","colgar los tenis":"Latinoamericano — dejar de usar lo que uno usaba a diario.","colgar los guayos":"Colombiano — los guayos son los tacos del fútbol.","entregar el equipo":"Como devolver el uniforme al final de la temporada.","doblar el petate":"Marinero y militar — el petate es la estera donde se duerme.","palmar":"España, coloquial.","diñarla":"España, argot — de origen gitano.","liar el petate":"Variante de doblar el petate.","entregar el alma":"El alma vuelve a quien la dio.","dar el ultimo suspiro":"Literario y emotivo.","cerrar los ojos para siempre":"Visual y definitivo.","irse con los angelitos":"Para los no tan niños también.","subir al cielo":"Religiosa directa.","partir de este mundo":"Literaria, elegante.","quedarse tieso":"El cuerpo se enfría y rigidiza.","quedarse frio":"Latinoamericano, coloquial.","irse al creador":"Volver al origen.","morir con las botas puestas":"Morir en plena actividad — del Oeste americano.","petatearse":"México — de petate, estera.","pagar la deuda de la naturaleza":"Filosófica y distanciadora.","encontrar la huesuda":"México — personificación esquelética de la muerte.","ser llevado por la pelona":"México — 'la pelona' es la muerte, la calva."}}
 ]
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
@@ -642,29 +689,54 @@ function goLang(){
 }
 
 // ─── BUILD GRID ───────────────────────────────────────────────────────────────
+function allLevelDone(level){
+  const cats = CATEGORIES.filter(c => c.level === level && c.lang === LANG && c.total)
+  return cats.length > 0 && cats.every(c => { const p = loadProgress(c.id); return p && p.found.length >= c.total })
+}
+
 function buildGrid(){
   const grid = document.getElementById("cat-grid")
   grid.innerHTML = ""
   document.getElementById("select-subtitle").innerText = t("subtitle")
   document.getElementById("lang-toggle").innerText = t("langToggle")
-  const beginners = CATEGORIES.filter(c => c.level === "beginner" && c.lang === LANG)
-  const normals = CATEGORIES.filter(c => c.level === "normal" && c.lang === "en")
-  const h1 = document.createElement("p"); h1.className = "level-header"; h1.innerText = t("beginner"); grid.appendChild(h1)
-  beginners.forEach(cat => grid.appendChild(makeBtn(cat)))
-  const h2 = document.createElement("p"); h2.className = "level-header"; h2.innerText = t("normal"); grid.appendChild(h2)
-  normals.forEach(cat => grid.appendChild(makeBtn(cat)))
+  const sort = arr => [...arr].sort((a,b) => {
+    if(a.total && b.total) return a.total - b.total
+    return a.total ? -1 : 1
+  })
+  const paperbacks = sort(CATEGORIES.filter(c => c.level === "beginner" && c.lang === LANG))
+  const hardcovers = sort(CATEGORIES.filter(c => c.level === "normal" && c.lang === "en"))
+  const incunables = sort(CATEGORIES.filter(c => c.level === "hard" && c.lang === "en"))
+  const pbDone = allLevelDone("beginner")
+
+  const mkHeader = (label, desc, locked) => {
+    const h = document.createElement("p")
+    h.className = "level-header" + (locked ? " level-locked" : "")
+    h.innerHTML = `${label} <span class="level-desc">${desc}</span>`
+    return h
+  }
+  grid.appendChild(mkHeader(t("levelPaperback"), t("levelPaperbackDesc"), false))
+  paperbacks.forEach(cat => grid.appendChild(makeBtn(cat, false)))
+  grid.appendChild(mkHeader(t("levelHardcover"), pbDone ? t("levelHardcoverDesc") : t("levelLockedDesc", t("levelPaperback")), !pbDone))
+  hardcovers.forEach(cat => grid.appendChild(makeBtn(cat, !pbDone)))
+  grid.appendChild(mkHeader(t("levelIncunable"), pbDone ? t("levelIncunableDesc") : t("levelLockedDesc", t("levelHardcover")), !pbDone))
+  incunables.forEach(cat => grid.appendChild(makeBtn(cat, !pbDone)))
 }
 
-function makeBtn(cat){
+function makeBtn(cat, locked){
   const btn = document.createElement("button")
   const prog = loadProgress(cat.id)
   const found = prog ? prog.found.length : 0
   const pct = prog && cat.total ? Math.round((found / cat.total) * 100) : 0
   const completed = cat.total && found >= cat.total
-  btn.className = "cat-btn" + (cat.level === "beginner" ? " beginner" : "") + (completed ? " completed" : "")
+  const lvlClass = cat.level === "beginner" ? " beginner" : cat.level === "hard" ? " hard" : ""
+  btn.className = "cat-btn" + lvlClass + (completed ? " completed" : "") + (locked ? " level-unavailable" : "")
   btn.id = "btn-" + cat.id
-  const countStr = cat.total ? `<span class="cat-count">${cat.total}</span>` : `<span class="cat-count">${t("open")}</span>`
-  const starterBadge = cat.level === "beginner" ? `<span class="badge-easy">${t("beginner")}</span>` : ""
+  const lvlBadge = cat.level === "beginner"
+    ? `<span class="badge-easy">${t("levelPaperback")}</span>`
+    : cat.level === "hard"
+    ? `<span class="badge-hard">${t("levelIncunable")}</span>`
+    : `<span class="badge-normal">${t("levelHardcover")}</span>`
+  const countStr = cat.total ? `<span class="cat-count">${cat.total} ${t("books")}</span>` : `<span class="cat-count">${t("open")}</span>`
   const completedBadge = completed ? `<span class="completed-badge">✓ ${t("completed_short")}</span>` : ""
   let progressHtml = ""
   if(completed){
@@ -672,8 +744,8 @@ function makeBtn(cat){
   } else if(pct > 0){
     progressHtml = `<div class="cat-progress"><div class="cat-progress-fill" style="width:${pct}%"></div></div><div class="cat-pct">${pct}%</div>`
   }
-  btn.innerHTML = `<div class="cat-name-row"><span>${cat.name}</span>${completedBadge}</div><span class="cat-meta">${countStr}${starterBadge}</span>${progressHtml}`
-  btn.onclick = () => startGame(cat)
+  btn.innerHTML = `<div class="cat-name-row"><span>${cat.name}</span>${completedBadge}</div><span class="cat-meta">${countStr}${lvlBadge}</span>${progressHtml}`
+  btn.onclick = () => { if(locked){ showToast(t("levelLocked")); return } startGame(cat) }
   return btn
 }
 
@@ -847,6 +919,7 @@ function verificar(){
   }
 
   setRes(t("notFound"), "#ef4444", null, null)
+  playSound('error')
 }
 
 function accept(input, canonical, flavor, wiki){
@@ -862,6 +935,7 @@ function accept(input, canonical, flavor, wiki){
   document.getElementById("resp").focus()
   if(modeScope !== 'olympiad') saveProgress(currentCat.id, usados, currentCat.total)
   checkSavePoint(prev, puntos, currentCat.total)
+  playSound('shelve')
   if(currentCat.total && puntos >= currentCat.total){
     setTimeout(() => showVictory(), 600)
   }
@@ -869,6 +943,7 @@ function accept(input, canonical, flavor, wiki){
 
 function showVictory(){
   stopTimer()
+  playSound('close')
   olympiadTotalTime += catElapsed
   document.getElementById("screen-game").classList.add("hidden")
   document.getElementById("win-title").innerText = t("winTitle", currentCat.name)
@@ -946,6 +1021,73 @@ function addTag(nombre, isEaster){
 function toWikiTitle(n){
   return n.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join("_")
 }
+
+// ─── MELOS ────────────────────────────────────────────────────────────────────
+let _audioCtx = null
+function _ac(){ if(!_audioCtx) _audioCtx = new (window.AudioContext||window.webkitAudioContext)(); return _audioCtx }
+
+function playSound(type){
+  try {
+    const ctx = _ac(), t = ctx.currentTime
+    if(type === 'shelve'){
+      const buf = ctx.createBuffer(1, ctx.sampleRate*0.08, ctx.sampleRate)
+      const d = buf.getChannelData(0)
+      for(let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.pow(1-i/d.length,2)*0.35
+      const s = ctx.createBufferSource(); s.buffer = buf
+      const f = ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=3200; f.Q.value=2
+      s.connect(f); f.connect(ctx.destination); s.start()
+    } else if(type === 'error'){
+      const buf = ctx.createBuffer(1, ctx.sampleRate*0.35, ctx.sampleRate)
+      const d = buf.getChannelData(0)
+      for(let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.sin(Math.PI*i/d.length)*0.12
+      const s = ctx.createBufferSource(); s.buffer = buf
+      const f = ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=700
+      s.connect(f); f.connect(ctx.destination); s.start()
+    } else if(type === 'close'){
+      const osc = ctx.createOscillator(), g = ctx.createGain()
+      osc.frequency.setValueAtTime(90,t); osc.frequency.exponentialRampToValueAtTime(28,t+0.22)
+      g.gain.setValueAtTime(0.35,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.26)
+      osc.connect(g); g.connect(ctx.destination); osc.start(t); osc.stop(t+0.27)
+    } else if(type === 'flip'){
+      const buf = ctx.createBuffer(1, ctx.sampleRate*0.1, ctx.sampleRate)
+      const d = buf.getChannelData(0)
+      for(let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*(i<d.length*0.3?i/(d.length*0.3):1-((i-d.length*0.3)/(d.length*0.7)))*0.2
+      const s = ctx.createBufferSource(); s.buffer = buf
+      s.connect(ctx.destination); s.start()
+    }
+  } catch(e){}
+}
+
+// ─── ALELUYAS ─────────────────────────────────────────────────────────────────
+const ALELUYA_CHARS = '📚📖✦✧◆▲●★☆αβγδεζ∞§¶∑∫Ω'.split('')
+function showAleluyas(){
+  const wrap = document.createElement('div'); wrap.className = 'aleluyas'
+  document.body.appendChild(wrap)
+  for(let i=0;i<45;i++){
+    setTimeout(()=>{
+      const el = document.createElement('span'); el.className = 'aleluya'
+      el.innerText = ALELUYA_CHARS[Math.floor(Math.random()*ALELUYA_CHARS.length)]
+      el.style.left = Math.random()*100+'vw'
+      el.style.animationDuration = (1.5+Math.random()*2.5)+'s'
+      el.style.fontSize = (14+Math.random()*16)+'px'
+      wrap.appendChild(el)
+      setTimeout(()=>el.remove(), 4500)
+    }, i*55)
+  }
+  setTimeout(()=>wrap.remove(), 7000)
+}
+
+// ─── TRIPLE ENTER ─────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Enter') return
+  const win = document.getElementById('screen-win')
+  if(win && !win.classList.contains('hidden')){
+    const next = document.getElementById('win-olympiad-next')
+    const another = document.getElementById('win-another')
+    if(next && !next.classList.contains('hidden')){ next.click(); return }
+    if(another && !another.classList.contains('hidden')){ another.click() }
+  }
+})
 </script>
 </body>
 </html>
