@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Aris v0.7.0 · 14/06/2026 · themiloramirez.github.io/aris -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1005,9 +1006,11 @@ function startFromMode(){
 
 function goLang(){
   stopTimer()
-  document.getElementById("screen-select").classList.add("hidden")
+  LANG = LANG === 'en' ? 'es' : 'en'
+  const screens = ['screen-select','screen-game','screen-win']
+  screens.forEach(s => document.getElementById(s).classList.add('hidden'))
   buildModeScreen()
-  document.getElementById("screen-mode").classList.remove("hidden")
+  document.getElementById('screen-mode').classList.remove('hidden')
 }
 
 // ─── BUILD GRID ───────────────────────────────────────────────────────────────
@@ -1026,8 +1029,8 @@ function buildGrid(){
     return a.total ? -1 : 1
   })
   const paperbacks = sort(CATEGORIES.filter(c => c.level === "beginner" && c.lang === LANG))
-  const hardcovers = sort(CATEGORIES.filter(c => c.level === "normal" && c.lang === "en"))
-  const incunables = sort(CATEGORIES.filter(c => c.level === "hard" && c.lang === "en"))
+  const hardcovers = sort(CATEGORIES.filter(c => c.level === "normal" && c.lang === LANG))
+  const incunables = sort(CATEGORIES.filter(c => c.level === "hard" && c.lang === LANG))
   const pbDone = allLevelDone("beginner")
 
   const mkHeader = (label, desc, locked) => {
@@ -1294,6 +1297,7 @@ function showVictory(){
   document.getElementById("win-share").innerText = t("winShare")
   document.getElementById("screen-win").classList.remove("hidden")
   if(modeScope !== 'olympiad') clearProgress(currentCat.id)
+  if(modeScope !== 'olympiad') setTimeout(() => buildGrid(), 50)
 }
 
 function olympiadNext(){
