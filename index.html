@@ -1296,8 +1296,7 @@ function showVictory(){
   }
   document.getElementById("win-share").innerText = t("winShare")
   document.getElementById("screen-win").classList.remove("hidden")
-  if(modeScope !== 'olympiad') clearProgress(currentCat.id)
-  if(modeScope !== 'olympiad') setTimeout(() => buildGrid(), 50)
+  if(modeScope !== 'olympiad') setTimeout(() => { buildGrid() }, 50)
 }
 
 function olympiadNext(){
