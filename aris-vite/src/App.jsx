@@ -5714,6 +5714,29 @@ const BIBLIOTECAS_CATALOGO = [
   return scoreOrden(a) - scoreOrden(b);
 });
 
+function ArisStamp() {
+  const [tiempo, setTiempo] = React.useState('');
+  React.useEffect(() => {
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      const d = new Date();
+      setTiempo('ARIS v0.34 · 25/07/2026 · ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()));
+    }
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div style={{
+      position: 'fixed', bottom: 6, right: 10,
+      fontSize: 9, color: '#8A8A78',
+      fontFamily: 'monospace', letterSpacing: '0.5px',
+      pointerEvents: 'none', zIndex: 9999
+    }}>{tiempo}</div>
+  );
+}
+
+
 function App() {
   const guardado = cargarProgreso(BIBLIOTECAS_CATALOGO);
 
@@ -6116,7 +6139,7 @@ function App() {
     </React.Fragment>
   );
 
-  return null;
+  return <ArisStamp />;
 }
 
 
