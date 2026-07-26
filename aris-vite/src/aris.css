@@ -1,6 +1,6 @@
 /* aris.css — estilos globales de Aris (migrado a Vite 25/07/2026) */
 
-body { margin: 0; padding: 24px; background: #DCD5C3; font-family: Georgia, serif; }
+body { margin: 0; padding: 24px; background: #DCD5C3; font-family: Georgia, serif; overflow-x: hidden; }
 #root { max-width: 460px; margin: 0 auto; padding-bottom: 60px; }
 
 @keyframes apareceConRebote {

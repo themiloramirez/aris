@@ -4129,48 +4129,6 @@ const EXAMEN_WEEKDAYS_EN = crearBiblioteca({
   synonyms: {}
 });
 
-const EXAMEN_MUSICAL_NOTES_EN = crearBiblioteca({
-  id: "examen_musical_notes_en", level: "exadm", lang: "en", field: "artes",
-  name: "Musical notes", desc: "Name the seven musical notes.", total: 7, metmin: 7,
-  facts: {
-    C: "The first note (and also the last one), goes by Do elsewhere. C major, its 'basic' scale sounds happy and unaccidental: no sharps, no flats. The blank page of music.",
-    D: "Re in solfège, D in sheet music. Two systems, one note, zero agreement, unless you count Dr. Dre as its offspring which we don't.",
-    E: "The most common note in Western tonal music. Mi in solfège. Open string on guitar, violin, bass. The old workhorse nobody even thinks of thanking.",
-    F: "Fa in solfège. Forms the tritone with B — the diabolus in musica. Medieval theorists feared it, giving Jazz musicians a niche to build their career.",
-    G: "The G clef wraps around this line on the staff — that's literally what the treble clef is: a very stylized G. The solfègians who call it sol are so misguided.",
-    A: "The tuning note: 440 Hz since 1939. Before that it was the war of A war: everybody tuned ad libitum. The saddest most basic cousin of C major: A minor.",
-    B: "Si in most of the world, Ti in some. B natural, B flat, B sharp: sounds a bit like self-help for people with multiple personalities."
-  },
-  synonyms: {}
-});
-
-const EXAMEN_CARDINAL_POINTS_EN = crearBiblioteca({
-  id: "examen_cardinal_points_en", level: "exadm", lang: "en", field: "geografia",
-  name: "Cardinal points", desc: "Name the four cardinal points.", total: 4, metmin: 4,
-  facts: {
-    north: "From Germanic norþ. Compasses point to magnetic north, some 500 km from geographic north. And it's drifting fast.",
-    south: "From Germanic sunþaz: toward the sun. If you ever find an old Germanic map: refrain from using it for navigation.",
-    east:  "Orient: where the sun rises, orienting us. Medieval churches faced east — their altars safe from the setting sun.",
-    west:  "Occident, sunset, fall: where the sun dies. Go west, Westminster, Westphalia: are we egomaniacs in the West?"
-  },
-  synonyms: {}
-});
-
-const EXAMEN_COLOR_SPECTRUM_EN = crearBiblioteca({
-  id: "examen_color_spectrum_en", level: "exadm", lang: "en", field: "artes",
-  name: "Colors of the spectrum", desc: "Name the colors of the spectrum (rainbow).", total: 7, metmin: 7,
-  facts: {
-    red:    "The longest visible wavelength: ~700 nm. Almost every language names it first. Women perceive more shades of it (bulls, less so).",
-    orange: "Almost all European languages named it after the fruit. The fruit got its name from Persian. Turandot, but sweet.",
-    yellow: "The most visible colour to the human eye. Shares its root with yell — the colour of something demanding attention. Also the favourite of Van Gogh, who knew a thing or two about both.",
-    green:  "The eye distinguishes more shades of green than any other colour. Close cousin of growths and grasses, and less close third-degree adopted nephew of chlorophyll, what?",
-    blue:   "The last common colour to receive a name in most languages. Homer had no word for it: the sea was wine-dark.",
-    indigo: "Newton included it to match the 7 musical notes. Gravity was more attractive, nobody paid much attention. Jeans adopted it later.",
-    violet: "The limit of the visible: ~380 nm. Beyond it: ultraviolet. Bees, birds and some tetrachromats transcend it."
-  },
-  synonyms: {}
-});
-
 const POOL_FALSAMENTE_OBVIAS = [
   crearBiblioteca({ id: "examen_planetas", level: "exadm", lang: "es", field: "ciencias_duras",
     name: "Planetas del sistema solar", desc: "Nombra los planetas del sistema solar.", total: 8, metmin: 8,
@@ -4522,8 +4480,8 @@ function ElVastoVacio({ bibliotecas = [], onAbrirBiblioteca }) {
       "--color-tenue":"#8A8A78","--color-linea":"#BFBAA8","--color-verde":"#3E5942","--color-oro":"#7A5C00",
       fontFamily:"Georgia, serif",color:"var(--color-tinta)",
       maxWidth:420,margin:"0 auto",border:"1px solid var(--color-tinta)",
-      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"300px 300px",backgroundPosition:"top left",
-      backgroundBlendMode:"multiply",backgroundColor:"rgba(247,243,232,0.55)"}}>
+      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"cover",backgroundPosition:"top left",
+      backgroundBlendMode:"multiply",backgroundColor:"rgba(247,243,232,0.75)"}}>
       <div style={{ padding: "18px 22px 12px" }}>
         <p style={{ fontSize: 9, color: "var(--color-tenue)", margin: "0 0 6px", letterSpacing: 1.5 }}>FIG. 3 — TABULA PROGRESSUS</p>
         <h1 style={{ fontSize: 19, margin: 0, fontWeight: 400, fontStyle: "italic",
@@ -6288,10 +6246,9 @@ function App() {
     <React.Fragment>
       <PhD onCompletado={() => { setPhdCompletado(true); setPantalla(PANTALLAS.VASTO_VACIO); }} />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
-
-  return <ArisStamp />;
 }
 
 
