@@ -4370,7 +4370,7 @@ function ElVastoVacio({ bibliotecas = [], onAbrirBiblioteca }) {
       "--color-tenue":"#8A8A78","--color-linea":"#BFBAA8","--color-verde":"#3E5942","--color-oro":"#7A5C00",
       fontFamily:"Georgia, serif",color:"var(--color-tinta)",
       maxWidth:420,margin:"0 auto",border:"1px solid var(--color-tinta)",
-      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"300px 300px",backgroundPosition:"top left",
+      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"cover",backgroundPosition:"center",
       backgroundBlendMode:"multiply",backgroundColor:"rgba(247,243,232,0.55)"}}>
       <div style={{ padding: "18px 22px 12px" }}>
         <p style={{ fontSize: 9, color: "var(--color-tenue)", margin: "0 0 6px", letterSpacing: 1.5 }}>FIG. 3 — TABULA PROGRESSUS</p>
