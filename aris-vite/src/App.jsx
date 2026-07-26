@@ -5229,7 +5229,7 @@ const TEXTO_A4 = [
 
 const TEXTO_A2aa = [
   "Nunca lo dudé y eso está mal: la duda es el punto de partida de la ciencia, pero, ¿ya qué?",
-  "Bienvenido a Aris, y al Vasto Vacío, el lugar común de la diversión. ¿Enviciador? Si es un buen hábito, ¿de verdad tiene que importarte? Este es el único vicio que o no lo es o es bueno.",
+  "Espero que no sufras de vértigo: la próxima pantalla es el Vasto Vacío. No estará vacío mucho tiempo — eso depende de ti.",
 ];
 
 const TEXTO_A2b = [
@@ -5279,6 +5279,7 @@ function PantallaDialogo({ texto, imagen, onContinuar }) {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "flex-start",
+      paddingTop: 40,
       paddingBottom: 80,
       cursor: "pointer",
       userSelect: "none",
@@ -6250,53 +6251,54 @@ function App() {
 
   // ⚠️ PROVISIONAL — quitar antes del lanzamiento público
   if (pantalla === PANTALLAS.CHAR_TEST)
-    return <PantallaCharTest onContinuar={() => setPantalla(guardado ? PANTALLAS.VASTO_VACIO : PANTALLAS.EXAMEN)} />;
+    return (<React.Fragment><ArisStamp /><PantallaCharTest onContinuar={() => setPantalla(guardado ? PANTALLAS.VASTO_VACIO : PANTALLAS.EXAMEN)} /></React.Fragment>);
 
   if (pantalla === PANTALLAS.ARISTOTELES_A4)
-    return <PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)} />;
+    return (<React.Fragment><ArisStamp /><PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)} /></React.Fragment>);
 
   if (pantalla === PANTALLAS.DIALOGO_A2aa)
-    return <PantallaDialogo
+    return (<React.Fragment><ArisStamp /><PantallaDialogo
       texto={TEXTO_A2aa}
       imagen={IMG_ARISTOTELES}
       onContinuar={() => setPantalla(PANTALLAS.ARISTOTELES_A4)}
-    />;
+    />;</React.Fragment>);
 
   if (pantalla === PANTALLAS.DIALOGO_A2b)
-    return <PantallaDialogo
+    return (<React.Fragment><ArisStamp /><PantallaDialogo
       texto={TEXTO_A2b}
       imagen={IMG_ARISTOTELES}
       onContinuar={() => setPantalla(PANTALLAS.EXAMEN)}
-    />;
+    />;</React.Fragment>);
 
   if (pantalla === PANTALLAS.DIALOGO_T1)
-    return <PantallaDialogo
+    return (<React.Fragment><ArisStamp /><PantallaDialogo
       texto={TEXTO_T1}
       imagen={IMG_TERESA}
       onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
-    />;
+    />;</React.Fragment>);
 
   if (pantalla === PANTALLAS.DIALOGO_T2)
-    return <PantallaDialogo
+    return (<React.Fragment><ArisStamp /><PantallaDialogo
       texto={TEXTO_T2}
       imagen={IMG_TERESA}
       onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
-    />;
+    />;</React.Fragment>);
 
   if (pantalla === PANTALLAS.DIALOGO_A5)
-    return <PantallaDialogo
+    return (<React.Fragment><ArisStamp /><PantallaDialogo
       texto={TEXTO_A5}
       imagen={IMG_ARISTOTELES}
       onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
-    />;
+    />;</React.Fragment>);
 
   if (pantalla === PANTALLAS.EXAMEN)
-    return <ExamenAdmision onAceptado={manejarAceptadoExamen} />;
+    return (<React.Fragment><ArisStamp /><ExamenAdmision onAceptado={manejarAceptadoExamen} /></React.Fragment>);
 
   if (pantalla === PANTALLAS.EXAMEN_BIBLIOTECAS) {
     const bActual = examenBibliotecas[indiceExamenActual];
     return (
-      <div>
+      <div style={{position:"relative"}}>
+      <ArisStamp />
         <p style={{ textAlign:"center",fontSize:11,color:"#8A8A78",marginBottom:8 }}>
           Examen de admisión — {indiceExamenActual + 1} de {examenBibliotecas.length}</p>
         <JugarBiblioteca key={bActual._id} biblioteca={bActual} onCompletada={manejarBibliotecaExamenCompletada}
