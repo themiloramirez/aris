@@ -5220,7 +5220,6 @@ function PantallaCharTest({ onContinuar, rutaEntrada }) {
 // A4: Aristóteles se revela con imagen
 
 const TEXTO_A4 = [
-  "Nunca lo dudé y eso está mal: la duda es el punto de partida de la ciencia, pero, ¿ya qué?",
   "Mi nombre es Aristóteles, es posible que hayas leído sobre mí. ¿Sabes leer, creo? Si llegaste hasta acá asumo que sí y que me conoces y que vas entendiendo el juego.",
   "Esto es el Vasto Vacío y tú lo irás llenando. Elige temas, ingresa a cada biblioteca y demuestra lo que sabes.",
   "Dudas: para eso está internet. O el botón de ayuda abajo.",
@@ -5238,7 +5237,9 @@ const TEXTO_A2b = [
 ];
 
 const TEXTO_T1 = [
-  "Teresa de Ávila, primera doctora de la congregación, presente y ausente a la vez, te saluda: Los mesías mueren por nuestras faltas y las tuyas me mortifican tanto que intercederé por ti cuando haga falta. Créeme que creo que puedes, pero tú ¿lo crees o solo crees?",
+  "Teresa de Ávila, primera doctora de la congregación, presente y ausente a la vez, te saluda.",
+  "Los mesías mueren por nuestras faltas y las tuyas me mortifican tanto que intercederé por ti cuando haga falta.",
+  "Créeme que creo que puedes, pero tú ¿lo crees o solo crees?",
 ];
 
 const TEXTO_T2 = [
@@ -5277,26 +5278,25 @@ function PantallaDialogo({ texto, imagen, onContinuar }) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center",
-      padding: 24,
+      justifyContent: "flex-start",
+      paddingBottom: 80,
       cursor: "pointer",
       userSelect: "none",
     }}>
       {imagen && (
-        <img src={imagen} alt="" style={{
-          width: 160, height: 160,
-          objectFit: "cover",
-          borderRadius: "50%",
-          border: "3px solid #D4A937",
-          marginBottom: 24,
-          boxShadow: "0 4px 24px rgba(0,0,0,0.6)"
-        }} />
+        <div style={{ width: "100%", height: 220, overflow: "hidden", marginBottom: 0 }}>
+          <img src={imagen} alt="" style={{
+            width: "100%", height: "100%",
+            objectFit: "cover", objectPosition: "center 20%",
+            filter: "sepia(8%) brightness(0.95)"
+          }} />
+        </div>
       )}
       <div style={{
-        maxWidth: 400,
+        maxWidth: 400, width: "90%",
         background: "rgba(42,30,16,0.95)",
         border: "1px solid #D4A937",
-        borderRadius: 8,
+        borderRadius: imagen ? "0 0 8px 8px" : 8,
         padding: "20px 24px",
         color: "#F7F3E8",
         fontSize: 15,
@@ -6009,17 +6009,26 @@ function App() {
     }));
     setBibliotecaJugando(biblioteca);
     setTipoComplecionActual(tipoComplecion);
-    // A5 trigger: after 6th regular bib, explain Verde/Oro/exámenes
+    // Triggers post-bib
     const vistos = (() => { try { return JSON.parse(localStorage.getItem("aris_dialogos_v1") || "{}"); } catch { return {}; } })();
-    if (!vistos["A5"]) {
-      const completadas = progresoBibliotecas.filter(b => b.tipoComplecion && b.level !== "exadm").length;
-      if (completadas >= 5) { // 5 completadas + esta = 6ª
-        const nuevosVistos = { ...vistos, A5: Date.now() };
-        try { localStorage.setItem("aris_dialogos_v1", JSON.stringify(nuevosVistos)); } catch {}
-        setPantalla(PANTALLAS.DIALOGO_A5);
-        return;
-      }
+    const completadas = progresoBibliotecas.filter(b => b.tipoComplecion && b._level === "beginner").length;
+
+    // T1 trigger: after 3rd regular bib
+    if (!vistos["T1"] && completadas >= 2) { // 2 ya completas + esta = 3ª
+      const nuevosVistos = { ...vistos, T1: Date.now() };
+      try { localStorage.setItem("aris_dialogos_v1", JSON.stringify(nuevosVistos)); } catch {}
+      setPantalla(PANTALLAS.DIALOGO_T1);
+      return;
     }
+
+    // A5 trigger: after 6th regular bib
+    if (!vistos["A5"] && completadas >= 5) { // 5 + esta = 6ª
+      const nuevosVistos = { ...vistos, A5: Date.now() };
+      try { localStorage.setItem("aris_dialogos_v1", JSON.stringify(nuevosVistos)); } catch {}
+      setPantalla(PANTALLAS.DIALOGO_A5);
+      return;
+    }
+
     setPantalla(PANTALLAS.BIBLIOTECA_COMPLETADA);
   }
 
@@ -6244,7 +6253,7 @@ function App() {
     return <PantallaCharTest onContinuar={() => setPantalla(guardado ? PANTALLAS.VASTO_VACIO : PANTALLAS.EXAMEN)} />;
 
   if (pantalla === PANTALLAS.ARISTOTELES_A4)
-    return <PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.DIALOGO_T1)} />;
+    return <PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)} />;
 
   if (pantalla === PANTALLAS.DIALOGO_A2aa)
     return <PantallaDialogo
