@@ -5228,6 +5228,93 @@ const TEXTO_A4 = [
   "Falso, pero no te hagas, ¡ya entendiste!",
 ];
 
+const TEXTO_A2aa = [
+  "Nunca lo dudé y eso está mal: la duda es el punto de partida de la ciencia, pero, ¿ya qué?",
+  "Bienvenido a Aris, y al Vasto Vacío, el lugar común de la diversión. ¿Enviciador? Si es un buen hábito, ¿de verdad tiene que importarte? Este es el único vicio que o no lo es o es bueno.",
+];
+
+const TEXTO_A2b = [
+  "A todos nos pasa... Bueno, no a todos... Bueno, a casi nadie, la verdad. Pero un sabio más viejo que yo decía que el que se equivoca y aprende es el que gana en realidad.",
+];
+
+const TEXTO_T1 = [
+  "Teresa de Ávila, primera doctora de la congregación, presente y ausente a la vez, te saluda: Los mesías mueren por nuestras faltas y las tuyas me mortifican tanto que intercederé por ti cuando haga falta. Créeme que creo que puedes, pero tú ¿lo crees o solo crees?",
+];
+
+const TEXTO_T2 = [
+  "Aquí te deleitas mortificándote, déjame ayudarte en ello, ya sabes cómo llamarme.",
+];
+
+const TEXTO_A5 = [
+  "Aprender es recordar, decía un maestro muy elevado mío: esto seguro ya lo recuerdas.",
+  "Cada biblioteca la puedes completar a dos niveles: Verde (cumples un porcentaje mínimo) y Oro (la completas toda). Solo el Oro te abre los exámenes de paso.",
+  "Y si hay dos exámenes que abrir: la Disertatio (Hardcover) y el PhD (Incunabula). Por ahora: a llenar el Vasto Vacío.",
+];
+
+
+function PantallaDialogo({ texto, imagen, onContinuar }) {
+  const [linea, setLinea] = React.useState(0);
+  const esUltima = linea >= texto.length - 1;
+
+  React.useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Enter" || e.key === " ") avanzar();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [linea]);
+
+  function avanzar() {
+    if (!esUltima) setLinea(l => l + 1);
+    else onContinuar();
+  }
+
+  return (
+    <div onClick={avanzar} style={{
+      fontFamily: "Georgia, serif",
+      background: "#1A1208",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 24,
+      cursor: "pointer",
+      userSelect: "none",
+    }}>
+      {imagen && (
+        <img src={imagen} alt="" style={{
+          width: 160, height: 160,
+          objectFit: "cover",
+          borderRadius: "50%",
+          border: "3px solid #D4A937",
+          marginBottom: 24,
+          boxShadow: "0 4px 24px rgba(0,0,0,0.6)"
+        }} />
+      )}
+      <div style={{
+        maxWidth: 400,
+        background: "rgba(42,30,16,0.95)",
+        border: "1px solid #D4A937",
+        borderRadius: 8,
+        padding: "20px 24px",
+        color: "#F7F3E8",
+        fontSize: 15,
+        lineHeight: 1.7,
+      }}>
+        <p style={{ margin: "0 0 20px 0" }}>{texto[linea]}</p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span style={{ fontSize: 11, color: "#8A8A78" }}>
+            {texto.length > 1 ? `${linea + 1} / ${texto.length}` : ""}
+          </span>
+          <span style={{ fontSize: 12, color: "#D4A937" }}>
+            {esUltima ? "[ continuar ]" : "[ siguiente ]"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 function PantallaAristotelesA4({ onContinuar }) {
   const [linea, setLinea] = React.useState(0);
   const esUltima = linea >= TEXTO_A4.length - 1;
@@ -5795,7 +5882,12 @@ function TeresaPresentacion({ onAceptar }) {
 
 const PANTALLAS = {
   CHAR_TEST:"char_test",
-  ARISTOTELES_A4:"aristoteles_a4",  // Presentación de Aristóteles tras el examen
+  ARISTOTELES_A4:"aristoteles_a4",  // A4: Aristóteles se presenta tras el examen
+  DIALOGO_A2aa:"dialogo_a2aa",      // A2aa: éxito en exadm
+  DIALOGO_A2b:"dialogo_a2b",        // A2b: fallo en exadm
+  DIALOGO_T1:"dialogo_t1",          // T1: Teresa en VastoVacío
+  DIALOGO_T2:"dialogo_t2",          // T2: Teresa en primera bib
+  DIALOGO_A5:"dialogo_a5",          // A5: explicación de niveles
   EXAMEN:"examen", EXAMEN_BIBLIOTECAS:"examen_bibliotecas",
   MODOS:"modos",
   VASTO_VACIO:"vasto_vacio",
@@ -5847,6 +5939,7 @@ function ArisStamp() {
 }
 
 
+
 function App() {
   const guardado = cargarProgreso(BIBLIOTECAS_CATALOGO);
 
@@ -5873,8 +5966,8 @@ function App() {
   const [olimpiadaTiempos, setOlimpiadaTiempos] = useState([]);
   const [disertatioCompletada, setDisertatioCompletada] = useState(guardado?.disertatioCompletada ?? false);
   const [phdCompletado, setPhdCompletado] = useState(guardado?.phdCompletado ?? false);
-
-  // Guardar en localStorage en cada cambio de estado relevante
+  
+// Guardar en localStorage en cada cambio de estado relevante
   useEffect(() => {
     guardarProgreso(progresoBibliotecas, disertatioCompletada, phdCompletado);
   }, [progresoBibliotecas, disertatioCompletada, phdCompletado]);
@@ -5893,13 +5986,17 @@ function App() {
     setPantalla(PANTALLAS.EXAMEN_BIBLIOTECAS);
   }
 
+  function mostrarA2aa() {
+    setPantalla(PANTALLAS.DIALOGO_A2aa);
+  }
+
   function mostrarA4() {
     setPantalla(PANTALLAS.ARISTOTELES_A4);
   }
 
   function manejarBibliotecaExamenCompletada() {
     if (indiceExamenActual + 1 < examenBibliotecas.length) setIndiceExamenActual(indiceExamenActual + 1);
-    else mostrarA4();  // Aristóteles se presenta antes de entrar al VV
+    else mostrarA2aa();  // A2aa: éxito en exadm, luego A4
   }
 
   function manejarBibliotecaCompletada(biblioteca, tipoComplecion) {
@@ -5912,6 +6009,17 @@ function App() {
     }));
     setBibliotecaJugando(biblioteca);
     setTipoComplecionActual(tipoComplecion);
+    // A5 trigger: after 6th regular bib, explain Verde/Oro/exámenes
+    const vistos = (() => { try { return JSON.parse(localStorage.getItem("aris_dialogos_v1") || "{}"); } catch { return {}; } })();
+    if (!vistos["A5"]) {
+      const completadas = progresoBibliotecas.filter(b => b.tipoComplecion && b.level !== "exadm").length;
+      if (completadas >= 5) { // 5 completadas + esta = 6ª
+        const nuevosVistos = { ...vistos, A5: Date.now() };
+        try { localStorage.setItem("aris_dialogos_v1", JSON.stringify(nuevosVistos)); } catch {}
+        setPantalla(PANTALLAS.DIALOGO_A5);
+        return;
+      }
+    }
     setPantalla(PANTALLAS.BIBLIOTECA_COMPLETADA);
   }
 
@@ -6064,6 +6172,7 @@ function App() {
     <React.Fragment>
       <TeresaPresentacion onAceptar={() => setPantalla(PANTALLAS.VASTO_VACIO)} />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
@@ -6083,6 +6192,7 @@ function App() {
         }
       }} />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
@@ -6134,7 +6244,42 @@ function App() {
     return <PantallaCharTest onContinuar={() => setPantalla(guardado ? PANTALLAS.VASTO_VACIO : PANTALLAS.EXAMEN)} />;
 
   if (pantalla === PANTALLAS.ARISTOTELES_A4)
-    return <PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)} />;
+    return <PantallaAristotelesA4 onContinuar={() => setPantalla(PANTALLAS.DIALOGO_T1)} />;
+
+  if (pantalla === PANTALLAS.DIALOGO_A2aa)
+    return <PantallaDialogo
+      texto={TEXTO_A2aa}
+      imagen={IMG_ARISTOTELES}
+      onContinuar={() => setPantalla(PANTALLAS.ARISTOTELES_A4)}
+    />;
+
+  if (pantalla === PANTALLAS.DIALOGO_A2b)
+    return <PantallaDialogo
+      texto={TEXTO_A2b}
+      imagen={IMG_ARISTOTELES}
+      onContinuar={() => setPantalla(PANTALLAS.EXAMEN)}
+    />;
+
+  if (pantalla === PANTALLAS.DIALOGO_T1)
+    return <PantallaDialogo
+      texto={TEXTO_T1}
+      imagen={IMG_TERESA}
+      onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
+    />;
+
+  if (pantalla === PANTALLAS.DIALOGO_T2)
+    return <PantallaDialogo
+      texto={TEXTO_T2}
+      imagen={IMG_TERESA}
+      onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
+    />;
+
+  if (pantalla === PANTALLAS.DIALOGO_A5)
+    return <PantallaDialogo
+      texto={TEXTO_A5}
+      imagen={IMG_ARISTOTELES}
+      onContinuar={() => setPantalla(PANTALLAS.VASTO_VACIO)}
+    />;
 
   if (pantalla === PANTALLAS.EXAMEN)
     return <ExamenAdmision onAceptado={manejarAceptadoExamen} />;
@@ -6210,6 +6355,7 @@ function App() {
         </div>
       </div>
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
@@ -6223,6 +6369,7 @@ function App() {
         onCompletada={manejarBibliotecaCompletada}
       />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
@@ -6232,6 +6379,7 @@ function App() {
         onVolver={() => setPantalla(PANTALLAS.VASTO_VACIO)}
         onBrag={() => setPantalla(PANTALLAS.VASTO_VACIO)} />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
@@ -6239,6 +6387,7 @@ function App() {
     <React.Fragment>
       <Disertatio onCompletado={() => { setDisertatioCompletada(true); setPantalla(PANTALLAS.VASTO_VACIO); }} />
       {panelBotones}{modalesFlotantes}
+    <ArisStamp />
     </React.Fragment>
   );
 
