@@ -1205,7 +1205,46 @@ const ISLAS_MEDITERRANEO_ES = crearBiblioteca({
 });
 
 
-const PAPERBACK_ES = [OCEANOS_ES, CONTINENTES_ES, SPICE_GIRLS_ES, ESTOMAGOS_ES, PECADOS_ES, HUESOS_OIDO_ES, MARAVILLAS_ES, LUNAS_GALILEANAS_ES, MACRONUTRIENTES_ES, MESES_30_ES, GASES_NOBLES_ES, ZODIACO_ES, SABORES_ES, FASES_LUNA_ES, TRIANGULOS_ES, PALABRAS_ACENTO_ES, ROMANCES_ES, GERMANICAS_ES, RELIGIONES_ES, PENTATEUCO_ES, ISLAS_CARIBE_ES, NAVES_COLON_ES, TRIMURTI_ES, EVANGELISTAS_ES, ISLAS_MEDITERRANEO_ES];
+
+const ELECTROLITOS_ES = crearBiblioteca({
+  id: "electrolitos_es", level: "beginner", lang: "es", field: "ciencias_duras",
+  name: "Electrolitos", desc: "Nombra los 7 electrolitos principales del cuerpo humano.", total: 7, metmin: 5,
+  names: {
+    sodio: "Sodio", potasio: "Potasio", calcio: "Calcio",
+    magnesio: "Magnesio", cloruro: "Cloruro", bicarbonato: "Bicarbonato", fosfato: "Fosfato"
+  },
+  facts: {
+    sodio:       "El más abundante fuera de las células: regula presión osmótica y volumen del plasma. Aumenta la presión sanguínea y el sabor de la comida.",
+    potasio:     "El más abundante dentro de las células. Esencial para el impulso nervioso y la contracción muscular. Viene de incógnito: en casa le dicen kalium.",
+    calcio:      "No solo huesos, leche y dientes: contracción muscular, sinapsis y cálculos renales. Sus canales de ión controlan desde el latido hasta la memoria.",
+    magnesio:    "Cofactor de más de 300 enzimas. El más ignorado y el que probablemente te falta. Casi una muletilla en nutrición.",
+    cloruro:     "El anión más abundante del plasma (lo negativo es importante también). Compañero de viaje del sodio — donde va uno, suele ir el otro.",
+    bicarbonato: "El búfer del cuerpo: mantiene el pH sanguíneo entre 7.35 y 7.45. Un margen de error que mata si se supera en cualquier dirección. Somos casi corales.",
+    fosfato:     "Protagonista del ATP y el ADN — energía e información — y estructura del hueso. Hoy que todo es data, wattios y soporte, ¿el fosfato es rey?"
+  },
+  synonyms: {}
+});
+
+const ELECTROLYTES_EN = crearBiblioteca({
+  id: "electrolytes_en", level: "beginner", lang: "en", field: "ciencias_duras",
+  name: "Electrolytes", desc: "Name the 7 main electrolytes in the human body.", total: 7, metmin: 5,
+  names: {
+    sodium: "Sodium", potassium: "Potassium", calcium: "Calcium",
+    magnesium: "Magnesium", chloride: "Chloride", bicarbonate: "Bicarbonate", phosphate: "Phosphate"
+  },
+  facts: {
+    sodium:      "The most abundant ion outside cells: regulates osmotic pressure and plasma volume. Raises blood pressure and makes food worth eating.",
+    potassium:   "The most abundant inside cells. Essential for nerve impulses and muscle contraction. Goes by an alias: at home, they call it kalium.",
+    calcium:     "Not just bones, milk and teeth: muscle contraction, synapses and kidney stones. Its ion channels control everything from heartbeat to memory.",
+    magnesium:   "Cofactor for over 300 enzymes. The most overlooked electrolyte and the one you are probably low on. Almost a nutritional cliché.",
+    chloride:    "The most abundant anion in plasma (the negative charge matters too). Sodium's travel companion — where one goes, the other follows.",
+    bicarbonate: "The body's buffer: keeps blood pH between 7.35 and 7.45. A margin of error that kills if crossed in either direction. We are almost coral.",
+    phosphate:   "Star of ATP and DNA — energy and information — and the structure of bone. In an age of data, watts and support, is phosphate king?"
+  },
+  synonyms: {}
+});
+
+const PAPERBACK_ES = [OCEANOS_ES, CONTINENTES_ES, SPICE_GIRLS_ES, ESTOMAGOS_ES, PECADOS_ES, HUESOS_OIDO_ES, MARAVILLAS_ES, LUNAS_GALILEANAS_ES, MACRONUTRIENTES_ES, MESES_30_ES, GASES_NOBLES_ES, ZODIACO_ES, SABORES_ES, FASES_LUNA_ES, TRIANGULOS_ES, PALABRAS_ACENTO_ES, ROMANCES_ES, GERMANICAS_ES, RELIGIONES_ES, PENTATEUCO_ES, ISLAS_CARIBE_ES, NAVES_COLON_ES, TRIMURTI_ES, EVANGELISTAS_ES, ISLAS_MEDITERRANEO_ES, ELECTROLITOS_ES];
 const PENTATEUCH_EN = crearBiblioteca({
   id: "pentateuch_en", level: "beginner", lang: "en", field: "humanidades",
   name: "The Pentateuch", desc: "Name the 5 books of the Torah (or the Old Testament, if you prefer).",
@@ -1310,7 +1349,7 @@ const MEDITERRANEAN_ISLANDS_EN = crearBiblioteca({
 
 
 
-const PAPERBACK_EN = [OCEANS_EN, CONTINENTS_EN, SPICE_GIRLS_EN, COWSTOMACHS_EN, SINS_EN, EAR_BONES_EN, WONDERS_EN, GALILEAN_MOONS_EN, MACRONUTRIENTS_EN, MONTHS_30_EN, NOBLE_GASES_EN, ZODIAC_EN, TASTES_EN, MOON_PHASES_EN, TRIANGLES_EN, OLYMPIC_GODS_EN, ROMANCE_LANGUAGES_EN, GERMANIC_LANGUAGES_EN, RELIGIONS_EN, PENTATEUCH_EN, CARIBBEAN_ISLANDS_EN, HINDU_TRIAD_EN, EVANGELISTS_EN, MEDITERRANEAN_ISLANDS_EN, CARAVELS_EN];
+const PAPERBACK_EN = [OCEANS_EN, CONTINENTS_EN, SPICE_GIRLS_EN, COWSTOMACHS_EN, SINS_EN, EAR_BONES_EN, WONDERS_EN, GALILEAN_MOONS_EN, MACRONUTRIENTS_EN, MONTHS_30_EN, NOBLE_GASES_EN, ZODIAC_EN, TASTES_EN, MOON_PHASES_EN, TRIANGLES_EN, OLYMPIC_GODS_EN, ROMANCE_LANGUAGES_EN, GERMANIC_LANGUAGES_EN, RELIGIONS_EN, PENTATEUCH_EN, CARIBBEAN_ISLANDS_EN, HINDU_TRIAD_EN, EVANGELISTS_EN, MEDITERRANEAN_ISLANDS_EN, CARAVELS_EN, ELECTROLYTES_EN];
 
 // === hardcover.js ===
 // data/hardcover.js
@@ -4019,6 +4058,77 @@ const POOL_OBVIAS = [
   })
 ];
 
+
+// === EXAMEN DE ADMISIÓN — versiones EN ===
+
+const EXAMEN_SEASONS_EN = crearBiblioteca({
+  id: "examen_seasons_en", level: "exadm", lang: "en", field: "ciencias_duras",
+  name: "Seasons", desc: "Name the four seasons.", total: 4, metmin: 4,
+  facts: {
+    spring: "The season when life springs back up after a long dormancy. Always at a much slower pace than what you'd like.",
+    summer: "In Germanic, the hottest part of the year: with cognates like German Sommer and Dutch zomer. Funny as there's no such thing as a Dutch summer.",
+    autumn: "From Latin autumnus, of Etruscan origin. Germanic fall is more explicit, pointing to decadence: the time when things and people fall.",
+    winter: "The whitest, coldest, wettest: etymology contested but probably related to those. Discontent and a tale: whatever the case, it's coming!"
+  },
+  synonyms: { autumn: ["fall"] }
+});
+
+const EXAMEN_ELEMENTS_EN = crearBiblioteca({
+  id: "examen_elements_en", level: "exadm", lang: "en", field: "ciencias_duras",
+  name: "Elements of antiquity", desc: "Name the four classical elements.", total: 4, metmin: 4,
+  facts: {
+    earth: "Aristotle: cold and dry. Empedocles: just one of four elements. For us: the floor, the dirt, the planet, the grave, the source of Eartha Kitt's name.",
+    water: "The OG principle of everything for Thales of Miletus, who was the OG thinker of principles. We can all agree that life started there, though, right?",
+    air:   "Anaximenes: the universal principle (arché). We inhale 20k litres of nitrogen and oxygen daily without giving it a thought.",
+    fire:  "For Heraclitus, the element/process. Everything flows — especially flame and time, the all-consuming."
+  },
+  synonyms: {}
+});
+
+const EXAMEN_SENSES_EN = crearBiblioteca({
+  id: "examen_senses_en", level: "exadm", lang: "en", field: "ciencias_duras",
+  name: "Senses", desc: "Name the five senses.", total: 5, metmin: 5,
+  facts: {
+    sight:   "Uses 30% of the cerebral cortex (~10 million bits/s), which in turn consumes 20% of your calories. Vision: the best diet.",
+    hearing: "The only sense that cannot be voluntarily switched off. Works even during deep sleep. And yet 'hearsay' is considered unreliable.",
+    smell:   "The most ancient evolutionarily. Connects directly to the limbic system (bypassing the thalamus): smells trigger direct memories that cannot be conjured at will.",
+    taste:   "Distinguishes only 5 basic flavours. Everything else is aroma. Now, if taste is 'subjective', then aromas are multitudinous?",
+    touch:   "The first to develop in the embryo. Many senses rolled into one: touch, pressure, temperature, caresses, pain, balance, proprioception..."
+  },
+  synonyms: {}
+});
+
+const EXAMEN_PLANETS_EN = crearBiblioteca({
+  id: "examen_planets_en", level: "exadm", lang: "en", field: "ciencias_duras",
+  name: "Planets of the solar system", desc: "Name the 8 planets of the solar system.", total: 8, metmin: 6,
+  facts: {
+    mercury: "Years of 88 Earth days and days of 59. Your salary arrives faster but disappears into 177 meals a day.",
+    venus:   "Much hotter than any other, despite being second from the Sun. The perfect greenhouse. For killing. Anything. Venera-tested. Several times.",
+    earth:   "The only known planet with chewing gum, logarithms and hordes insulting the IAU over whether Pluto counts as a planet.",
+    mars:    "Olympus Mons: the largest volcano in the solar system (3x Everest). Looks down on Everest, smiling at Mauna Kea as it emerges triumphant from the sea.",
+    jupiter: "Its Great Red Spot: a storm 1.3x the size of Earth, active for 350+ years. Shrinking. Still bigger than all we know.",
+    saturn:  "Its rings are barely ~10 metres thick and, depending on the source, between 100 and 4,500 million years old. Astronomy: an inexact science.",
+    uranus:  "Rotates on its side: axis tilted 98°. When you get knocked over in the morning, all you want is to spend the rest of the eon lying down.",
+    neptune: "The most mathematical: predicted before observed. Le Verrier calculated its position with a pencil, inspiring many still searching for Planet X."
+  },
+  synonyms: {}
+});
+
+const EXAMEN_WEEKDAYS_EN = crearBiblioteca({
+  id: "examen_weekdays_en", level: "exadm", lang: "en", field: "humanidades",
+  name: "Days of the week", desc: "Name the seven days of the week.", total: 7, metmin: 7,
+  facts: {
+    monday:    "Mōnandæg in Old English (Moon's day): The most hated day in history — many museums hate it and lock themselves up in their room.",
+    tuesday:   "Tiw's day: celebrating the Anglo-Saxon god of war. He apparently beat Mars, the source of the name in many other languages. Mars never won anything.",
+    wednesday: "Woden's day: honoring Odin, chief of the Norse gods. Tricky: learn to pronounce, learn to write, never mix both lessons.",
+    thursday:  "Thor's day. The god of thunder and hammers is behind this day: you act young, go out, get hammered and feel as if being hit on the head by one all the next day.",
+    friday:    "Frigg's day — or Freya's, scholars still argue. Either way: divine and celestial. The most beloved by the privileged, just another day for those who work saturdays.",
+    saturday:  "The intruder: a Roman god — Saturn — naming an English day. Every other day went Norse. Saturn held out. Admirable for somebody who ate his own children.",
+    sunday:    "Sun's day. The original day of sacred rest — or so they say. Brunch, errands, family, don't even think about it, it's 6 pm already."
+  },
+  synonyms: {}
+});
+
 const POOL_FALSAMENTE_OBVIAS = [
   crearBiblioteca({ id: "examen_planetas", level: "exadm", lang: "es", field: "ciencias_duras",
     name: "Planetas del sistema solar", desc: "Nombra los planetas del sistema solar.", total: 8, metmin: 8,
@@ -4370,7 +4480,7 @@ function ElVastoVacio({ bibliotecas = [], onAbrirBiblioteca }) {
       "--color-tenue":"#8A8A78","--color-linea":"#BFBAA8","--color-verde":"#3E5942","--color-oro":"#7A5C00",
       fontFamily:"Georgia, serif",color:"var(--color-tinta)",
       maxWidth:420,margin:"0 auto",border:"1px solid var(--color-tinta)",
-      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"cover",backgroundPosition:"center",
+      backgroundImage:`url(${IMG_MARBLE})`,backgroundSize:"300px 300px",backgroundPosition:"top left",
       backgroundBlendMode:"multiply",backgroundColor:"rgba(247,243,232,0.55)"}}>
       <div style={{ padding: "18px 22px 12px" }}>
         <p style={{ fontSize: 9, color: "var(--color-tenue)", margin: "0 0 6px", letterSpacing: 1.5 }}>FIG. 3 — TABULA PROGRESSUS</p>
