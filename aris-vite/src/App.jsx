@@ -5208,26 +5208,44 @@ function PhD({ onCompletado }) {
 // === PantallaAristoteles — Bienvenida / Examen de admisión (reemplaza PantallaCharTest) ===
 // A1: Aristóteles como voz sin cara. La identidad no se revela hasta A4 (tras el examen).
 
-const TEXTO_A1 = [
-  "La puerta cruje al abrirse. Adentro: ¡¿un examen!?",
-  "Una voz sabia, antigua y con fuerte acento —pero ¿de dónde?— dice: «Formalidad fugaz y fácil: ¡fáctico! Reintenta las veces que quieras.»",
-  "Pausa teatral. «Ahora, si fallas demasiadas veces, ni quiero imaginármelo.»",
+// ES — narrador-Borges (A1a) + Aristóteles anónimo (A1b, A1c)
+const TEXTO_A1_ES = [
+  "Al fondo, una puerta, pero hay fondos bajo los fondos. Detrás de lo previsible, lo inexorable: el saber queriendo saber cuánto sabes.",
+  "Una voz curtida, sapiente y quizás estagirita, dice: «Más que una prueba, es una clasificación. Sé que tu potencia es acto, pero ¿cuánto?»",
+  "Un instante de eterno silencio. «Ahora, si fallas demasiadas veces, ni quiero imaginármelo.»",
 ];
 
-const TEXTO_BA1 = ({ nombreReferente, adjetivo }) => [
-  `${nombreReferente} no aparece por ningún lado — ya entró, así son los ${adjetivo}. Pero a falta de algo más, ¿una puerta? y ¿un examen?`,
-  "Una voz sabia, antigua y con fuerte acento —pero ¿de dónde?— dice: «Formalidad fugaz y fácil: ¡fáctico! Reintenta las veces que quieras.»",
-  `Pausa teatral. «Ahora, si fallas demasiadas veces, ni quiero imaginarme que dirá ${nombreReferente}... o yo mismo.»`,
+const TEXTO_BA1_ES = ({ nombreReferente }) => [
+  `${nombreReferente} parece ir un lúcido paso adelante — acaso ¿cruzó ya el umbral?`,
+  "Fatídica, en su lugar: una puerta. Y detrás, inesperado como siempre, un examen.",
+  "Una voz curtida, sapiente y quizás estagirita, dice: «Más que una prueba, es una clasificación. Sé que tu potencia es acto, pero ¿cuánto?»",
+  `Un instante de eterno silencio. «Ahora, si fallas demasiadas veces, ni quiero imaginarme que dirá ${nombreReferente}... o yo mismo.»`,
 ];
+
+// EN — Borges narrator (A1a) + anonymous Aristotle (A1b, A1c)
+const TEXTO_A1_EN = [
+  "The passage ends — but, don't they always? — upon a door. Behind it, unexpectedly and expectant, a rite.",
+  "A wise, age-tanned, and maybe a tiny bit Stagirite voice says: «More than a rite, this is a sorting by class, or is it a classing by sort? Your potency is act, I know, but, how much so?»",
+  "An instant of eternal silence. «Now, if your fails work as a loop, I can't even begin to imagine it.»",
+];
+
+const TEXTO_BA1_EN = ({ nombreReferente }) => [
+  `${nombreReferente} shines by their absence, that swift overachiever! Mayhaps they have gone beyond?`,
+  "Fateful, in their stead, a door. Behind it, what are the odds, a rite.",
+  "A wise, age-tanned, and maybe a tiny bit Stagirite voice says: «More than a rite, this is a sorting by class, or is it a classing by sort? Your potency is act, I know, but, how much so?»",
+  `An instant of eternal silence. «Now, if your fails work as a loop, I can't even begin to imagine it — nor what ${nombreReferente} might say.»`,
+];
+
+// Selector por idioma
+const TEXTO_A1 = detectarIdiomaJuego() === "en" ? TEXTO_A1_EN : TEXTO_A1_ES;
+const TEXTO_BA1 = detectarIdiomaJuego() === "en" ? TEXTO_BA1_EN : TEXTO_BA1_ES;
 
 function PantallaCharTest({ onContinuar, rutaEntrada }) {
   const [lineaActual, setLineaActual] = React.useState(0);
   const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const ref = params.get("ref");
-  const adjetivo = "sabios";
-
   const lineas = (rutaEntrada === "brag" && ref)
-    ? TEXTO_BA1({ nombreReferente: ref, adjetivo })
+    ? TEXTO_BA1({ nombreReferente: ref })
     : TEXTO_A1;
 
   const esUltima = lineaActual >= lineas.length - 1;
