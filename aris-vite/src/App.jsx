@@ -4148,7 +4148,65 @@ const POOL_FALSAMENTE_OBVIAS = [
     facts: { vista:"Usa el 30% de la corteza cerebral (~10 millones de bits/s) que a su vez consume el 20% de tus calorías. Mirar: la mejor dieta.",oido:"El único sentido que no se puede apagar voluntariamente. Funciona incluso durante el sueño profundo. Y luego que de oídas es despectivo.",olfato:"El más antiguo evolutivamente. Conecta directo al sistema límbico (saltándose el tálamo): por eso los olores disparan memorias sin aviso y no se pueden evocar.",gusto:"Solo distingue 5 sabores básicos. Todo lo demás es aroma. Entre gustos no hay disgustos, pero entre olfatos...",tacto:"El primero en desarrollarse en el embrión. Tacto, presión, temperatura, caricias, dolor, equilibrio, propiocepción..." } })
 ];
 
-function armarExamenAdmision() {
+// === EXAMEN DE ADMISIÓN — pools EN agrupados ===
+
+const POOL_OBVIAS_EN = [
+  EXAMEN_SEASONS_EN,
+  EXAMEN_ELEMENTS_EN,
+  EXAMEN_SENSES_EN,
+  EXAMEN_WEEKDAYS_EN,
+  crearBiblioteca({
+    id: "examen_arithmetic_en", level: "exadm", lang: "en", field: "ciencias_duras",
+    name: "Arithmetic operations",
+    desc: "Name the four basic arithmetic operations.",
+    total: 4, metmin: 4,
+    facts: {
+      addition:       "1+1=2. Counting is adding. Allegedly the most basic, but also miraculous: stuff joining stuff.",
+      subtraction:    "Taking away. More horrible magic than miracle: where did those morsels go?",
+      multiplication: "Addition that knows how to hide its parentheses. Without it, trash would multiply. What?",
+      division:       "Sharing equally — the most ideal of all, almost miraculous when it does happen."
+    },
+    synonyms: {}
+  })
+];
+
+const POOL_FALSAMENTE_OBVIAS_EN = [
+  EXAMEN_PLANETS_EN,
+  crearBiblioteca({
+    id: "examen_color_spectrum_en", level: "exadm", lang: "en", field: "artes",
+    name: "Colors of the spectrum",
+    desc: "Name the colors of the rainbow.",
+    total: 7, metmin: 7,
+    facts: {
+      red:    "The longest visible wavelength (~700nm). Women see it better. Bulls, famously, don't.",
+      orange: "Named after the fruit, originally named in Persian. Turandot's naming games, but sweeter.",
+      yellow: "The chromatic cousin of 'yell': two roots, two demands for attention. Also akin to gold, yolk, gall, and jaundice.",
+      green:  "The eye distinguishes more shades of green than any other color. The origin story of gringos as green-goes was just that, a story.",
+      blue:   "The last common color to get a name in most languages. Homer's sea was wine-dark, not blue.",
+      indigo: "Newton added it to make the specter match the musical notes. Jeans adopted it later.",
+      violet: "The edge of the visible: ~380nm. Beyond it, ultraviolet — for birds and bees. Then again, violets are blue."
+    },
+    synonyms: {
+      violet: ["purple"]
+    }
+  }),
+  EXAMEN_SENSES_EN
+];
+
+// === Detección de idioma y armarExamenAdmision bilingüe ===
+
+function detectarIdiomaJuego() {
+  const lang = navigator.language || navigator.userLanguage || "es";
+  return lang.startsWith("en") ? "en" : "es";
+}
+
+function armarExamenAdmision(lang) {
+  const idiomaFinal = lang || detectarIdiomaJuego();
+  if (idiomaFinal === "en") {
+    const obvias = mezclarYTomar(POOL_OBVIAS_EN, 3);
+    const falsasObvias = mezclarYTomar(POOL_FALSAMENTE_OBVIAS_EN, 2);
+    return mezclarYTomar([...obvias, ...falsasObvias], 5);
+  }
   const obvias = mezclarYTomar(POOL_OBVIAS, 3);
   const falsasObvias = mezclarYTomar(POOL_FALSAMENTE_OBVIAS, 2);
   return mezclarYTomar([...obvias, ...falsasObvias], 5);
@@ -5982,7 +6040,7 @@ function App() {
 
   function manejarAceptadoExamen({ modoEckhart: esEckhart }) {
     if (esEckhart) { setModoEckhart(true); setPantalla(PANTALLAS.VASTO_VACIO); return; }
-    const examen = armarExamenAdmision();
+    const examen = armarExamenAdmision(detectarIdiomaJuego());
     setExamenBibliotecas(examen); setIndiceExamenActual(0);
     setPantalla(PANTALLAS.EXAMEN_BIBLIOTECAS);
   }
