@@ -2283,8 +2283,184 @@ const PACTO_VARSOVIA_EN = crearBiblioteca({
   }
 });
 
-const HARDCOVER_ES = [HALOGENOS_ES, MUSAS_ES, PREFIJOS_GRIEGOS_ES, HERACLES_ES, ORDENES_ES, CESARES_ES, DECATLON_ES, HUESOS_CARPO_ES, PLANETAS_ENANOS_ES, PRIMOS_ES, PRESOCRATICOS_ES, JUECES_INFRAMUNDO_ES, FIBONACCI_ES, GREENWICH_ES, ECUADOR_PAISES_ES, CANADA_ES, ESTADOS_UE_ES, ESTADOS_USA_ES, UNIDADES_SI_ES, PACTO_VARSOVIA_ES];
-const HARDCOVER_EN = [HALOGENS_EN, MUSES_EN, GREEK_NUMERICAL_PREFIXES_EN, HERACLES_EN, ORDERS_EN, CAESARS_EN, DECATHLON_EN, CARPALS_EN, DWARF_PLANETS_EN, PRIMES_EN, PRESOCRATICS_EN, JUDGES_UNDERWORLD_EN, FIBONACCI_EN, GREENWICH_EN, EQUATOR_COUNTRIES_EN, CANADA_EN, EU_STATES_EN, USA_STATES_EN, UNIDADES_SI_EN, PACTO_VARSOVIA_EN];
+// ============ PRE-CODE SIRENS / SIRENAS PRE-CODE ============
+
+const PRE_CODE_SIRENS_FACTS_ES = {
+  barbara_stanwyck: "Baby Face (1933): explotada desde los 14, lectora de Nietzsche, trepadora financiera. El Código la prohibió; su grandeza sobrevivió 70 años. Una copia reemergió en 2004.",
+  ruth_chatterton:  "Female (1933). CEO de una fábrica: usaba a los hombres para el sexo y los descartaba. Jezabel misma la idolatraba. También: piloto y novelista.",
+  miriam_hopkins:   "Temple Drake (1933): primer drama #MeToo de la historia. De Faulkner. El Código contra una violada asesina. También: la noble canalla de lo mejor de Lubitsch, apenas pausada por el Código.",
+  mae_west:         "La mente más sucia, ingeniosa y veloz de Hollywood, Broadway y casi todo el siglo XX. Guionista, autocreadora, genialmente obscena. ¿Todo el Código contra ella? No, pero casi.",
+  bette_davis:      "Incontenible: sagaz, mordaz, rapaz. Atroz ser su colega, celestial, su espectador. Ganó o usurpó todos los mejores papeles. Lo sentimos, Bankhead.",
+  norma_shearer:    "La esposa del mandamás de MGM: siete películas sobre la irrelevancia del matrimonio. The Divorcee (1930): engañada ella, engañado él, Oscareada ella.",
+  joan_crawford:    "Entró bailando con un apellido 'feo', trepó con las uñas, sobrevivió a todo — sonido, Código, Dunaway, los 70, Pepsi. Crawford pre-code: bestia indómita, hambrienta y sexual (como sus cejas).",
+  greta_garbo:      "Reina Cristina (1933): un beso en la boca con una mujer, una abdicación por amor. Las Annas: Christie y Karenina. El rostro que le enseñó al mundo la melancolía.",
+  claudette_colbert:"It Happened One Night (1934): autostop con la pierna. Ganó el último Oscar pre-code. Se bañó en leche de burra en Sign of the Cross (1932). Un rostro triple: comedia, espectáculo, inteligencia.",
+  katharine_hepburn:"Llegó en 1932 en pantalones, con nuevas reglas y sin preguntar. 4 Oscars y nunca fue a la ceremonia. ¿'Veneno de taquilla'? The Philadelphia Story ganó sin pelear. Pre-code: personalidad y acento.",
+  clara_bow:        "Pionera del sex-appeal en pantalla. El código llegó tarde a tratar de frenarla. Rumiada y escupida por Hollywood. 'Solo soy la crema batida sobre el pastel'. Si te hablan de It girls: ¡es ella!",
+  marlene_dietrich: "Morocco (1930): esmoquin, sombrero de copa, beso mujer-mujer, descalza en el desierto tras Gary Cooper. Von Sternberg la inventó: sus pómulos y boas la eternizaron. Le ganó a Hitler.",
+  carole_lombard:   "'El Ángel Profano.' Reina del screwball, la mejor pagada de Hollywood, muerta a los 33 vendiendo bonos de guerra. Ni Clark Gable ni el screwball se recobraron. Su canto del cisne fue con Lubitsch.",
+  marie_dressler:   "¿Tu vecina canadiense? El mayor éxito en ventas de Hollywood en 1932 y 1933. Opacaba a Garbo o Crawford. Luego: lista negra sindicalista, años de pobreza y retorno triunfal a los 60.",
+  dolores_del_rio:  "La primera gran latina de Hollywood — no objeto exótico, color pero no de fondo: protagonista. La cámara la amaba, el sistema no daba con su nicho. Volvió a México y siguió cosechando triunfos."
+};
+
+const PRE_CODE_SIRENS_FACTS_EN = {
+  barbara_stanwyck: "In Baby Face (1933): pimped out, Nietzsche fan, financial climber. The Code banned it, its greatness survived till its recovery in 2004.",
+  ruth_chatterton:  "In Female (1933): as the CEO of a car factory, she used men for sex just to drop them afterwards. Jezebel herself idolized her. Also: she was a pilot and a novelist.",
+  miriam_hopkins:   "Temple Drake (1933): The OG Me Too drama. By Faulkner. The Code was made to stop it. Also, Lubitsch's favorite sophisticate enchantress. The Code didn't stop her — it barely paused her.",
+  mae_west:         "The dirtiest, wittiest, and quickest mind in Hollywood, Broadway and probably the whole 20th century. Screenwriter, self-inventor, and utterly obscene. The code wasn't only against her, but almost.",
+  bette_davis:      "Too big and smart to be contained by anything, much less so a Code. Probably hell to work with, but heaven to watch. She got most of the best roles available, and unavailable. Sorry, miss Bankhead.",
+  norma_shearer:    "Wife of the head of MGM, starred in seven films about the irrelevance of marriage. The Divorcee (1930): boy meets/cheats on girl, girl cheats on boy, girl wins the Oscar.",
+  joan_crawford:    "Danced her way in, clawed her way up, survived everything — talkies, the Code, Mommie Dearest, the 70s, Pepsi. Pre-code Crawford is a hungrier, more sexual animal: unashamed and barely tamed. Also indomitable: those brows!",
+  greta_garbo:      "Queen Christina (1933): kissing a woman on the mouth, abdicating for love. The Annas: Christie and Karenina. The face that taught the world melancholy.",
+  claudette_colbert:"It Happened One Night (1934): hitchhiked with her leg. Won the last pre-code Oscar. Bathed in asses' milk in Sign of the Cross (1932). Comedy, spectacle, intelligence — all at once in that face.",
+  katharine_hepburn:"Arrived in 1932 wearing pants and refusing to play along. Won 4 Oscars and never attended the show. When declared 'box office poison', her comeback was The Philadelphia Story. Pre-code as personality and accent.",
+  clara_bow:        "Inventress of screen sexuality way before the Code tried to ban it. Hollywood-chewed-and-spat. 'I'm just the whipped cream on top of the pie,' she said. Betty Boop is her ghost. In two letters: It (1927).",
+  marlene_dietrich: "Morocco (1930): tuxedo, top hat, girl-on-girl public kiss, barefoot walk into the desert after Gary Cooper. Von Sternberg invented her: her cheeks, boas and allure outgrew him. Hitler's PR nemesis.",
+  carole_lombard:   "'The Profane Angel.' Queen of screwball, highest paid star in Hollywood, died at 33 selling war bonds. Neither Clark Gable or screwball ever fully recovered. Her swan song was with Lubitsch.",
+  marie_dressler:   "Your Canadian neighbor lookalike was Hollywood's #1 box office draw in 1932 and 1933. Adored by the masses (above Garbo and Crawford and...) Then, blacklisted for unionizing, broke for a decade, and a comeback at 60.",
+  dolores_del_rio:  "Hollywood's first Latina leading lady — not exotic prop, not supporting color: protagonist. The camera loved her, the system was baffled by her beauty: what to do with her? Went back to Mexico and kept harvesting triumphs."
+};
+
+const PRE_CODE_SIRENS_SYNONYMS = {
+  barbara_stanwyck: ["stanwyck", "barbara stanwyk"],
+  ruth_chatterton:  ["chatterton"],
+  miriam_hopkins:   ["hopkins", "miriam"],
+  mae_west:         ["west"],
+  bette_davis:      ["davis", "betty davis"],
+  norma_shearer:    ["shearer", "norma"],
+  joan_crawford:    ["crawford"],
+  greta_garbo:      ["garbo"],
+  claudette_colbert:["colbert", "claudette"],
+  katharine_hepburn:["hepburn", "kate hepburn", "katharine"],
+  clara_bow:        ["bow", "clara"],
+  marlene_dietrich: ["dietrich", "marlene"],
+  carole_lombard:   ["lombard", "carol lombard"],
+  marie_dressler:   ["dressler", "marie"],
+  dolores_del_rio:  ["del rio", "dolores delrio"]
+};
+
+const PRE_CODE_SIRENS_ES = crearBiblioteca({
+  id: "pre_code_sirens_es", level: "normal", lang: "es", field: "artes",
+  name: "Sirenas pre-Code", desc: "Nombra a estas actrices del Hollywood pre-Code (1928-1934).",
+  total: 15, metmin: 10, dificultad: 4, lejania: 4,
+  facts: PRE_CODE_SIRENS_FACTS_ES, synonyms: PRE_CODE_SIRENS_SYNONYMS
+});
+
+const PRE_CODE_SIRENS_EN = crearBiblioteca({
+  id: "pre_code_sirens_en", level: "normal", lang: "en", field: "artes",
+  name: "Pre-Code Sirens", desc: "Name these actresses of pre-Code Hollywood (1928-1934).",
+  total: 15, metmin: 10, dificultad: 4, lejania: 3,
+  facts: PRE_CODE_SIRENS_FACTS_EN, synonyms: PRE_CODE_SIRENS_SYNONYMS
+});
+
+// ============ GOLDEN AGE DIVAS / DIVAS DE LA EDAD DE ORO ============
+
+const GOLDEN_AGE_DIVAS_FACTS_ES = {
+  greta_garbo:       "Ninotchka (1939): soviética modelo vuelta modelo de sombreros. '¡Garbo ríe!' — eslogan de la MGM, veredicto de la audiencia. La más legendaria, recluida y extrañada. 'Quiero estar sola'.",
+  bette_davis:       "Eva al desnudo (1950): depredadora y presa. Baby Jane (1962): dos némesis, una collab, odio como poética. Sagaz, mordaz, sutil, grotesca: el paquete completo. Madonna: 'Bette Davis, we love you'.",
+  joan_crawford:     "Mildred Pierce (1945): su Oscar, su CPR. Baby Jane (1962): décadas de odio que culminan en obra maestra de odio. Sirena, ejecutiva de Pepsi, Christina: ¡nada de ganchos de alambre, nunca!",
+  anna_may_wong:     "Primera y única estrella asiático-americana del viejo Hollywood — víctima y villana en un solo sistema. Luise Rainer en yellowface le usurpó un papel (¿y un Oscar?).",
+  dorothy_dandridge: "Primera mujer negra nominada al Oscar como protagonista por Carmen Jones (1954), luego en la portada de Life. Murió a los 42 con 2 dólares en su cuenta. 'Si fuera blanca, habría conquistado el mundo.'",
+  merle_oberon:      "Nacida en Mumbai de madre cingalesa, pasó la vida entera como blanca 'de Tasmania'. Cumbres borrascosas (1939): pionera del casting ciego mucho antes de que Fennell, Elordi y Chau reclamaran ese mérito.",
+  hedy_lamarr:       "El rostro y la mente: belleza y WiFi y Bluetooth, todo de una emigrante judía austrohúngara. Patentado en 1942 (a los 27). Solo Rimbaud podría competir.",
+  katharine_hepburn: "La Reina Africana (1951): Bogart, sanguijuelas, disentería, ella. De repente, el verano: la maternidad y el amor como villanía. El León en invierno (1968): Leonor de Aquitania como ingenio, dolor y deidad. Pantalones y acento.",
+  barbara_stanwyck:  "Perdición (1944): la femme fatale, tobillera incluida. La dama de Eve (1941): el amor como estafa donde todos pierden (pero ella gana). Ícono sáfico, imán de atención, peor omisión de los Oscar.",
+  vivien_leigh:      "Lo que el viento se llevó (1939): Scarlett O'Hara era de la India. Un tranvía llamado deseo (1951): gritamos Stella, pensamos Blanche. Frágil e imponente.",
+  ingrid_bergman:    "Casablanca (1942): el rostro que hizo llorar a Bogart en pantalla. Dejó Hollywood por Rossellini, fue madre y desterrada. Víctima pionera del gaslighting, coleccionista de Oscars (3), exitosa 'retornée'.",
+  marilyn_monroe:    "Famosa como rubia, en privado una morena lectora de Proust que se casó con Arthur Miller. Comedia, drama, genio: vida y obra, un ícono si no *el* ícono. La belleza ayudó, pero sin ella también habría podido.",
+  rita_hayworth:     "Margarita Cansino, bailarina hispano-mexicana, devenida pin-up y sex symbol panamericana. Su imagen fue pegada a la bomba atómica de Bikini y al agujero en la pared de Sueño de fuga.",
+  ava_gardner:       "Tres maridos: Mickey Rooney, Artie Shaw, Frank Sinatra. 'He tenido enfermedades que duraron más que mis matrimonios.' Hemingway, Borges y Graves: ¿cuántos rostros tienen fans tan ilustres y diversos?",
+  olivia_de_havilland:"Ganó dos Oscars, demandó a su estudio, ganó — ¡los actores no son propiedad! La Ley De Havilland (1944) como proclama de independencia. Secundaria en Lo que el viento se llevó, primaria en su duelo con su hermana.",
+  kim_novak:         "Vértigo (1958): Carlotta Valdés, el vértice del deseo en el romance más perverso de Hitchcock. Columbia quiso convertirla en Rita Hayworth. Ya había pasado por eso en Vértigo y se negó. ¿Son todas las mejores rubias morenas?",
+  lauren_bacall:     "19 años, una ceja levantada, una línea: '¿Sabes silbar, verdad?' Bogart. El sueño eterno. Luego, 40 años como viuda de la leyenda. La voz, el humo, y Hawks, Huston, Streisand y von Trier en su CV.",
+  grace_kelly:       "Sueña con ser ella, no te compares. Tres Hitchcocks en tres años, un Oscar, una corona. Se retiró a los 26 para ser realeza. Hermosa, talentosa, madre de diosas.",
+  marlene_dietrich:  "Escándalo en París (1948), Testigo de cargo (1957): Wilder la dirigió, ella fue aún más salvaje que cuando era un gorila. Adorada por las tropas en la guerra. Alemania la llamó traidora. Ella se dio por elogiada.",
+  tallulah_bankhead: "La diva más bisexual, borracha y citable de Broadway. Llegó tarde a Hollywood y se fue pronto (y probablemente no sola). Pieles de visón en un Bote salvavidas (1944): su única gran película. 'Soy pura como la nieve sucia.'",
+  veronica_lake:     "Inventora del peinado peek-a-boo: un ojo cubierto por un mechón hipnótico. Tanto que generó accidentes y el Departamento de Guerra intervino. ¿La Rachel? Un mito capilar.",
+  joan_fontaine:     "Rebeca (1940): protagonista, anónima (¡solo Hitchcock y du Maurier se atreverían!), ganadora de un Oscar. Más allá: persona non grata en casa de los De Havilland. Feudo sororal más grande que Hollywood.",
+  natalie_wood:      "Rebelde sin causa (1955), West Side Story (1961), Esplendor en la hierba (1961). Tres films, tres actuaciones definitivas. Aterrada del agua toda su vida, ahogada a los 43. El mundo aún llora y se pregunta.",
+  audrey_hepburn:    "Vacaciones en Roma (1953): princesa por un día, Oscar al primer intento. Desayuno con diamantes (1961): el LBD, el gato, la lluvia. Después: embajadora UNICEF para los niños olvidados del mundo. Antes: comedora de tulipanes.",
+  shirley_maclaine:  "El apartamento (1960): Wilder de nuevo, el ascensor como deseo. La fuerza del cariño (1983): por fin el Oscar. Vidas pasadas, proyecciones astrales y cinco décadas eludiendo categorías. Sigue aquí, los espíritus esperan.",
+  doris_day:         "La estrella mejor pagada de Hollywood en 1960, despachada como eterna virgen. Confidencias a medianoche (1959): mucho más graciosa y subversiva de lo que se admitió. Activista animal. Nunca vio sus propias películas. ¿Qué será, será?",
+  lana_turner:       "¿La chica del suéter descubierta en una fuente de sodas — mito o verdad? Qué importa: más allá de la leyenda (¡hecho!), su amante abusivo fue apuñalado en 1958 en su casa. Por su hija. Turner testificó. El jurado absolvió."
+};
+
+const GOLDEN_AGE_DIVAS_FACTS_EN = {
+  greta_garbo:       "Ninotchka (1939): Soviet envoy turned hat convert. 'Garbo laughs!' — MGM's tagline, history's verdict. The most legendary, secluded, and missed. 'I want to be alone'.",
+  bette_davis:       "All About Eve (1950): predator as prey. Baby Jane (1962): two nemesis, one collab, hate as poetics. Smart, grotesque, subtle, transcendent. Madonna: 'Bette Davis, we love you'.",
+  joan_crawford:     "Mildred Pierce (1945): her resurrective Oscar. Baby Jane (1962): a long career of hate culminating in a great work of hate. Siren, Pepsi executive, Christina: no wire hangers, ever!",
+  anna_may_wong:     "Old Hollywood's first and only Asian-American star — systematically victimized and villainized. Luise Rainer in yellow face usurped a role (and an Oscar?) from her.",
+  dorothy_dandridge: "First Black woman nominated for a Best Actress Oscar as Carmen Jones (1954), then on the cover of Life. Died at 42 with $2 in her account. 'If I were white, I could have captured the world.'",
+  merle_oberon:      "Born in Mumbai to a Ceylonese mother, passed as white most of her life as 'Tasmanian'. Wuthering Heights (1939): blind casting pioneer way before Fennell, Elordi and Chau claimed the feat.",
+  hedy_lamarr:       "The face and the mind: beauty and WiFi and Bluetooth, all from an Austro-Hungarian Jewish émigré. Patented in 1942 (at 27). Only Rimbaud could compete.",
+  katharine_hepburn: "The African Queen (1951): Bogart, leeches, dysentery, her. Suddenly, Last Summer: motherhood and love as villainy. The Lion in Winter (1968): Eleanor of Aquitaine as wit, pain, and deity. Pants and accent.",
+  barbara_stanwyck:  "Double Indemnity (1944): la femme fatale, anklet and all. The Lady Eve (1941): love as a con where everybody is a victim (yet she wins). Sapphic icon, attention magnet, and Oscar's worst omission.",
+  vivien_leigh:      "Gone with the Wind (1939): a Southern Belle who was actually from India. A Streetcar Named Desire (1951): everybody screams Stella, but thinks of Blanche. Frail as a person, commandeering as a talent.",
+  ingrid_bergman:    "Casablanca (1942): the face that made Bogart cry on screen. Left Hollywood for Rossellini, becoming a mother and banned in America. Gaslighting pioneering victim, Oscar collector (3), successful returnée.",
+  marilyn_monroe:    "Famous as a blonde, privately a Proust-reading brunette who married Arthur Miller. Comedy, drama, genius: life and opus, an icon if not *the* icon. Beauty helped, but she could have done it without it.",
+  rita_hayworth:     "Margarita Cansino, Spanish-Mexican and dancer, became an All-American pin-up and sex icon. Her image was taped to the Bikini Atoll atomic bomb and the hole in the wall in The Shawshank Redemption.",
+  ava_gardner:       "Three husbands: Mickey Rooney, Artie Shaw, Frank Sinatra. 'I've had diseases that lasted longer than my marriages.' Hemingway, Borges and Graves: how many faces have such illustrious and diverse fans?",
+  olivia_de_havilland:"Won two Oscars, sued her studio, won — actors aren't property! The De Havilland Law (1944) as a proclamation of independence. Secondary in Gone With The Wind, primary in her feud against her sister.",
+  kim_novak:         "Vertigo (1958): Carlotta Valdes, the vortex of desire in Hitchcock's most perverse romance. Columbia tried to turn her into Rita Hayworth. She'd been through that in Vertigo already and refused. Are all the best blondes brunettes?",
+  lauren_bacall:     "19, one raised eyebrow, one line: 'You know how to whistle, don't you?' Bogart. The Big Sleep. Then, 40 years as the widow of the legend. The voice, the smoke, and Hawks, Huston, Streisand and von Trier in her CV.",
+  grace_kelly:       "Dream of being her, don't compare yourself to her. Three Hitchcocks in three years, one Oscar, one crown. Retired at 26 to become royalty. Gorgeous, talented, mother of goddesses.",
+  marlene_dietrich:  "A Foreign Affair (1948), Witness for the Prosecution (1957): Wilder directed her, wilder she became. Entertained Allied troops at the front. Germany called her a traitor. She, a compliment.",
+  tallulah_bankhead: "Broadway's most bisexual, drunk, and quotable diva. Got too late to Hollywood and left too early (and probably not alone). Mink stoles on a Lifeboat (1944): her only great film. 'I'm as pure as the driven slush.'",
+  veronica_lake:     "Peek-a-boo hairdo inventress. So hypnotic the War Department intervened. The Rachel? A capillary myth. Think again: peek-a-boo.",
+  joan_fontaine:     "Rebecca (1940): The nameless protagonist (only Hitchcock and du Maurier would dare!) who earned her an Oscar. Beyond that, persona non grata at the de Havillands'. Feud as long-lasting legendary sibling rivalry.",
+  natalie_wood:      "Rebel Without a Cause (1955), West Side Story (1961), Splendor in the Grass (1961). Three films, three definitive performances. Fearful of water all her life, drowned at 43. The world still grieves and wonders.",
+  audrey_hepburn:    "Roman Holiday (1953): princess for a day, Oscar on the first try. Breakfast at Tiffany's (1961): LBD, cat, rain. Later: UNICEF ambassador to the world's forgotten children. Before: tulip eater.",
+  shirley_maclaine:  "The Apartment (1960): Wilder again, the elevator as desire. Terms of Endearment (1983): finally the Oscar. Past lives, astral projections, and five decades of eluding categories. Still here, the spirits await.",
+  doris_day:         "Hollywood's highest-paid star in 1960, dismissed as the eternal virgin. Pillow Talk (1959): far funnier and more subversive than thought. Animal rights activist. Never watched her own films. Qué será, será?",
+  lana_turner:       "Sweater girl discovered at a soda fountain — myth or truth? Who cares: beyond the legend (fact!), her abusive lover was stabbed to death in 1958 at her home. By her daughter. Turner testified. The jury acquitted."
+};
+
+const GOLDEN_AGE_DIVAS_SYNONYMS = {
+  greta_garbo:       ["garbo", "greta"],
+  bette_davis:       ["davis", "betty davis"],
+  joan_crawford:     ["crawford"],
+  anna_may_wong:     ["wong", "anna may", "anna mae wong"],
+  dorothy_dandridge: ["dandridge", "dorothy"],
+  merle_oberon:      ["oberon", "merle"],
+  hedy_lamarr:       ["lamarr", "hedy", "heddy lamarr"],
+  katharine_hepburn: ["hepburn", "kate hepburn", "katharine", "katharine hepburn"],
+  barbara_stanwyck:  ["stanwyck", "barbara stanwyk"],
+  vivien_leigh:      ["leigh", "vivien", "vivian leigh"],
+  ingrid_bergman:    ["bergman", "ingrid"],
+  marilyn_monroe:    ["monroe", "marilyn"],
+  rita_hayworth:     ["hayworth", "rita", "margarita cansino"],
+  ava_gardner:       ["gardner", "ava"],
+  olivia_de_havilland:["de havilland", "olivia", "dehavilland"],
+  kim_novak:         ["novak", "kim"],
+  lauren_bacall:     ["bacall", "lauren", "betty bacall"],
+  grace_kelly:       ["kelly", "grace", "princess grace"],
+  marlene_dietrich:  ["dietrich", "marlene"],
+  tallulah_bankhead: ["bankhead", "tallulah"],
+  veronica_lake:     ["lake", "veronica"],
+  joan_fontaine:     ["fontaine", "joan fontaine"],
+  natalie_wood:      ["wood", "natalie"],
+  audrey_hepburn:    ["audrey hepburn", "audrey", "hepburn"],
+  shirley_maclaine:  ["maclaine", "shirley", "mac laine"],
+  doris_day:         ["day", "doris"],
+  lana_turner:       ["turner", "lana"]
+};
+
+const GOLDEN_AGE_DIVAS_ES = crearBiblioteca({
+  id: "golden_age_divas_es", level: "hard", lang: "es", field: "artes",
+  name: "Divas de la Edad de Oro", desc: "Nombra a estas divas del Hollywood clásico (1935-1965).",
+  total: 27, metmin: 15, dificultad: 5, lejania: 4,
+  facts: GOLDEN_AGE_DIVAS_FACTS_ES, synonyms: GOLDEN_AGE_DIVAS_SYNONYMS
+});
+
+const GOLDEN_AGE_DIVAS_EN = crearBiblioteca({
+  id: "golden_age_divas_en", level: "hard", lang: "en", field: "artes",
+  name: "Golden Age Divas", desc: "Name these divas of classic Hollywood (1935-1965).",
+  total: 27, metmin: 15, dificultad: 5, lejania: 3,
+  facts: GOLDEN_AGE_DIVAS_FACTS_EN, synonyms: GOLDEN_AGE_DIVAS_SYNONYMS
+});
+
+const HARDCOVER_ES = [HALOGENOS_ES, MUSAS_ES, PREFIJOS_GRIEGOS_ES, HERACLES_ES, ORDENES_ES, CESARES_ES, DECATLON_ES, HUESOS_CARPO_ES, PLANETAS_ENANOS_ES, PRIMOS_ES, PRESOCRATICOS_ES, JUECES_INFRAMUNDO_ES, FIBONACCI_ES, GREENWICH_ES, ECUADOR_PAISES_ES, CANADA_ES, ESTADOS_UE_ES, ESTADOS_USA_ES, UNIDADES_SI_ES, PACTO_VARSOVIA_ES, PRE_CODE_SIRENS_ES];
+const HARDCOVER_EN = [HALOGENS_EN, MUSES_EN, GREEK_NUMERICAL_PREFIXES_EN, HERACLES_EN, ORDERS_EN, CAESARS_EN, DECATHLON_EN, CARPALS_EN, DWARF_PLANETS_EN, PRIMES_EN, PRESOCRATICS_EN, JUDGES_UNDERWORLD_EN, FIBONACCI_EN, GREENWICH_EN, EQUATOR_COUNTRIES_EN, CANADA_EN, EU_STATES_EN, USA_STATES_EN, UNIDADES_SI_EN, PACTO_VARSOVIA_EN, PRE_CODE_SIRENS_EN];
 
 // ============ PENTATEUCO / PENTATEUCH ============
 const CORRIENTES_FILOSOFICAS_ES = crearBiblioteca({
@@ -5984,7 +6160,9 @@ function scoreOrden(b) {
 
 const BIBLIOTECAS_CATALOGO = [
   ...PAPERBACK_ES, ...HARDCOVER_ES,
-  CORRIENTES_FILOSOFICAS_ES, EXPRESIONES_LATINAS_ES, EXPRESIONES_FRANCESAS_ES, VANISHED_STATES_ES, HABIA_UNA_VEZ_ES
+  CORRIENTES_FILOSOFICAS_ES, EXPRESIONES_LATINAS_ES, EXPRESIONES_FRANCESAS_ES, VANISHED_STATES_ES, HABIA_UNA_VEZ_ES,
+  GOLDEN_AGE_DIVAS_ES,
+  GOLDEN_AGE_DIVAS_EN
 ].sort((a, b) => {
   // Primero por nivel (beginner → normal → hard), luego por score dentro del nivel
   const niveles = { beginner: 0, normal: 1, hard: 2 };
