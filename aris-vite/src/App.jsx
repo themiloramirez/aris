@@ -2283,7 +2283,60 @@ const PACTO_VARSOVIA_EN = crearBiblioteca({
   }
 });
 
-// ============ PRE-CODE SIRENS / SIRENAS PRE-CODE ============
+// ============ SISTEMA DE SONIDO ============
+
+const SOUND_CLIPS = {
+  // Juego principal — pack oficina #378075
+  completar_bib:  { start: 3.0,  end: 4.2  },  // stamp
+  error:          { start: 50.0, end: 53.0  },  // crumpling paper
+  perder_vida:    { start: 59.0, end: 61.0  },  // tearing paper
+  acierto:        { start: 89.0, end: 91.0  },  // marker (01:29-01:31)
+  abrir_bib:      { start: 109.0, end: 111.0 }, // drawer (01:49-01:51)
+  // Teresa — línea glitch (v1.0)
+  teresa_aparece: { start: 3.0,  end: 4.2  },   // placeholder: usar stamp hasta tener clips Teresa
+  teresa_concede: { start: 3.0,  end: 4.2  },   // placeholder
+  teresa_falla:   { start: 50.0, end: 53.0 },   // placeholder: crumpling
+};
+
+let _audioCtx = null;
+let _audioBuffer = null;
+let _soundEnabled = localStorage.getItem("aris_sound") !== "off";
+
+async function initSound() {
+  if (_audioBuffer) return;
+  try {
+    _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const response = await fetch("assets/audio/oficina.mp3");
+    const arrayBuffer = await response.arrayBuffer();
+    _audioBuffer = await _audioCtx.decodeAudioData(arrayBuffer);
+  } catch (e) {
+    console.warn("Aris sound init failed:", e);
+  }
+}
+
+function playSound(clipKey) {
+  if (!_soundEnabled || !_audioBuffer || !_audioCtx) return;
+  const clip = SOUND_CLIPS[clipKey];
+  if (!clip) return;
+  try {
+    if (_audioCtx.state === "suspended") _audioCtx.resume();
+    const source = _audioCtx.createBufferSource();
+    source.buffer = _audioBuffer;
+    source.connect(_audioCtx.destination);
+    source.start(0, clip.start, clip.end - clip.start);
+  } catch (e) {
+    console.warn("Aris playSound error:", e);
+  }
+}
+
+function setSoundEnabled(val) {
+  _soundEnabled = val;
+  localStorage.setItem("aris_sound", val ? "on" : "off");
+}
+
+function getSoundEnabled() { return _soundEnabled; }
+
+
 
 const PRE_CODE_SIRENS_FACTS_ES = {
   barbara_stanwyck: "Baby Face (1933): explotada desde los 14, lectora de Nietzsche, trepadora financiera. El Código la prohibió; su grandeza sobrevivió 70 años. Una copia reemergió en 2004.",
@@ -4552,6 +4605,7 @@ function JugarBiblioteca({ biblioteca, onCompletada, mensajeCompletacion, modoTi
         setEncontrados(nuevos);
         setUltimoFeedback({ tipo: "ok", clave, texto: biblioteca.facts[clave] || "" });
         setInput("");
+        playSound("acierto");
         // Limpiar pista del elemento encontrado
         if (pistas[clave]) {
           const nuevasPistas = { ...pistas };
@@ -4560,12 +4614,15 @@ function JugarBiblioteca({ biblioteca, onCompletada, mensajeCompletacion, modoTi
           guardarPistas(biblioteca._id, nuevasPistas);
         }
         if (total !== null && nuevos.length >= total) {
+          playSound("completar_bib");
           setEsperandoContinuar(true); // mostrar FT + botón, no avanzar todavía
         }
       }
     } else if (resultado.ambiguo) {
+      playSound("error");
       setUltimoFeedback({ tipo: "no", texto: "Casi, pero no estoy seguro de cuál querías decir — revisá la ortografía." });
     } else {
+      playSound("error");
       const closeAnswer = buscarCloseAnswer(biblioteca._id, norm(input));
       setUltimoFeedback({ tipo: "no", texto: closeAnswer || "No encontrado. Probá otra vez." });
     }
@@ -6207,6 +6264,23 @@ function App() {
     guardado?.progreso ?? estadoInicialProgreso(BIBLIOTECAS_CATALOGO)
   );
   const [configAbierta, setConfigAbierta] = useState(false);
+  const [soundEnabled, setSoundEnabledState] = useState(getSoundEnabled());
+
+  // Inicializar sonido al primer click del usuario
+  React.useEffect(() => {
+    const handleFirstInteraction = () => {
+      initSound();
+      document.removeEventListener("click", handleFirstInteraction);
+    };
+    document.addEventListener("click", handleFirstInteraction);
+    return () => document.removeEventListener("click", handleFirstInteraction);
+  }, []);
+
+  const toggleSound = () => {
+    const next = !soundEnabled;
+    setSoundEnabled(next);
+    setSoundEnabledState(next);
+  };
   const [ayudaAbierta, setAyudaAbierta] = useState(false);
   const [modoNoche, setModoNoche] = useState(false);
   const [modoEckhart, setModoEckhart] = useState(false);
@@ -6389,7 +6463,15 @@ function App() {
               Configuración
             </h2>
             <p style={{ fontSize:13, color:"#5a5040", marginBottom:8 }}>Idioma: <strong>Español</strong> (inglés próximamente)</p>
-            <p style={{ fontSize:13, color:"#5a5040", marginBottom:16 }}>Sonido: próximamente</p>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:16 }}>
+              <span style={{ fontSize:13, color:"#5a5040" }}>Sonido:</span>
+              <button onClick={toggleSound}
+                style={{ background: soundEnabled ? "#2A2A24" : "#ccc", color: soundEnabled ? "#F7F3E8" : "#2A2A24",
+                         border:"none", padding:"4px 14px", fontFamily:"Georgia, serif", fontSize:12,
+                         cursor:"pointer", borderRadius:2 }}>
+                {soundEnabled ? "🔊 Activado" : "🔇 Silenciado"}
+              </button>
+            </div>
             <button onClick={() => setConfigAbierta(false)}
               style={{ background:"#2A2A24", color:"#F7F3E8", border:"none", padding:"6px 16px",
                        fontFamily:"Georgia, serif", fontSize:12, cursor:"pointer" }}>
@@ -6583,6 +6665,7 @@ function App() {
                 b._id === bSimp._id ? {...b, completados: 0, tipoComplecion: null} : b));
             }
             const bFull = progresoBibliotecas.find(b => b._id === bSimp._id);
+            playSound("abrir_bib");
             setBibliotecaJugando(bFull); setPantalla(PANTALLAS.JUGANDO_BIBLIOTECA);
           }}
         />
