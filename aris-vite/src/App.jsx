@@ -1130,7 +1130,7 @@ const PENTATEUCO_ES = crearBiblioteca({
 
 
 const ISLAS_CARIBE_ES = crearBiblioteca({
-  id: "islas_caribe_es", level: "beginner", lang: "es", field: "humanidades",
+  id: "islas_caribe_es", level: "beginner", lang: "es", field: "geografia",
   name: "Las 5 mayores islas del Caribe", desc: "Nombra las 5 islas más grandes del mar Caribe por extensión.",
   total: 5, metmin: 3, dificultad: 1, lejania: 2,
   facts: {
@@ -1147,17 +1147,17 @@ const ISLAS_CARIBE_ES = crearBiblioteca({
 
 
 const NAVES_COLON_ES = crearBiblioteca({
-  id: "naves_colon_es", level: "beginner", lang: "es", field: "humanidades",
+  id: "naves_colon_es", level: "beginner", lang: "es", field: "historia",
   name: "Naves de Colón", desc: "Nombra las 3 naves con las que Colón llegó a América en 1492.",
   total: 3, metmin: 2, dificultad: 1, lejania: 1,
   facts: {
     pinta: 'La Pinta: Pintada de colores vistosos — "la pintá". La más rápida y la primera en avistar tierra cuando Rodrigo de Triana —no Colón— gritó "¡Tierra!"',
     nina: 'La Niña se llamaba Santa Clara. "Niña" era apodo derivado del apellido de su dueño, Juan Niño — apodos que derrotan santas.',
-    santa_maria: 'La nao capitana — ni siquiera era carabela. Los marineros la llamaban "La Gallega"; recordada por su nombre de bautizo y su naufragio junto a la Hispaniola.'
+    "santa maria": 'La nao capitana — ni siquiera era carabela. Los marineros la llamaban "La Gallega"; recordada por su nombre de bautizo y su naufragio junto a la Hispaniola.'
   },
   synonyms: {
     nina: ["santa clara"],
-    santa_maria: ["la gallega"]
+    "santa maria": ["la gallega"]
   }
 });
 
@@ -1188,7 +1188,7 @@ const EVANGELISTAS_ES = crearBiblioteca({
 
 
 const ISLAS_MEDITERRANEO_ES = crearBiblioteca({
-  id: "islas_mediterraneo_es", level: "beginner", lang: "es", field: "humanidades",
+  id: "islas_mediterraneo_es", level: "beginner", lang: "es", field: "geografia",
   name: "Las 5 mayores islas del Mediterráneo", desc: "Nombra las 5 islas más grandes del mar Mediterráneo por extensión.",
   total: 5, metmin: 3, dificultad: 1, lejania: 2,
   facts: {
@@ -1244,7 +1244,663 @@ const ELECTROLYTES_EN = crearBiblioteca({
   synonyms: {}
 });
 
-const PAPERBACK_ES = [OCEANOS_ES, CONTINENTES_ES, SPICE_GIRLS_ES, ESTOMAGOS_ES, PECADOS_ES, HUESOS_OIDO_ES, MARAVILLAS_ES, LUNAS_GALILEANAS_ES, MACRONUTRIENTES_ES, MESES_30_ES, GASES_NOBLES_ES, ZODIACO_ES, SABORES_ES, FASES_LUNA_ES, TRIANGULOS_ES, PALABRAS_ACENTO_ES, ROMANCES_ES, GERMANICAS_ES, RELIGIONES_ES, PENTATEUCO_ES, ISLAS_CARIBE_ES, NAVES_COLON_ES, TRIMURTI_ES, EVANGELISTAS_ES, ISLAS_MEDITERRANEO_ES, ELECTROLITOS_ES];
+// ============ JUEGOS OLÍMPICOS DE ATENAS 1896 ============
+
+// ============ MUJERES DE ROMA ============
+
+const MUJERES_ROMA_FACTS_ES = {
+  lucrecia:       "509 a.C. Violada por Sexto Tarquinio, se suicidó contándolo. Su muerte fundó la República romana. ¿Leyenda o historia? Shakespeare ni se lo preguntó.",
+  "livia drusila":  "Esposa de Augusto, madre de Tiberio: 51 años en el poder sin cargo. Envenenada — se dice. El poder más fuerte casi nunca es oficial.",
+  "agripina mayor": "Nieta de Augusto, heroína popular. Tiberio la exilió y la dejó morir de hambre. El pueblo la lloró como no lloró a ningún emperador.",
+  "agripina menor": "Envenenó a Claudio y puso a Nerón en el trono. Nerón la mandó matar varias veces — quería ver el útero que lo había parido. Maternidad romana: tragedia griega.",
+  mesalina:       "Esposa de Claudio. Ninfómana, conspiradora, casada con otro mientras Claudio vivía — según sus enemigos. Ejecutada a los 22, inmortalizada por Graves.",
+  "popea sabina":   "Amante y esposa de Nerón. Bella, inteligente, protectora de los judíos. Nerón la mató de una patada embarazada. Emperatriz absoluta del skincare romano.",
+  "julia mayor":    "Hija de Augusto, tres matrimonios de Estado. Exiliada por 'libertinaje' — probablemente política. Murió de hambre. El precio de ser hija de Roma.",
+  calpurnia:      "Tercera esposa de César. Soñó los idus de marzo y le advirtió. César no escuchó. Después entregó sus papeles a Marco Antonio. La más discreta, la más leal."
+};
+
+const MUJERES_ROMA_FACTS_EN = {
+  lucrecia:       "509 BC. Raped by Sextus Tarquinius, she killed herself telling the story. Her death founded the Roman Republic. Legend or history? Shakespeare didn't ask.",
+  "livia drusila":  "Wife of Augustus, mother of Tiberius: 51 years in power without a title. Poisoned — they say. The strongest power is almost never official.",
+  "agripina mayor": "Granddaughter of Augustus, popular heroine. Tiberius exiled her and let her starve. The people mourned her as they mourned no emperor.",
+  "agripina menor": "Poisoned Claudius and put Nero on the throne. Nero tried to kill her several times — he wanted to see the womb that bore him. Roman motherhood: Greek tragedy.",
+  mesalina:       "Wife of Claudius. Nymphomaniac, conspirator, publicly married to another while Claudius lived — according to her enemies. Executed at 22, immortalized by Graves.",
+  "popea sabina":   "Lover and wife of Nero. Beautiful, intelligent, protector of the Jews. Nero kicked her to death while pregnant. Absolute empress of Roman skincare.",
+  "julia mayor":    "Daughter of Augustus, three marriages of State. Exiled for 'licentiousness' — probably politics. Died of hunger. The price of being Rome's daughter.",
+  calpurnia:      "Caesar's third wife. Dreamed the Ides of March and warned him. Caesar didn't listen. After the assassination, she handed his papers to Mark Antony. The most discreet, the most loyal."
+};
+
+const MUJERES_ROMA_SYNONYMS_ES = {
+  lucrecia:       ["lucrecia", "lucretia"],
+  "livia drusila":  ["livia", "livia drusila"],
+  "agripina mayor": ["agripina la mayor", "agripina mayor", "agrippina", "agrippina mayor"],
+  "agripina menor": ["agripina la menor", "agripina menor", "agripina la joven"],
+  mesalina:       ["mesalina", "valeria mesalina"],
+  "popea sabina":   ["popea", "popea sabina", "poppaea"],
+  "julia mayor":    ["julia", "julia la mayor", "julia mayor"],
+  calpurnia:      ["calpurnia"]
+};
+
+const MUJERES_ROMA_SYNONYMS_EN = {
+  lucrecia:       ["lucretia", "lucrecia"],
+  "livia drusila":  ["livia", "livia drusilla"],
+  "agripina mayor": ["agrippina the elder", "agrippina major", "agrippina"],
+  "agripina menor": ["agrippina the younger", "agrippina minor"],
+  mesalina:       ["messalina", "valeria messalina"],
+  "popea sabina":   ["poppaea", "poppaea sabina", "popea"],
+  "julia mayor":    ["julia", "julia the elder", "julia major"],
+  calpurnia:      ["calpurnia"]
+};
+
+const MUJERES_ROMA_ES = crearBiblioteca({
+  id: "mujeres_roma_es", level: "normal", lang: "es", field: "historia",
+  name: "Mujeres de Roma",
+  desc: "Nombra estas mujeres que ejercieron el poder en la Roma imperial.",
+  total: 8, metmin: 5, dificultad: 3, lejania: 4,
+  facts: MUJERES_ROMA_FACTS_ES, synonyms: MUJERES_ROMA_SYNONYMS_ES
+});
+
+const MUJERES_ROMA_EN = crearBiblioteca({
+  id: "mujeres_roma_en", level: "normal", lang: "en", field: "historia",
+  name: "Women of Rome",
+  desc: "Name these women who wielded power in imperial Rome.",
+  total: 8, metmin: 5, dificultad: 3, lejania: 4,
+  facts: MUJERES_ROMA_FACTS_EN, synonyms: MUJERES_ROMA_SYNONYMS_EN
+});
+
+// ============ SIETE COLINAS DE ROMA ============
+
+const COLINAS_ROMA_FACTS_ES = {
+  aventino:   "Popular: fuera del pomerium original, barrio y refugio de plebeyos en la Secessio. Hoy: vista a San Pedro, jardines de azahar y — dicen — la cueva de Caco.",
+  capitolino: "La más pequeña y sagrada: Júpiter, Juno, Minerva y las ocas de Juno salvando a Roma. Los triunfos militares terminaban aquí: ¿pereza de subir las demás?",
+  celio:      "La más tranquila. Barrio aristocrático en la República, termas de Caracalla a sus pies. San Giovanni en Laterano en la cima: siglos de capas, una sola Roma.",
+  esquilino:  "La más grande. Cementerio de pobres, luego jardines de Mecenas. Aquí enterraron a Nerón. Santa María la Mayor en su cima. Gloria e infamia, colindando.",
+  palatino:   "La de Rómulo y los emperadores. 'Palatium' dio 'palacio' a todas las lenguas europeas. La colina que nombró (etimológicamente) al poder.",
+  quirinal:   "La más institucional: el Quirinale, residencia del Presidente. Reyes sabinos, papas, jefes de Estado. Siglos de poder, cero herencia lingüística.",
+  viminal:    "Pequeña y olvidada. Entre el Quirinal y el Esquilino. Las termas de Diocleciano. La estación Termini: todos pasan rápido, menos las víctimas de robos."
+};
+
+const COLINAS_ROMA_FACTS_EN = {
+  aventino:   "Outside the pomerium, plebeian neighborhood and refuge during the Secessio. Today: views of St. Peter's, orange blossom gardens and — they say — the cave of Cacus.",
+  capitolino: "The smallest and most sacred: Jupiter, Juno, Minerva and Juno's geese saving Rome. Military triumphs ended here: too lazy to climb the others?",
+  celio:      "The most peaceful. Aristocratic neighborhood in the Republic, Baths of Caracalla at its feet. San Giovanni in Laterano at the summit: centuries of layers, one Rome.",
+  esquilino:  "The largest. Cemetery of the poor, then Maecenas' gardens. Nero was buried here. Santa Maria Maggiore at its summit. Glory and infamy, side by side.",
+  palatino:   "Romulus' hill and the emperors' home. 'Palatium' gave 'palace' to every European language. The hill that named power itself.",
+  quirinal:   "The most institutional: the Quirinale, residence of the President. Sabine kings, popes, heads of state. Centuries of power, zero linguistic legacy abroad.",
+  viminal:    "Small and forgotten. Between the Quirinal and the Esquiline. Baths of Diocletian. Termini station: everyone passes through quickly, except the pickpocket victims."
+};
+
+const COLINAS_ROMA_SYNONYMS_ES = {
+  aventino:   ["aventino", "aventine"],
+  capitolino: ["capitolino", "capitoline", "campidoglio"],
+  celio:      ["celio", "caelian", "caelio"],
+  esquilino:  ["esquilino", "esquiline"],
+  palatino:   ["palatino", "palatine"],
+  quirinal:   ["quirinal", "quirinale", "quirinalio"],
+  viminal:    ["viminal", "viminale"]
+};
+
+const COLINAS_ROMA_SYNONYMS_EN = {
+  aventino:   ["aventine", "aventino"],
+  capitolino: ["capitoline", "capitolino", "campidoglio"],
+  celio:      ["caelian", "celio", "caelian hill"],
+  esquilino:  ["esquiline", "esquilino"],
+  palatino:   ["palatine", "palatino"],
+  quirinal:   ["quirinal", "quirinale"],
+  viminal:    ["viminal", "viminale"]
+};
+
+const COLINAS_ROMA_ES = crearBiblioteca({
+  id: "colinas_roma_es", level: "normal", lang: "es", field: "historia",
+  name: "Siete colinas de Roma",
+  desc: "Nombra las siete colinas de Roma.",
+  total: 7, metmin: 5, dificultad: 3, lejania: 4,
+  facts: COLINAS_ROMA_FACTS_ES, synonyms: COLINAS_ROMA_SYNONYMS_ES
+});
+
+const COLINAS_ROMA_EN = crearBiblioteca({
+  id: "colinas_roma_en", level: "normal", lang: "en", field: "historia",
+  name: "Seven Hills of Rome",
+  desc: "Name the seven hills of Rome.",
+  total: 7, metmin: 5, dificultad: 3, lejania: 4,
+  facts: COLINAS_ROMA_FACTS_EN, synonyms: COLINAS_ROMA_SYNONYMS_EN
+});
+
+// ============ EMPERADORES ANTONINOS ============
+
+const ANTONINOS_FACTS_ES = {
+  nerva:         "El primer antonino: 96-98 d.C. Senador anciano que apagó el caos post-Domiciano. Adoptó a Trajano — el mejor hijo posible. 16 meses de reinado, 96 años de dinastía.",
+  trajano:       "98-117 d.C. Optimus princeps. Dacia conquistada, máxima extensión del Imperio. Primer hispano en el trono. Su columna narra más que todos los columnistas actuales.",
+  adriano:       "117-138 d.C. Viajero, barbado, homoerótico. Antínoo inmortalizado como dios y ciudad. Muro en Britania, Panteón reconstruido, Jerusalén renombrada. ¿A qué hora dormía?",
+  "antonino pio":  "138-161 d.C. 23 años sin guerras, sin crisis, sin escándalos. Roma en paz total. Ni el chisme ni la historia lo mientan: así es el éxito.",
+  "marco aurelio": "161-180 d.C. Las Meditaciones las escribió en campaña, para sí mismo. Guerras, plagas, bárbaros — y aún así, ecuanimidad. El rey-filósofo platónico. O casi.",
+  comodo:        "180-192 d.C. Se creyó Hércules, olvidando que Hércules es trágico. Roma: 'Commodiana.' Gladiador en el anfiteatro, estrangulado en la bañera. Atroz vida, gloriosos sustantivos."
+};
+
+const ANTONINOS_FACTS_EN = {
+  nerva:         "The first Antonine: 96-98 AD. Elder senator who extinguished the post-Domitian chaos. Adopted Trajan — the best possible son. 16 months of reign, 96 years of dynasty.",
+  trajano:       "98-117 AD. Optimus princeps. Dacia conquered, the Empire at its greatest extent. First Hispanic on the throne. His column narrates more than all columnists today.",
+  adriano:       "117-138 AD. Traveler, bearded, homoerotic. Antinous immortalized as god and city. Wall in Britannia, Pantheon rebuilt, Jerusalem renamed. When did he sleep?",
+  "antonino pio":  "138-161 AD. 23 years without wars, without crises, without scandals. Rome in total peace. Neither gossip nor history mention him: utter success.",
+  "marco aurelio": "161-180 AD. The Meditations were written on campaign, for himself. Wars, plagues, barbarians — and still, equanimity. The Platonic philosopher-king. Or almost.",
+  comodo:        "180-192 AD. Believed himself Hercules — so tragic. Not Rome: 'Commodiana.' Gladiator in the arena, strangled in the bathtub. Atrocious life, glorious nouns."
+};
+
+const ANTONINOS_SYNONYMS_ES = {
+  nerva:         ["nerva"],
+  trajano:       ["trajano", "trajan"],
+  adriano:       ["adriano", "hadrian"],
+  "antonino pio":  ["antonino pío", "antonino pio", "antoninus pius"],
+  "marco aurelio": ["marco aurelio", "marcus aurelius"],
+  comodo:        ["cómodo", "comodo", "commodus"]
+};
+
+const ANTONINOS_SYNONYMS_EN = {
+  nerva:         ["nerva"],
+  trajano:       ["trajan", "trajano"],
+  adriano:       ["hadrian", "adriano"],
+  "antonino pio":  ["antoninus pius", "antonino pio", "antonino pío"],
+  "marco aurelio": ["marcus aurelius", "marco aurelio"],
+  comodo:        ["commodus", "comodo", "cómodo"]
+};
+
+const ANTONINOS_ES = crearBiblioteca({
+  id: "antoninos_es", level: "normal", lang: "es", field: "historia",
+  name: "Emperadores Antoninos",
+  desc: "Nombra los seis emperadores de la dinastía Antonina.",
+  total: 6, metmin: 4, dificultad: 3, lejania: 4,
+  facts: ANTONINOS_FACTS_ES, synonyms: ANTONINOS_SYNONYMS_ES
+});
+
+const ANTONINOS_EN = crearBiblioteca({
+  id: "antoninos_en", level: "normal", lang: "en", field: "historia",
+  name: "Antonine Emperors",
+  desc: "Name the six emperors of the Antonine dynasty.",
+  total: 6, metmin: 4, dificultad: 3, lejania: 4,
+  facts: ANTONINOS_FACTS_EN, synonyms: ANTONINOS_SYNONYMS_EN
+});
+
+// ============ ACTORES CON 3+ OSCARS ============
+
+const OSCARS_3_FACTS_ES = {
+  katharine_hepburn: "Cuatro veces (1933, 1967, 1968, 1981): una actriz, cero ceremonias asistidas. Pantalones, acentos, mucho más grande que Hollywood mismo. 'No soy una gran actriz, soy una gran personalidad.' ¿Por qué no ambas, Kate?",
+  meryl_streep:      "Tres Oscars, 21 nominaciones — uno se pregunta: ¿se emociona aún? ¿Y cómo saberlo? Acentos, risas, reinvenciones: los habita todos. Alemana, polaca, inglesa, australiana.",
+  frances_mcdormand: "Tres Oscars protagónicos: segunda en la historia tras Hepburn. Fargo, Tres anuncios, Nomadland. Sin agente, sin publicista, sin Hollywood. Con Minnesota e independencia rotunda.",
+  ingrid_bergman:    "Tres Oscars (ninguno por Casablanca). Ni el exilio ni la gloria ni la infamia ni el puritanismo pudieron frenarla. El carisma y el talento menos reclusivos de Suecia.",
+  daniel_day_lewis:  "El único actor con tres Oscars al Mejor Actor. Mi pie izquierdo, Petróleo sangriento, Lincoln. El método como religión llevado a nivel martirio. Retirado en 2017.",
+  jack_nicholson:    "Tres Oscars en tres décadas distintas: 70s, 80s y 90s. Aterrador y encantador, entre resplandores y payasos y vecinos detestables. Siempre Jack.",
+  walter_brennan:    "Tres Oscars consecutivos como actor de reparto (1936-1940): hecho único. Cowboy eterno, voz inconfundible, nunca protagonista. Dorado como su era, pero ¿anterior a los 15 minutos de fama?",
+  sean_penn:         "Dos Oscars al Mejor Actor (Mystic River, Milk). El tercero llegó como reparto en 2026 por One Battle After Another. No fue a la ceremonia. Kieran Culkin aceptó: 'no pudo venir esta noche, o no quiso.' Typical Penn."
+};
+
+const OSCARS_3_FACTS_EN = {
+  katharine_hepburn: "Four times (1933, 1967, 1968, 1981): one actress, zero ceremonies attended. Trousers, opinions, much larger than Hollywood itself. 'I'm not a great actress, I'm a great personality.' Why not both, Kate?",
+  meryl_streep:      "Three Oscars, 21 nominations — one wonders: does she still get excited? Would one notice? Accents, laughs, reinventions: she inhabits them all. German, Polish, English, Australian.",
+  frances_mcdormand: "Three lead Oscars: second in history after Hepburn. Fargo, Three Billboards, Nomadland. No agent, no publicist, no Hollywood. Just Minnesota and absolute independence.",
+  ingrid_bergman:    "Three Oscars (none for Casablanca). Neither exile nor glory nor infamy nor puritanism could stop her. The least reclusive charisma and talent Sweden ever exported.",
+  daniel_day_lewis:  "The only actor with three Best Actor Oscars. My Left Foot, There Will Be Blood, Lincoln. The method as religion taken to martyrdom level. Retired in 2017.",
+  jack_nicholson:    "Three Oscars across three different decades: 70s, 80s and 90s. Terrifying and charming, between shining hotels, clown suits and despicable neighbors. Always Jack.",
+  walter_brennan:    "Three consecutive supporting Oscars (1936-1940): unique in history. Eternal cowboy, unmistakable voice, never the lead. Golden as his era — but pre-fifteen-minutes-of-fame?",
+  sean_penn:         "Two Best Actor Oscars (Mystic River, Milk). The third arrived as supporting in 2026 for One Battle After Another. Didn't attend. Kieran Culkin accepted: 'couldn't be here this evening, or didn't want to.' Typical Penn."
+};
+
+const OSCARS_3_SYNONYMS_ES = {
+  katharine_hepburn: ["katharine hepburn", "kate hepburn", "hepburn"],
+  meryl_streep:      ["meryl streep", "streep"],
+  frances_mcdormand: ["frances mcdormand", "mcdormand", "frances"],
+  ingrid_bergman:    ["ingrid bergman", "bergman"],
+  daniel_day_lewis:  ["daniel day-lewis", "day lewis", "day-lewis"],
+  jack_nicholson:    ["jack nicholson", "nicholson"],
+  walter_brennan:    ["walter brennan", "brennan"],
+  sean_penn:         ["sean penn", "penn"]
+};
+
+const OSCARS_3_SYNONYMS_EN = {
+  katharine_hepburn: ["katharine hepburn", "kate hepburn", "hepburn"],
+  meryl_streep:      ["meryl streep", "streep"],
+  frances_mcdormand: ["frances mcdormand", "mcdormand"],
+  ingrid_bergman:    ["ingrid bergman", "bergman"],
+  daniel_day_lewis:  ["daniel day-lewis", "day lewis", "day-lewis"],
+  jack_nicholson:    ["jack nicholson", "nicholson"],
+  walter_brennan:    ["walter brennan", "brennan"],
+  sean_penn:         ["sean penn", "penn"]
+};
+
+const OSCARS_3_ES = crearBiblioteca({
+  id: "oscars_3_es", level: "beginner", lang: "es", field: "artes",
+  name: "Actores con 3+ Oscars",
+  desc: "Nombra los actores y actrices que han ganado tres o más Oscars de actuación.",
+  total: 8, metmin: 5, dificultad: 3, lejania: 3,
+  facts: OSCARS_3_FACTS_ES, synonyms: OSCARS_3_SYNONYMS_ES
+});
+
+const OSCARS_3_EN = crearBiblioteca({
+  id: "oscars_3_en", level: "beginner", lang: "en", field: "artes",
+  name: "Actors with 3+ Oscars",
+  desc: "Name the actors and actresses who have won three or more acting Oscars.",
+  total: 8, metmin: 5, dificultad: 3, lejania: 3,
+  facts: OSCARS_3_FACTS_EN, synonyms: OSCARS_3_SYNONYMS_EN
+});
+
+// ============ MUSEOS DE PARÍS ============
+
+const MUSEOS_PARIS_FACTS_ES = {
+  louvre:    "El más visitado del mundo: 9 millones/año. La Gioconda, la Venus de Milo, la Victoria de Samotracia. La revolución abrió el palacio real como museo en 1793. La pirámide: ¿Amada? ¿Odiada? ¡Notada!",
+  orsay:     "Antigua estación de tren reconvertida en 1986. El impresionismo su raison d'être: Monet, Manet, Renoir, Degas, Van Gogh, Cézanne, el reloj. A la vez mucho más grande y mucho más pequeño que el del otro lado del río.",
+  pompidou:  "1977: lo interior como exterior, ¿y no es eso lo que comparten el arte y el escándalo? Tuberías escandalosamente arquitectónicas. Piano y Rogers. Moderno y contemporáneo. La plaza Beaubourg: el mejor tercer espacio.",
+  picasso:   "Hôtel Salé, Marais. 5.000 obras donadas por herederos en pago de impuestos sucesorios. El fisco francés como docto curador involuntario. ¿Picasso aquí? Nunca. Pero, ¡tantos Picassos!",
+  orangerie: "Zambullirse entre Nymphéas de Monet: ocho paneles, dos ovalos, luz cenital, silencio. Monet, pintor y diseñador. Lo inmersivo real. En el sótano: Soutine, Utrillo, Picasso — ¿más moderno que Orsay?"
+};
+
+const MUSEOS_PARIS_FACTS_EN = {
+  louvre:    "The world's most visited: 9 million/year. Mona Lisa, Venus de Milo, Winged Victory. The Revolution opened the royal palace as a museum in 1793. The pyramid: loved? Hated? Noticed.",
+  orsay:     "Former train station, converted in 1986. Impressionism as its raison d'être: Monet, Manet, Renoir, Degas, Van Gogh, Cézanne, the clock. Both larger and smaller than the one across the river.",
+  pompidou:  "1977: the interior brought outside — isn't that what art and scandal share? Pipes on the outside, art within. Piano and Rogers. Modern and contemporary. Place Beaubourg: the best third space in Paris.",
+  picasso:   "Hôtel Salé, Marais. 5,000 works donated by heirs in lieu of inheritance taxes. The French tax authority as unlikely curator. Picasso never lived here — but so many Picassos do.",
+  orangerie: "Immerse yourself in Monet's Nymphéas: eight panels, two oval rooms, overhead light, silence. Monet, painter and designer. The original immersive experience. Downstairs: Soutine, Utrillo, Picasso — more modern than Orsay?"
+};
+
+const MUSEOS_PARIS_SYNONYMS_ES = {
+  louvre:    ["el louvre", "museo del louvre"],
+  orsay:     ["orsay", "musée d'orsay", "museo de orsay"],
+  pompidou:  ["pompidou", "centro pompidou", "beaubourg"],
+  picasso:   ["museo picasso", "picasso"],
+  orangerie: ["orangerie", "l'orangerie", "museo de la orangerie"]
+};
+
+const MUSEOS_PARIS_SYNONYMS_EN = {
+  louvre:    ["the louvre", "louvre museum"],
+  orsay:     ["orsay", "musée d'orsay", "musee d'orsay"],
+  pompidou:  ["pompidou", "centre pompidou", "beaubourg"],
+  picasso:   ["picasso museum", "picasso"],
+  orangerie: ["orangerie", "l'orangerie", "the orangerie"]
+};
+
+const MUSEOS_PARIS_ES = crearBiblioteca({
+  id: "museos_paris_es", level: "beginner", lang: "es", field: "artes",
+  name: "Museos de París",
+  desc: "Nombra los cinco grandes museos de arte de París.",
+  total: 5, metmin: 4, dificultad: 1, lejania: 2,
+  facts: MUSEOS_PARIS_FACTS_ES, synonyms: MUSEOS_PARIS_SYNONYMS_ES
+});
+
+const MUSEOS_PARIS_EN = crearBiblioteca({
+  id: "museos_paris_en", level: "beginner", lang: "en", field: "artes",
+  name: "Paris museums",
+  desc: "Name the five great art museums of Paris.",
+  total: 5, metmin: 4, dificultad: 1, lejania: 2,
+  facts: MUSEOS_PARIS_FACTS_EN, synonyms: MUSEOS_PARIS_SYNONYMS_EN
+});
+
+// ============ FAMILIA DEL VIOLÍN ============
+
+const FAMILIA_VIOLIN_FACTS_ES = {
+  violin:         "Agudo, veloz, protagonista. Stradivarius y Guarneri: apellidos que valen millones. ¿Cuerdas de catgut? Falso — ¡tripas de oveja! El arco de crin de caballo: eso sí era real.",
+  viola:          "Entre el agudo y el grave: siempre en medio, en armonía, en equipo. Más oscura, más íntima, más justa. La menos buscada, pero la más acogedora.",
+  cello:          "El que más se parece a la voz humana. Bach lo liberó en las Suites, Rostropovich tocó Bach ante el Muro de Berlín cayendo (1989), sin RSVP. Se toca entre las piernas (el cello, ¡no Rostropovich!).",
+  contrabajo:     "Grave, grande, discreto. La columna vertebral de la orquesta y del jazz. Dos escuelas: arco alemán y arco francés. Enorme, pero se siente más que verse.",
+  "viola da gamba": "La abuela olvidada: parece un cello sin serlo, precede al violín pero tiene trastes. Bach la usó en las Sonatas, pero sus primos más protagonistas la eclipsaron y enterraron."
+};
+
+const FAMILIA_VIOLIN_FACTS_EN = {
+  violin:         "High, fast, protagonist. Stradivarius and Guarneri: surnames worth millions. Catgut strings? False — sheep intestines! Horsehair bow: that part was real.",
+  viola:          "Between high and low: always in the middle, in harmony, in ensemble. Darker, more intimate, more just. The least sought, but the most welcoming.",
+  cello:          "The instrument that most resembles the human voice. Bach freed it in the Suites. Rostropovich played Bach at the falling Berlin Wall (1989), no RSVP. Played between the legs — the cello, not Rostropovich.",
+  contrabajo:     "Low, large, discreet. The backbone of the orchestra and jazz. Two schools: German bow and French bow. Enormous, but felt more than seen.",
+  "viola da gamba": "The forgotten grandmother: looks like a cello but isn't, predates the violin but has frets. Bach used it in the Sonatas. Its more prominent cousins eclipsed and buried it."
+};
+
+const FAMILIA_VIOLIN_SYNONYMS_ES = {
+  violin:         ["violín", "violin"],
+  viola:          ["viola"],
+  cello:          ["cello", "violonchelo", "chelo", "violoncello"],
+  contrabajo:     ["contrabajo", "bajo", "double bass"],
+  "viola da gamba": ["viola de gamba", "viola da gamba", "gamba"]
+};
+
+const FAMILIA_VIOLIN_SYNONYMS_EN = {
+  violin:         ["violin", "violín"],
+  viola:          ["viola"],
+  cello:          ["cello", "violoncello", "violoncelo"],
+  contrabajo:     ["double bass", "contrabass", "bass", "contrabajo"],
+  "viola da gamba": ["viola da gamba", "gamba", "viol"]
+};
+
+const FAMILIA_VIOLIN_ES = crearBiblioteca({
+  id: "familia_violin_es", level: "beginner", lang: "es", field: "artes",
+  name: "Familia del violín",
+  desc: "Nombra los cinco instrumentos de la familia del violín.",
+  total: 5, metmin: 4, dificultad: 2, lejania: 2,
+  facts: FAMILIA_VIOLIN_FACTS_ES, synonyms: FAMILIA_VIOLIN_SYNONYMS_ES
+});
+
+const FAMILIA_VIOLIN_EN = crearBiblioteca({
+  id: "familia_violin_en", level: "beginner", lang: "en", field: "artes",
+  name: "The violin family",
+  desc: "Name the five instruments of the violin family.",
+  total: 5, metmin: 4, dificultad: 2, lejania: 2,
+  facts: FAMILIA_VIOLIN_FACTS_EN, synonyms: FAMILIA_VIOLIN_SYNONYMS_EN
+});
+
+// ============ HÁPAX SPORTÓMENOS — DEPORTES DE UNA SOLA OLIMPIADA ============
+
+const HAPAX_FACTS_ES = {
+  pelota_vasca:  "París 1900: dos equipos, un partido, Francia retirada pre-juego. España, ganadora como nunca. El deporte más rápido del mundo fue fugaz. Demostración en 1924, 1968 y 1992. Nunca más oficial.",
+  croquet:       "París 1900: solo franceses. 'Todos ganamos' nunca fue más cierto. El deporte de jardín más aristocrático no podía durar más de un verano. Au revoir, croquet.",
+  cricket:       "París 1900: Gran Bretaña vs Francia. Los británicos ganaron fácil — casi todos los franceses eran expats ingleses. Vuelve en LA 2028, 128 años después. El críquet se hizo esperar.",
+  jeu_de_paume:  "Londres 1908: tenis pero en cancha cerrada, primo del squash, tío bisabuelo de todas las raquetas. Solo una edición olímpica. El tenis à plein air generó mejor impresión.",
+  roque:         "San Luis 1904: el croquet trasatlántico y en superficie dura. Solo estadounidenses. Nunca más visto en ningún lugar relevante. Casi se nos olvida contarlo.",
+  rackets:       "Londres 1908: arqueantepasado del squash. Siete participantes, 100% británicos. Evan Noel ganó el oro individual. Ganarle a seis compatriotas también da oro.",
+  motorboating:  "Londres 1908: lanchas a motor en aguas de Southampton. Tres eventos, un solo clima londinense terrible, más abandonos que llegadas. El motor como atleta no podía durar.",
+  breakdancing:  "París 2024: debutó y murió en la misma ciudad que la pelota vasca en 1900 (pero con aun menos gloria). El COI lo eliminó para Los Ángeles 2028. Deportes: no estrenen en París."
+};
+
+const HAPAX_FACTS_EN = {
+  pelota_vasca:  "Paris 1900: two teams, one match, France withdrew pre-game. Spain, winner like never before or again. Too fast, too brief. Shown in 1924, 1968 and 1992. Never official again.",
+  croquet:       "Paris 1900: only French participants. 'We all won' was never truer. The most aristocratic garden sport couldn't last more than one summer. Au revoir, croquet.",
+  cricket:       "Paris 1900: Great Britain vs France. The British won easily — most French players were English expats. Returns at LA 2028, 128 years later. Cricket kept us waiting.",
+  jeu_de_paume:  "London 1908: tennis but indoors, cousin of squash, great-great-uncle of all racket sports. Only one Olympic edition. Tennis à plein air: a better impression.",
+  roque:         "St. Louis 1904: transatlantic croquet on hard surface. Only Americans competed. Never seen again anywhere relevant. We needed a post-it to remember to include it.",
+  rackets:       "London 1908: ancestor of squash. Seven participants, 100% British. Evan Noel won the individual gold. Beating six compatriots counts as gold too.",
+  motorboating:  "London 1908: motorboats on Southampton Water. Three events, one typically terrible London weather, more withdrawals than finishes. The engine as athlete couldn't last.",
+  breakdancing:  "Paris 2024: debuted and died in the same city as pelota vasca in 1900 (but with even less glory). The IOC dropped it for LA 2028. Sports: don't premiere in Paris."
+};
+
+const HAPAX_SYNONYMS_ES = {
+  pelota_vasca:  ["pelota", "jai alai", "pilota"],
+  croquet:       ["croquet"],
+  cricket:       ["cricket", "criquet"],
+  jeu_de_paume:  ["jeu de paume", "juego de palma", "real tennis"],
+  roque:         ["roque"],
+  rackets:       ["rackets", "raquets", "racquets"],
+  motorboating:  ["motorboating", "motonáutica", "lancha", "lancha a motor"],
+  breakdancing:  ["breakdancing", "break dance", "breaking", "breakdance"]
+};
+
+const HAPAX_SYNONYMS_EN = {
+  pelota_vasca:  ["pelota", "jai alai", "basque pelota", "pilota"],
+  croquet:       ["croquet"],
+  cricket:       ["cricket"],
+  jeu_de_paume:  ["jeu de paume", "real tennis", "royal tennis"],
+  roque:         ["roque"],
+  rackets:       ["rackets", "raquets", "racquets"],
+  motorboating:  ["motorboating", "powerboating", "motor boating"],
+  breakdancing:  ["breakdancing", "break dance", "breaking", "breakdance"]
+};
+
+const HAPAX_ES = crearBiblioteca({
+  id: "hapax_es", level: "hard", lang: "es", field: "deportes",
+  name: "Hápax sportómenos",
+  desc: "Nombra estos deportes que aparecieron solo una vez en los Juegos Olímpicos.",
+  total: 8, metmin: 4, dificultad: 4, lejania: 5,
+  facts: HAPAX_FACTS_ES, synonyms: HAPAX_SYNONYMS_ES
+});
+
+const HAPAX_EN = crearBiblioteca({
+  id: "hapax_en", level: "hard", lang: "en", field: "deportes",
+  name: "Hapax sportomenos",
+  desc: "Name these sports that appeared only once at the Olympic Games.",
+  total: 8, metmin: 4, dificultad: 4, lejania: 5,
+  facts: HAPAX_FACTS_EN, synonyms: HAPAX_SYNONYMS_EN
+});
+
+// ============ PAÍSES CON MÁS DE 200 OROS OLÍMPICOS ============
+
+const OROS_200_FACTS_ES = {
+  eeuu:         "Más de 1.000 oros: líderes indiscutibles que duplican a su contrincante más cercano. En todos los Juegos de verano desde 1896. Boicoteadores (Moscú 1980) y boicoteados (LA 1984).",
+  urss:         "Nueve Olimpiadas y 395 oros (1952-1988). Siempre primeros o segundos. Disuelta en 1991, pero disolver tanto oro no es histórico. La URSS: ¿hace falta existir aún para ser de los mejores?",
+  "gran bretana": "Ha ganado al menos un oro en cada Olimpiada de verano desde 1896 (¡di no al boicot!). 313 oros históricos. Remo, ciclismo y atletismo: sus fortés. Seguro ni sudan.",
+  china:        "Ausentes por razones políticas hasta 1984. Desde entonces: auge imparable. 303 oros en 12 Olimpiadas. París 2024: empate con EEUU en oros. ¿La resistencia es fútil?",
+  alemania:     "Imperio, República de Weimar, Tercer Reich, RFA, RDA, Equipo Unificado, Alemania reunificada: 450 oros combinados. Una nación, seis equipos, un solo cansancio de enumerar tantos estados.",
+  francia:      "Presentes como cocreadores desde 1896. Pierre de Coubertin, francés y espíritu de los juegos. 220 oros: esgrima, ciclismo, atletismo, judo. Acaparadores de sede: tres veces.",
+  italia:       "210 oros: esgrima, gimnasia, ciclismo, natación. Junto a Suiza, los únicos con más inviernos que veranos olímpicos: 3:1. Roma vs Cortina, Turín y Milán. ¿Que en Suiza no hay verano?"
+};
+
+const OROS_200_FACTS_EN = {
+  eeuu:         "Over 1,000 golds: undisputed leaders, doubling their nearest rival. In every Summer Games since 1896. Boycotters (Moscow 1980) and boycotted (LA 1984): winners nevertheless.",
+  urss:         "Nine Olympics, 395 golds (1952-1988). Always first or second. Dissolved in 1991, but can you dissolve that much gold? The USSR: does one need to exist in order to surpass most others?",
+  "gran bretana": "The only country to win at least one gold at every Summer Olympics since 1896. No exceptions — (the trick: say no to boycotts). 313 golds. Rowing, cycling, athletics. With stiff upper-lips.",
+  china:        "Absent for political reasons until 1984. Since then: unstoppable rise. 303 golds in 12 Olympics. Paris 2024: tied with the USA in golds for the first time. Resistance is futile?",
+  alemania:     "Empire, Weimar Republic, Third Reich, FRG, GDR, Unified Team, reunified Germany: 450 combined golds. One nation, six teams, one exhausting list of states.",
+  francia:      "Present and co-creators since 1896. Pierre de Coubertin was French. 220 golds: fencing, cycling, athletics, judo. Three-time hosts — the Olympics will always have Paris?",
+  italia:       "210 golds: fencing, gymnastics, cycling, swimming. Along with Switzerland, the only countries with more Winter than Summer Games: 3:1. Rome vs Cortina, Turin and Milan. Summer in Switzerland?"
+};
+
+const OROS_200_SYNONYMS_ES = {
+  eeuu:         ["estados unidos", "usa", "us", "united states", "norteamérica"],
+  urss:         ["unión soviética", "union sovietica", "soviet union", "soviética"],
+  "gran bretana": ["gran bretaña", "gran bretana", "reino unido", "uk", "great britain", "united kingdom", "inglaterra"],
+  china:        ["china"],
+  alemania:     ["germany"],
+  francia:      ["france"],
+  italia:       ["italy"]
+};
+
+const OROS_200_SYNONYMS_EN = {
+  eeuu:         ["united states", "usa", "us", "america"],
+  urss:         ["soviet union", "ussr", "soviets"],
+  "gran bretana": ["great britain", "uk", "united kingdom", "england", "britain"],
+  china:        ["china"],
+  alemania:     ["germany", "alemania"],
+  francia:      ["france", "francia"],
+  italia:       ["italy", "italia"]
+};
+
+const OROS_200_ES = crearBiblioteca({
+  id: "oros_200_es", level: "beginner", lang: "es", field: "deportes",
+  name: "Países con más de 200 oros olímpicos",
+  desc: "Nombra los siete países con más de 200 oros en los Juegos Olímpicos de Verano.",
+  total: 7, metmin: 5, dificultad: 2, lejania: 2,
+  facts: OROS_200_FACTS_ES, synonyms: OROS_200_SYNONYMS_ES
+});
+
+const OROS_200_EN = crearBiblioteca({
+  id: "oros_200_en", level: "beginner", lang: "en", field: "deportes",
+  name: "Countries with 200+ Olympic golds",
+  desc: "Name the seven countries with more than 200 golds at the Summer Olympic Games.",
+  total: 7, metmin: 5, dificultad: 2, lejania: 2,
+  facts: OROS_200_FACTS_EN, synonyms: OROS_200_SYNONYMS_EN
+});
+
+// ============ PERIODOS DEL MESOZOICO ============
+
+const MESOZOICO_FACTS_ES = {
+  triasico:  "Acto inaugural: 252-201 Ma. Primeros dinosaurios, mamíferos, pterosaurios — y montones de bichos rarísimos. Flanqueado por extinciones masivas: la Gran Mortandad, la peor de todas. Pangea: intacta.",
+  jurasico:  "201-145 Ma. Pangea se parte, los mares suben, los dinosaurios mandan. Braquiosaurio, Estegosaurio, Alosaurio. Lo que no era del Jurásico: el ámbar. Sorry, Spielberg.",
+  cretacico: "145-66 Ma. Triceratops, T-Rex, plantas con flor, abejas, hierbas. Termina con Chicxulub: adiós dinosaurios y amigos, bienvenidos cenotes. El más largo y el más trágico del Mesozoico."
+};
+
+const MESOZOICO_FACTS_EN = {
+  triassic:   "Opening act: 252-201 Ma. First dinosaurs, mammals, pterosaurs — and tons of weirdos. Surrounded by mass extinctions: including the Great Dying, the worst ever. Pangea status: unbroken.",
+  jurassic:   "201-145 Ma. Pangea splits, seas rise, dinosaurs rule. Brachiosaurus, Stegosaurus, Allosaurus. What wasn't from the Jurassic: the amber. Sorry, Mr. Spielberg.",
+  cretaceous: "145-66 Ma. Triceratops, T-Rex, flowering plants, bees, grass. Ends with Chicxulub — no more dinosaurs and friends, welcome, cenotes! The longest and most tragic of the Mesozoic."
+};
+
+const MESOZOICO_SYNONYMS_ES = {
+  triasico:  ["triásico", "triassic"],
+  jurasico:  ["jurásico", "jurassic"],
+  cretacico: ["cretácico", "cretaceous"]
+};
+
+const MESOZOICO_SYNONYMS_EN = {
+  triassic:   ["triasic"],
+  jurassic:   ["jurasic"],
+  cretaceous: ["cretacic", "cretaceo"]
+};
+
+const MESOZOICO_ES = crearBiblioteca({
+  id: "mesozoico_es", level: "beginner", lang: "es", field: "ciencias_duras",
+  name: "Periodos del Mesozoico",
+  desc: "Nombra los tres periodos de la era Mesozoica.",
+  total: 3, metmin: 3, dificultad: 1, lejania: 2,
+  facts: MESOZOICO_FACTS_ES, synonyms: MESOZOICO_SYNONYMS_ES
+});
+
+const MESOZOICO_EN = crearBiblioteca({
+  id: "mesozoico_en", level: "beginner", lang: "en", field: "ciencias_duras",
+  name: "Mesozoic periods",
+  desc: "Name the three periods of the Mesozoic era.",
+  total: 3, metmin: 3, dificultad: 1, lejania: 2,
+  facts: MESOZOICO_FACTS_EN, synonyms: MESOZOICO_SYNONYMS_EN
+});
+
+// ============ SEDES OLÍMPICAS DE VERANO EN AMÉRICA ============
+
+const SEDES_AMERICA_FACTS_ES = {
+  los_angeles:  "Tres veces: 1932: Gran Depresión; 1984: boicot soviético y pronto, 2028: juegos sin carros. Los Ángeles: triple anfitriona a prueba de todo.",
+  atlanta:      "1996: Juegos Centenarios en el patio de Coca-Cola, las manos temblorosas de Muhammad Ali encendiendo la llama. Luego, la bomba en Centennial Park. Los más americanos de la historia, para bien y para mal.",
+  st_louis:     "1904: junto a una Feria Mundial y casi sin extranjeros — más bien unos Juegos americanos locales. El ganador del maratón: ¡descalificado por ir en carro! El subcampeón: estricnina como estimulante. Los menos santos de los juegos.",
+  mexico_city:  "1968: mal de altura, poco oxígeno, los saltos de Fosbury y Beamon. Y Smith y Carlos levantando el puño en el podio. Oro al momento más político de la historia olímpica. Aún.",
+  rio:          "2016: primeros y únicos sudamericanos. Zika, caos político, Simone Biles. Escenarios casi desechables. Río: hermosa, caótica, inolvidable, irrepetible, quebrada."
+};
+
+const SEDES_AMERICA_FACTS_EN = {
+  los_angeles:  "Thrice: 1932, 1984 and soon, 2028. 1932: the great depression. 1984: the Soviet boycott. 2028: alleged car-free Games. LA: triple Olympics against all odds.",
+  atlanta:      "1996: Centennial Games, Coca-Cola's backyard, Muhammad Ali's trembling hands lighting the flame. Then, the bomb in Centennial Park. The most American games ever, for better and worse.",
+  st_louis:     "1904: held alongside a World's Fair and barely international — more like local American Games. The marathon winner: out! He rode a car. The runner-up: strychnine as a stimulant. Beat me in St. Louis: the gateway dope.",
+  mexico_city:  "1968: altitude, thin air, Fosbury's flop, Bob Beamon's impossible long jump. And Tommie Smith and John Carlos raising fists on the podium. The most political moment in Olympic history, still.",
+  rio:          "2016: first South American Games. Zika fears, political chaos, Simone Biles. The venues crumbled almost immediately after. Rio: gorgeous, chaotic, unforgettable, unrepeatable, broke."
+};
+
+const SEDES_AMERICA_SYNONYMS_ES = {
+  los_angeles:  ["los angeles", "la", "los ángeles"],
+  atlanta:      ["atlanta"],
+  st_louis:     ["st louis", "saint louis", "san luis", "st. louis"],
+  mexico_city:  ["ciudad de méxico", "ciudad de mexico", "mexico", "méxico"],
+  rio:          ["río de janeiro", "rio de janeiro", "río", "rio"]
+};
+
+const SEDES_AMERICA_SYNONYMS_EN = {
+  los_angeles:  ["los angeles", "la", "los ángeles"],
+  atlanta:      ["atlanta"],
+  st_louis:     ["st louis", "saint louis", "san luis"],
+  mexico_city:  ["mexico city", "mexico", "méxico", "ciudad de mexico"],
+  rio:          ["rio de janeiro", "río de janeiro", "rio"]
+};
+
+const SEDES_AMERICA_ES = crearBiblioteca({
+  id: "sedes_america_es", level: "beginner", lang: "es", field: "deportes",
+  name: "Sedes olímpicas de verano en América",
+  desc: "Nombra las cinco ciudades americanas que han organizado los Juegos Olímpicos de Verano.",
+  total: 5, metmin: 4, dificultad: 2, lejania: 2,
+  facts: SEDES_AMERICA_FACTS_ES, synonyms: SEDES_AMERICA_SYNONYMS_ES
+});
+
+const SEDES_AMERICA_EN = crearBiblioteca({
+  id: "sedes_america_en", level: "beginner", lang: "en", field: "deportes",
+  name: "American Summer Olympic host cities",
+  desc: "Name the five American cities that have hosted the Summer Olympic Games.",
+  total: 5, metmin: 4, dificultad: 2, lejania: 2,
+  facts: SEDES_AMERICA_FACTS_EN, synonyms: SEDES_AMERICA_SYNONYMS_EN
+});
+
+const OLIMPICOS_1896_FACTS_ES = {
+  atletismo:    "El más antiguo y humano: correr, saltar, lanzar. Doce pruebas en 1896, todos hombres. La pista corría en sentido horario — dirección equivocada según los estándares actuales.",
+  gimnasia:     "Gymnastikē en griego: entrenar desnudo. En 1896: anillas, barras paralelas, barra fija, salto, trepa de cuerda. Alemania dominó. Sin suelo aún: ¿era lava? El potro permanece, pero sin cuello.",
+  ciclismo:     "Ruta: Atenas-Maratón, ida y vuelta, 87km. Tres caídas, dos cambios de bicicleta y aun así: ganó por diez minutos. También pista. Uno de los pocos deportes en cada Olimpiada desde 1896.",
+  esgrima:      "El único deporte de 1896 que mezcló amateurs y profesionales. Francia y Grecia se repartieron las medallas. Florete y sable ya eran distintos. La espada llegaría en 1900. ¡Touché!",
+  tiro:         "Cinco pruebas: tres de pistola, dos de rifle. Solo hombres, naturalmente. El campo de tiro fue construido para los Juegos. Grecia dominó. Las mujeres llegaron en 1968.",
+  natacion:     "Mar abierto, Bahía de Zea, abril, agua a 13°C. El húngaro Alfred Hajós ganó dos oros: 'Mi voluntad de vivir superó completamente mi deseo de ganar'. ¿Quién necesita carriles o gafas pudiendo ahogarse en el Egeo?",
+  tenis:        "El más burgués Y casual: la mayoría de los competidores eran socios de clubes que casualmente estaban en Atenas. Individual y dobles masculino. Las mujeres llegaron pronto: 1900. John Boland ganó por Gran Bretaña de vacaciones.",
+  halterofilia: "Dos pruebas: levantamiento con una mano y con dos; sin categorías de peso. Viggo Jensen de Dinamarca y Launceston Elliot de Gran Bretaña empataron en la prueba de una mano; Jensen ganó por estilo.",
+  lucha:        "Grecorromana solo: sin piernas. Un combate duró 40 minutos. El gimnasta alemán Carl Schuhmann ganó a pesar del cambio de disciplina. ¿Categorías de peso? ¿Límite de tiempo? ¿Para qué? Dos hombres y la gravedad."
+};
+
+const OLIMPICOS_1896_FACTS_EN = {
+  athletics:    "The oldest and most human Olympic discipline: running, jumping, throwing. Twelve events in 1896, all men. The track ran clockwise — wrong direction by today's standards.",
+  gymnastics:   "Gymnastikē in Greek — training naked. In 1896: rings, parallel bars, horizontal bar, vault, rope climb. Germany dominated. No floor exercise: was it lava? The horse remains, but neckless.",
+  cycling:      "Road race: Athens to Marathon and back, 87km. Three crashes, two changes of bike, and still: #1 won by ten minutes. Track cycling also contested. One of the few sports at every Olympics since 1896.",
+  fencing:      "Amateurs and pros competed alongside: the only sport to do so in 1896. France and Greece split the medals. Foil and sabre were already distinct. The épée would arrive in 1900. Touché!",
+  shooting:     "Five events: three pistol, two rifle. All men, naturally. The shooting range was built specifically for the Games. Greece dominated. Women joined in 1968.",
+  swimming:     "Open sea, Bay of Zea, April, water: 13°C. Hungarian Alfred Hajós won two golds: 'My will to live completely overcame my desire to win.' Who needs lanes or goggles when you can drown in the Aegean?",
+  tennis:       "The most bourgeois AND casual — most competitors were well-to-do club members who happened to be in Athens. Singles and doubles for men. Women joined soon: 1900. John Boland won for Britain while on holiday.",
+  weightlifting:"Two events: one-hand lift and two-hand lift; no weight categories. Viggo Jensen of Denmark and Launceston Elliot of Britain tied the one-hand record; Jensen won by style.",
+  wrestling:    "Greco-Roman only — no legs. One match lasted 40 minutes. German gymnast Carl Schuhmann won despite the crossover. Weight categories? Time limits? What for? Two men and gravity."
+};
+
+const OLIMPICOS_1896_SYNONYMS_ES = {
+  atletismo:    ["pista y campo", "athletics"],
+  gimnasia:     ["gimnasia artística"],
+  ciclismo:     ["bicicleta"],
+  esgrima:      ["florete", "sable"],
+  tiro:         ["tiro deportivo", "tiro al blanco"],
+  natacion:     ["natacion"],
+  tenis:        [],
+  halterofilia: ["pesas", "levantamiento de pesas", "pesas olímpicas"],
+  lucha:        ["lucha grecorromana", "lucha greco-romana"]
+};
+
+const OLIMPICOS_1896_SYNONYMS_EN = {
+  athletics:    ["track and field", "track & field"],
+  gymnastics:   ["artistic gymnastics"],
+  cycling:      ["bicycle", "biking"],
+  fencing:      ["foil", "sabre", "sword"],
+  shooting:     ["rifle", "pistol"],
+  swimming:     [],
+  tennis:       [],
+  weightlifting:["weight lifting", "weights", "lifting"],
+  wrestling:    ["greco-roman wrestling", "greco roman wrestling"]
+};
+
+// ============ SEDES OLÍMPICAS DE VERANO EN ASIA ============
+
+const SEDES_ASIA_FACTS_ES = {
+  tokio:   "1940: cancelados por la guerra. 1964: primeros Juegos en Asia, debut del judo. 2020: Covid-19, movidos a 2021, sin público, igual ocurrieron. ¿Japón rompe los Juegos? ¿O al revés?",
+  seul:    "1988: 159 naciones, casi post-Guerra Fría. El oro de Ben Johnson — y su fantasma. Los Juegos como deshielo geopolítico y primer baile de sociedad de Corea del Sur.",
+  beijing: "2008: 204 naciones, 40 mil millones de dólares, el Nido de Pájaro. La ceremonia de apertura más vista de la historia. 2022 invierno: primera ciudad en albergar ambos Juegos. ¿La única forma de reducir la contaminación?"
+};
+
+const SEDES_ASIA_FACTS_EN = {
+  tokyo:   "1940: canceled by war. 1964: first Asian Games, judo debuted. 2020: Covid-19, moved to 2021, no audience, still happened. Japan the breaker of Games? The other way around?",
+  seoul:   "1988: 159 nations, almost post-Cold War. Ben Johnson's gold — and its ghost. The Olympics as geopolitical thaw and debutante ball for South Korea.",
+  beijing: "2008: 204 nations, $40 billion, Bird's Nest. The most watched Opening Ceremony in history. Then 2022 Winter — first city to host both Summer and Winter Games. Also, the only way to curb pollution?"
+};
+
+const SEDES_ASIA_SYNONYMS_ES = {
+  tokio:   ["tokyo"],
+  seul:    ["seoul", "seúl"],
+  beijing: ["pekín", "pekin", "peking"]
+};
+
+const SEDES_ASIA_SYNONYMS_EN = {
+  tokyo:   ["tokio"],
+  seoul:   ["seul", "seúl"],
+  beijing: ["peking", "pekin", "pekín"]
+};
+
+const SEDES_ASIA_ES = crearBiblioteca({
+  id: "sedes_asia_es", level: "beginner", lang: "es", field: "deportes",
+  name: "Sedes olímpicas de verano en Asia",
+  desc: "Nombra las tres ciudades asiáticas que han organizado los Juegos Olímpicos de Verano.",
+  total: 3, metmin: 3, dificultad: 1, lejania: 2,
+  facts: SEDES_ASIA_FACTS_ES, synonyms: SEDES_ASIA_SYNONYMS_ES
+});
+
+const SEDES_ASIA_EN = crearBiblioteca({
+  id: "sedes_asia_en", level: "beginner", lang: "en", field: "deportes",
+  name: "Asian Summer Olympic host cities",
+  desc: "Name the three Asian cities that have hosted the Summer Olympic Games.",
+  total: 3, metmin: 3, dificultad: 1, lejania: 2,
+  facts: SEDES_ASIA_FACTS_EN, synonyms: SEDES_ASIA_SYNONYMS_EN
+});
+
+const OLIMPICOS_1896_ES = crearBiblioteca({
+  id: "olimpicos_1896_es", level: "beginner", lang: "es", field: "deportes",
+  name: "Deportes olímpicos — Atenas 1896",
+  desc: "Nombra los nueve deportes de los primeros Juegos Olímpicos modernos.",
+  total: 9, metmin: 7, dificultad: 2, lejania: 3,
+  facts: OLIMPICOS_1896_FACTS_ES, synonyms: OLIMPICOS_1896_SYNONYMS_ES
+});
+
+const OLIMPICOS_1896_EN = crearBiblioteca({
+  id: "olimpicos_1896_en", level: "beginner", lang: "en", field: "deportes",
+  name: "Olympic sports — Athens 1896",
+  desc: "Name the nine sports of the first modern Olympic Games.",
+  total: 9, metmin: 7, dificultad: 2, lejania: 3,
+  facts: OLIMPICOS_1896_FACTS_EN, synonyms: OLIMPICOS_1896_SYNONYMS_EN
+});
+
+const PAPERBACK_ES = [OCEANOS_ES, CONTINENTES_ES, SPICE_GIRLS_ES, ESTOMAGOS_ES, PECADOS_ES, HUESOS_OIDO_ES, MARAVILLAS_ES, LUNAS_GALILEANAS_ES, MACRONUTRIENTES_ES, MESES_30_ES, GASES_NOBLES_ES, ZODIACO_ES, SABORES_ES, FASES_LUNA_ES, TRIANGULOS_ES, PALABRAS_ACENTO_ES, ROMANCES_ES, GERMANICAS_ES, RELIGIONES_ES, PENTATEUCO_ES, ISLAS_CARIBE_ES, NAVES_COLON_ES, TRIMURTI_ES, EVANGELISTAS_ES, ISLAS_MEDITERRANEO_ES, ELECTROLITOS_ES, OLIMPICOS_1896_ES, SEDES_ASIA_ES, MESOZOICO_ES, SEDES_AMERICA_ES, OROS_200_ES, MUSEOS_PARIS_ES, FAMILIA_VIOLIN_ES, OSCARS_3_ES];
 const PENTATEUCH_EN = crearBiblioteca({
   id: "pentateuch_en", level: "beginner", lang: "en", field: "humanidades",
   name: "The Pentateuch", desc: "Name the 5 books of the Torah (or the Old Testament, if you prefer).",
@@ -1261,7 +1917,7 @@ const PENTATEUCH_EN = crearBiblioteca({
 // ============ ISLAS DEL CARIBE / CARIBBEAN ISLANDS ============
 
 const CARIBBEAN_ISLANDS_EN = crearBiblioteca({
-  id: "caribbean_islands_en", level: "beginner", lang: "en", field: "humanidades",
+  id: "caribbean_islands_en", level: "beginner", lang: "en", field: "geografia",
   name: "5 Largest Caribbean Islands", desc: "Name the 5 largest islands in the Caribbean Sea by area.",
   total: 5, metmin: 3, dificultad: 1, lejania: 2,
   facts: {
@@ -1287,17 +1943,17 @@ const CARIBBEAN_ISLANDS_EN = crearBiblioteca({
 
 
 const CARAVELS_EN = crearBiblioteca({
-  id: "caravels_en", level: "beginner", lang: "en", field: "humanidades",
+  id: "caravels_en", level: "beginner", lang: "en", field: "historia",
   name: "Columbus's Ships", desc: "Name the 3 ships that carried Columbus to America in 1492.",
   total: 3, metmin: 2, dificultad: 2, lejania: 4,
   facts: {
     pinta: 'The Pinta: named for being brightly painted — "la pintá." The fastest of the three, and first to sight land — Rodrigo de Triana, not Columbus, shouted "Land!"',
     nina: 'The Niña: Spanish for "the girl." Her real name was Santa Clara. "Niña" came from her owner\'s surname, Juan Niño — a nickname outranking a saint.',
-    santa_maria: 'The flagship — and not actually a caravel at all, but a nao. Sailors called her "La Gallega"; she\'s remembered by her baptismal name, and by her wreck off Hispaniola.'
+    "santa maria": 'The flagship — and not actually a caravel at all, but a nao. Sailors called her "La Gallega"; she\'s remembered by her baptismal name, and by her wreck off Hispaniola.'
   },
   synonyms: {
     nina: ["santa clara"],
-    santa_maria: ["la gallega"]
+    "santa maria": ["la gallega"]
   }
 });
 
@@ -1331,7 +1987,7 @@ const EVANGELISTS_EN = crearBiblioteca({
 // ============ ISLAS DEL MEDITERRÁNEO / MEDITERRANEAN ISLANDS ============
 
 const MEDITERRANEAN_ISLANDS_EN = crearBiblioteca({
-  id: "mediterranean_islands_en", level: "beginner", lang: "en", field: "humanidades",
+  id: "mediterranean_islands_en", level: "beginner", lang: "en", field: "geografia",
   name: "5 Largest Mediterranean Islands", desc: "Name the 5 largest islands in the Mediterranean Sea by area.",
   total: 5, metmin: 3, dificultad: 1, lejania: 2,
   facts: {
@@ -1349,7 +2005,7 @@ const MEDITERRANEAN_ISLANDS_EN = crearBiblioteca({
 
 
 
-const PAPERBACK_EN = [OCEANS_EN, CONTINENTS_EN, SPICE_GIRLS_EN, COWSTOMACHS_EN, SINS_EN, EAR_BONES_EN, WONDERS_EN, GALILEAN_MOONS_EN, MACRONUTRIENTS_EN, MONTHS_30_EN, NOBLE_GASES_EN, ZODIAC_EN, TASTES_EN, MOON_PHASES_EN, TRIANGLES_EN, OLYMPIC_GODS_EN, ROMANCE_LANGUAGES_EN, GERMANIC_LANGUAGES_EN, RELIGIONS_EN, PENTATEUCH_EN, CARIBBEAN_ISLANDS_EN, HINDU_TRIAD_EN, EVANGELISTS_EN, MEDITERRANEAN_ISLANDS_EN, CARAVELS_EN, ELECTROLYTES_EN];
+const PAPERBACK_EN = [OCEANS_EN, CONTINENTS_EN, SPICE_GIRLS_EN, COWSTOMACHS_EN, SINS_EN, EAR_BONES_EN, WONDERS_EN, GALILEAN_MOONS_EN, MACRONUTRIENTS_EN, MONTHS_30_EN, NOBLE_GASES_EN, ZODIAC_EN, TASTES_EN, MOON_PHASES_EN, TRIANGLES_EN, OLYMPIC_GODS_EN, ROMANCE_LANGUAGES_EN, GERMANIC_LANGUAGES_EN, RELIGIONS_EN, PENTATEUCH_EN, CARIBBEAN_ISLANDS_EN, HINDU_TRIAD_EN, EVANGELISTS_EN, MEDITERRANEAN_ISLANDS_EN, CARAVELS_EN, ELECTROLYTES_EN, OLIMPICOS_1896_EN, SEDES_ASIA_EN, MESOZOICO_EN, SEDES_AMERICA_EN, OROS_200_EN, MUSEOS_PARIS_EN, FAMILIA_VIOLIN_EN, OSCARS_3_EN];
 
 // === hardcover.js ===
 // data/hardcover.js
@@ -1542,7 +2198,7 @@ const HERACLES_EN = crearBiblioteca({
 
 // ============ LOS 12 CÉSARES SEGÚN SUETONIO ============
 const CESARES_ES = crearBiblioteca({
-  id: "cesares_es", level: "normal", lang: "es", field: "humanidades",
+  id: "cesares_es", level: "normal", lang: "es", field: "historia",
   name: "Los 12 Césares según Suetonio", desc: "Ave César. Nombra los emperadores inmortalizados por Suetonio en 'Las vidas de los doce Césares'.",
   total: 12, metmin: 8, dificultad: 4, lejania: 3,
   facts: {
@@ -1576,7 +2232,7 @@ const CESARES_ES = crearBiblioteca({
 });
 
 const CAESARS_EN = crearBiblioteca({
-  id: "caesars_en", level: "normal", lang: "en", field: "humanidades",
+  id: "caesars_en", level: "normal", lang: "en", field: "historia",
   name: "The 12 Caesars according to Suetonius", desc: "Hail Caesar. Name the emperors immortalised by Suetonius in 'The Twelve Caesars'.",
   total: 12, metmin: 8, dificultad: 4, lejania: 3,
   facts: {
@@ -1981,7 +2637,7 @@ const CANADA_EN = crearBiblioteca({
 // ============ ESTADOS MIEMBROS DE LA UE / EU MEMBER STATES ============
 
 const ESTADOS_UE_ES = crearBiblioteca({
-  id: "estados_ue_es", level: "normal", lang: "es", field: "humanidades",
+  id: "estados_ue_es", level: "normal", lang: "es", field: "geografia",
   name: "Estados miembros de la UE", desc: "Nombra los 27 estados miembros de la Unión Europea.",
   total: 27, metmin: 18, dificultad: 3, lejania: 1,
   facts: {
@@ -2021,7 +2677,7 @@ const ESTADOS_UE_ES = crearBiblioteca({
 });
 
 const EU_STATES_EN = crearBiblioteca({
-  id: "eu_states_en", level: "normal", lang: "en", field: "humanidades",
+  id: "eu_states_en", level: "normal", lang: "en", field: "geografia",
   name: "EU member states", desc: "Name the 27 member states of the European Union.",
   total: 27, metmin: 18, dificultad: 3, lejania: 1,
   facts: {
@@ -2338,6 +2994,7 @@ function getSoundEnabled() { return _soundEnabled; }
 
 
 
+
 const PRE_CODE_SIRENS_FACTS_ES = {
   barbara_stanwyck: "Baby Face (1933): explotada desde los 14, lectora de Nietzsche, trepadora financiera. El Código la prohibió; su grandeza sobrevivió 70 años. Una copia reemergió en 2004.",
   ruth_chatterton:  "Female (1933). CEO de una fábrica: usaba a los hombres para el sexo y los descartaba. Jezabel misma la idolatraba. También: piloto y novelista.",
@@ -2512,8 +3169,8 @@ const GOLDEN_AGE_DIVAS_EN = crearBiblioteca({
   facts: GOLDEN_AGE_DIVAS_FACTS_EN, synonyms: GOLDEN_AGE_DIVAS_SYNONYMS
 });
 
-const HARDCOVER_ES = [HALOGENOS_ES, MUSAS_ES, PREFIJOS_GRIEGOS_ES, HERACLES_ES, ORDENES_ES, CESARES_ES, DECATLON_ES, HUESOS_CARPO_ES, PLANETAS_ENANOS_ES, PRIMOS_ES, PRESOCRATICOS_ES, JUECES_INFRAMUNDO_ES, FIBONACCI_ES, GREENWICH_ES, ECUADOR_PAISES_ES, CANADA_ES, ESTADOS_UE_ES, ESTADOS_USA_ES, UNIDADES_SI_ES, PACTO_VARSOVIA_ES, PRE_CODE_SIRENS_ES];
-const HARDCOVER_EN = [HALOGENS_EN, MUSES_EN, GREEK_NUMERICAL_PREFIXES_EN, HERACLES_EN, ORDERS_EN, CAESARS_EN, DECATHLON_EN, CARPALS_EN, DWARF_PLANETS_EN, PRIMES_EN, PRESOCRATICS_EN, JUDGES_UNDERWORLD_EN, FIBONACCI_EN, GREENWICH_EN, EQUATOR_COUNTRIES_EN, CANADA_EN, EU_STATES_EN, USA_STATES_EN, UNIDADES_SI_EN, PACTO_VARSOVIA_EN, PRE_CODE_SIRENS_EN];
+const HARDCOVER_ES = [HALOGENOS_ES, MUSAS_ES, PREFIJOS_GRIEGOS_ES, HERACLES_ES, ORDENES_ES, CESARES_ES, DECATLON_ES, HUESOS_CARPO_ES, PLANETAS_ENANOS_ES, PRIMOS_ES, PRESOCRATICOS_ES, JUECES_INFRAMUNDO_ES, FIBONACCI_ES, GREENWICH_ES, ECUADOR_PAISES_ES, CANADA_ES, ESTADOS_UE_ES, ESTADOS_USA_ES, UNIDADES_SI_ES, PACTO_VARSOVIA_ES, PRE_CODE_SIRENS_ES, HAPAX_ES, ANTONINOS_ES, COLINAS_ROMA_ES, MUJERES_ROMA_ES];
+const HARDCOVER_EN = [HALOGENS_EN, MUSES_EN, GREEK_NUMERICAL_PREFIXES_EN, HERACLES_EN, ORDERS_EN, CAESARS_EN, DECATHLON_EN, CARPALS_EN, DWARF_PLANETS_EN, PRIMES_EN, PRESOCRATICS_EN, JUDGES_UNDERWORLD_EN, FIBONACCI_EN, GREENWICH_EN, EQUATOR_COUNTRIES_EN, CANADA_EN, EU_STATES_EN, USA_STATES_EN, UNIDADES_SI_EN, PACTO_VARSOVIA_EN, PRE_CODE_SIRENS_EN, HAPAX_EN, ANTONINOS_EN, COLINAS_ROMA_EN, MUJERES_ROMA_EN];
 
 // ============ PENTATEUCO / PENTATEUCH ============
 const CORRIENTES_FILOSOFICAS_ES = crearBiblioteca({
@@ -2587,75 +3244,75 @@ const HABIA_UNA_VEZ_ES = crearBiblioteca({
   facts: {
     cenicienta: "Antes Rodopis, entre griega y egipcia. Perrault con zapatilla de cristal; la tradición y Grimm: de oro. Bibidi carroza de calabaza: la magia del XX.",
     blancanieves: "Grimm, 1812. La reina no pedía el corazón — sino pulmones e hígado: ¿vanidad o anemia? Su hermana, Rosa Roja, no dio la talla de la historia.",
-    bella_durmiente: "Ella llevaba más de dos siglos de embarazo anónimo: ¡dormida! Consenso: cero consenso. ¿Despertar? Un beso (Grimm) o una astilla.",
-    caperucita_roja: "El lobo suprematista: abuela de aperitivo, caperucita de plato fuerte. Y ya. Leñadores/cuento=0. Moraleja: no confíes ni en conocidos ni desconocidos.",
-    hansel_y_gretel: "Hambruna, pequeña edad de hielo, abandono en el bosque, una bruja y un horno salvador. ¿Hace falta decir que no eran niños cazarrecompensas?",
+    "bella durmiente": "Ella llevaba más de dos siglos de embarazo anónimo: ¡dormida! Consenso: cero consenso. ¿Despertar? Un beso (Grimm) o una astilla.",
+    "caperucita roja": "El lobo suprematista: abuela de aperitivo, caperucita de plato fuerte. Y ya. Leñadores/cuento=0. Moraleja: no confíes ni en conocidos ni desconocidos.",
+    "hansel y gretel": "Hambruna, pequeña edad de hielo, abandono en el bosque, una bruja y un horno salvador. ¿Hace falta decir que no eran niños cazarrecompensas?",
     sirenita: "Por él, ella siente caminar sobre cristales rotos; él elige a otra y ella se vuelve espuma de mar. Aún así, menos terrible que casi todo Andersen.",
     rapunzel: "Grimm y el folklore son crueles: embarazo delatado por ropa que no cierra, destierro, príncipe cegado por espinas, mucho acondicionador, aun así: final feliz.",
     rumpelstiltskin: "Oro por primogénitos (lee la letra menuda). Shylock invertido: el horror es contractual, no su exoneración.",
-    gato_con_botas: "Perrault, 1697. El gato más productivo, benevolente y mejor vestido se inventa al Marqués de Carabás. La farsa como arte y política.",
-    bella_y_la_bestia: "Madame de Villeneuve, 1740 — lo de Disney y Beaumont son, a lo sumo, resúmenes. El original: mucho más largo, mucho más raro.",
+    "gato con botas": "Perrault, 1697. El gato más productivo, benevolente y mejor vestido se inventa al Marqués de Carabás. La farsa como arte y política.",
+    "bella y la bestia": "Madame de Villeneuve, 1740 — lo de Disney y Beaumont son, a lo sumo, resúmenes. El original: mucho más largo, mucho más raro.",
     pinocho: "Collodi, 1883. Allí, el grillo muere en la página 3 aplastado por Pinocho. Luego es conciencia fantasma de un pinocho mucho más villano.",
     pulgarcita: "Andersen, 1835: Niña del tamaño de un pulgar, secuestrada por sapos, prometida a un topo, salvada por una golondrina. Andersen, casi siempre te pasas...",
-    patito_feo: "El pobre sufre tanto hasta que descubre lo que es. Y luego dicen que a buen fin no hay mal principio. Rara avis feliz en Andersen.",
-    traje_nuevo_del_emperador: "Andersen, 1837. Estafas, política y moda como indicios de una teoría de la verdad. Definitorio para el concepto de veeduría.",
-    jack_y_las_habichuelas: "Tradición oral inglesa. Semillas mágicas, gigante dormido, arpa que delata. Quien roba a un ladrón... ¿emprende y fructifica?",
-    ricitos_de_oro: "Una invasión, tres protagonistas tradicionales (anciana, zorra, rubia rizada). Los osos como víctimas y la protagonista invasora, la villana.",
-    barba_azul: "Perrault, 1697. Asesino serial de esposas, habitación prohibida, notoria barba. ¿Que Gilles de Rais? Calumnia: lo de él eran los niños.",
-    reina_de_las_nieves: "Andersen, 1844: Kay y Gerda. Un espejo roto, una astilla en el ojo, un corazón de hielo. Inspira Narnia y Frozen, pero nadie copia el dolor de Andersen.",
-    principe_rana: "Ha evolucionado paralelo al amor: antes se daba con golpes a la pared, ya con besos. Por fin algo de optimismo, hermanos Grimm.",
+    "patito feo": "El pobre sufre tanto hasta que descubre lo que es. Y luego dicen que a buen fin no hay mal principio. Rara avis feliz en Andersen.",
+    "traje nuevo del emperador": "Andersen, 1837. Estafas, política y moda como indicios de una teoría de la verdad. Definitorio para el concepto de veeduría.",
+    "jack y las habichuelas": "Tradición oral inglesa. Semillas mágicas, gigante dormido, arpa que delata. Quien roba a un ladrón... ¿emprende y fructifica?",
+    "ricitos de oro": "Una invasión, tres protagonistas tradicionales (anciana, zorra, rubia rizada). Los osos como víctimas y la protagonista invasora, la villana.",
+    "barba azul": "Perrault, 1697. Asesino serial de esposas, habitación prohibida, notoria barba. ¿Que Gilles de Rais? Calumnia: lo de él eran los niños.",
+    "reina de las nieves": "Andersen, 1844: Kay y Gerda. Un espejo roto, una astilla en el ojo, un corazón de hielo. Inspira Narnia y Frozen, pero nadie copia el dolor de Andersen.",
+    "principe rana": "Ha evolucionado paralelo al amor: antes se daba con golpes a la pared, ya con besos. Por fin algo de optimismo, hermanos Grimm.",
     cerillera: "Ya que no hay lobos ni ogros y casi ni abuelas, es el más terrible y vigente. Niña muerta de frío, alucinando de hambre, en Navidad. ¡Andersen, no más!",
-    soldadito_de_plomo: "Andersen y muy él. Amor imposible: un soldado cojo y una bailarina de papel. El amor arde y ellos con él. ¿Arder amando es mejor que no haber amado?",
-    vasilisa_la_bella: "La Cenicienta rusa con Baba Yaga de madrina. Más oscura, más honesta, más patas de gallina. La muñeca heredada de su madre muerta: el hilo salvador.",
-    pajaro_de_fuego: "Un pájaro luminoso ruso que beneficia y perjudica a su captor. Stravinsky lo convirtió en ballet y París, en motín. Como a casi todo.",
+    "soldadito de plomo": "Andersen y muy él. Amor imposible: un soldado cojo y una bailarina de papel. El amor arde y ellos con él. ¿Arder amando es mejor que no haber amado?",
+    "vasilisa la bella": "La Cenicienta rusa con Baba Yaga de madrina. Más oscura, más honesta, más patas de gallina. La muñeca heredada de su madre muerta: el hilo salvador.",
+    "pajaro de fuego": "Un pájaro luminoso ruso que beneficia y perjudica a su captor. Stravinsky lo convirtió en ballet y París, en motín. Como a casi todo.",
     momotaro: "El Niño Durazno más amado del Japón — nacido de un durazno gigante y criado por viejitos, conquista la isla de los ogros. Sin ironía ni azúcar agregado.",
-    gata_blanca: "Madame d'Aulnoy, 1698. El cuento de hadas original. Reina transformada en gata; telas, nueces y mascotas minúsculas. Estilo mayúsculo.",
-    ali_baba: "Las mil y una noches. Cuarenta ladrones, una cueva y la contraseña más famosa (¡no la uses online! considera: abreteajonjoli1234!).",
+    "gata blanca": "Madame d'Aulnoy, 1698. El cuento de hadas original. Reina transformada en gata; telas, nueces y mascotas minúsculas. Estilo mayúsculo.",
+    "ali baba": "Las mil y una noches. Cuarenta ladrones, una cueva y la contraseña más famosa (¡no la uses online! considera: abreteajonjoli1234!).",
     aladino: "Originalmente en China, no Arabia — uno de tantos y deliciosos errores del traductor Galland. Otro: inventar al genio de la lámpara.",
     simbad: "Siete viajes, cada uno más imposible. La Odisea árabe: monstruos, naufragios, riquezas. Bagdad presaqueo mongol: puerto fantástico de lo inverosímil.",
-    piel_de_asno: "Perrault, 1694. Padre que corteja a su hija con vestidos del color del tiempo, de la luna y del sol. Huye disfrazada de burra con un anillo cenicientesco.",
-    princesa_y_el_guisante: "Andersen, 1835. Una reina quiere casar a su hijo con una princesa real. ¿La prueba? una alverja bajo veinte colchones. Si incomoda ¡es princesa!",
-    zapatillas_rojas: "Andersen: unas zapatillas que hacen bailar sin parar. Irreversiblemente. Entre raves y Kate Bush. Demasiado horrible para Disney. Andersen, ¡te pasaste!",
-    flautista_de_hamelin: "La música como exterminio de ratas y como éxodo infantil. El medioevo era raro: tener ratas o perder niños, elijan, sajones.",
-    tres_cerditos: "Folklore inglés: arquitectura como carácter y destino. Ladrillo mata palo y paja: lobo, ídem. La casa propia y firme como happy end y fin en sí mismo.",
-    musicos_de_bremen: "Grimm: un burro, un perro, un gato y un gallo — ya viejos y desgastados — arman banda y conquistan una casa. Subversivo y viejo cadáver exquisito.",
+    "piel de asno": "Perrault, 1694. Padre que corteja a su hija con vestidos del color del tiempo, de la luna y del sol. Huye disfrazada de burra con un anillo cenicientesco.",
+    "princesa y el guisante": "Andersen, 1835. Una reina quiere casar a su hijo con una princesa real. ¿La prueba? una alverja bajo veinte colchones. Si incomoda ¡es princesa!",
+    "zapatillas rojas": "Andersen: unas zapatillas que hacen bailar sin parar. Irreversiblemente. Entre raves y Kate Bush. Demasiado horrible para Disney. Andersen, ¡te pasaste!",
+    "flautista de hamelin": "La música como exterminio de ratas y como éxodo infantil. El medioevo era raro: tener ratas o perder niños, elijan, sajones.",
+    "tres cerditos": "Folklore inglés: arquitectura como carácter y destino. Ladrillo mata palo y paja: lobo, ídem. La casa propia y firme como happy end y fin en sí mismo.",
+    "musicos de bremen": "Grimm: un burro, un perro, un gato y un gallo — ya viejos y desgastados — arman banda y conquistan una casa. Subversivo y viejo cadáver exquisito.",
     pulgarcito: "Perrault, 1697 — ni primo de la de Andersen. Niño pequeño, hambruna, abandono, ogro caníbal. Migas de pan: el primer fracaso de future-proofing.",
   },
   synonyms: {
     cenicienta: ["la cenicienta", "cinderella"],
     blancanieves: ["blanca nieves", "snow white"],
-    bella_durmiente: ["la bella durmiente", "sleeping beauty", "aurora"],
-    caperucita_roja: ["caperucita", "la caperucita", "la caperucita roja"],
-    hansel_y_gretel: ["hansel y gretel", "hansel", "gretel"],
+    "bella durmiente": ["la bella durmiente", "sleeping beauty", "aurora"],
+    "caperucita roja": ["caperucita", "la caperucita", "la caperucita roja"],
+    "hansel y gretel": ["hansel y gretel", "hansel", "gretel"],
     sirenita: ["la sirenita", "little mermaid", "ariel"],
     rapunzel: ["rapunzel"],
     rumpelstiltskin: ["rumplestiltskin", "rumpelstiltskin"],
-    gato_con_botas: ["el gato con botas", "puss in boots"],
-    bella_y_la_bestia: ["la bella y la bestia", "beauty and the beast"],
+    "gato con botas": ["el gato con botas", "puss in boots"],
+    "bella y la bestia": ["la bella y la bestia", "beauty and the beast"],
     pinocho: ["pinocchio"],
     pulgarcita: ["pulgarcita"],
-    patito_feo: ["el patito feo", "ugly duckling"],
-    traje_nuevo_del_emperador: ["el traje nuevo del emperador", "traje nuevo", "el rey desnudo"],
-    jack_y_las_habichuelas: ["jack y las habichuelas magicas", "las habichuelas magicas", "jack and the beanstalk"],
-    ricitos_de_oro: ["ricitos de oro", "goldilocks"],
-    barba_azul: ["barba azul", "bluebeard"],
-    reina_de_las_nieves: ["la reina de las nieves", "snow queen"],
-    principe_rana: ["el principe rana", "el principe sapo", "the frog prince"],
+    "patito feo": ["el patito feo", "ugly duckling"],
+    "traje nuevo del emperador": ["el traje nuevo del emperador", "traje nuevo", "el rey desnudo"],
+    "jack y las habichuelas": ["jack y las habichuelas magicas", "las habichuelas magicas", "jack and the beanstalk"],
+    "ricitos de oro": ["ricitos de oro", "goldilocks"],
+    "barba azul": ["barba azul", "bluebeard"],
+    "reina de las nieves": ["la reina de las nieves", "snow queen"],
+    "principe rana": ["el principe rana", "el principe sapo", "the frog prince"],
     cerillera: ["la cerillera", "la vendedora de fosforos", "la vendedora de cerillas"],
-    soldadito_de_plomo: ["el soldadito de plomo", "tin soldier"],
-    vasilisa_la_bella: ["vasilisa", "vasilisa la bella"],
-    pajaro_de_fuego: ["el pajaro de fuego", "pájaro de fuego", "firebird"],
+    "soldadito de plomo": ["el soldadito de plomo", "tin soldier"],
+    "vasilisa la bella": ["vasilisa", "vasilisa la bella"],
+    "pajaro de fuego": ["el pajaro de fuego", "pájaro de fuego", "firebird"],
     momotaro: ["momotaro", "el nino durazno"],
-    gata_blanca: ["la gata blanca", "the white cat"],
-    ali_baba: ["ali baba", "alí babá", "abrete sesamo", "ábrete sésamo"],
+    "gata blanca": ["la gata blanca", "the white cat"],
+    "ali baba": ["ali baba", "alí babá", "abrete sesamo", "ábrete sésamo"],
     aladino: ["aladdin", "aladino"],
     simbad: ["sinbad", "simbad el marino"],
-    piel_de_asno: ["piel de asno", "donkeyskin"],
-    princesa_y_el_guisante: ["la princesa y el guisante", "la princesa y la arveja", "princess and the pea"],
-    zapatillas_rojas: ["las zapatillas rojas", "the red shoes"],
-    flautista_de_hamelin: ["el flautista de hamelin", "el flautista de hamelín", "pied piper"],
-    tres_cerditos: ["los tres cerditos", "the three little pigs"],
-    musicos_de_bremen: ["los musicos de bremen", "los músicos de bremen", "town musicians of bremen"],
+    "piel de asno": ["piel de asno", "donkeyskin"],
+    "princesa y el guisante": ["la princesa y el guisante", "la princesa y la arveja", "princess and the pea"],
+    "zapatillas rojas": ["las zapatillas rojas", "the red shoes"],
+    "flautista de hamelin": ["el flautista de hamelin", "el flautista de hamelín", "pied piper"],
+    "tres cerditos": ["los tres cerditos", "the three little pigs"],
+    "musicos de bremen": ["los musicos de bremen", "los músicos de bremen", "town musicians of bremen"],
     pulgarcito: ["pulgarcito", "le petit poucet", "tom thumb"],
   }
 });
@@ -2679,14 +3336,14 @@ const CORRIENTES_FILOSOFICAS_EN = crearBiblioteca({
     empiricism: "Knowledge comes from sensory experience; the mind starts empty. Locke, Hume, Berkeley. Hume and coffee: two stimulants against Kant's dogmatic slumber.",
     neoplatonism: "The One emanates the Intellect; the Intellect, the Soul; the Soul, matter. Plotinus emanates from Plato; Augustine from Plotinus. Epiphenomena all the way down?",
     idealism: "It's all in your mind, but your mind is in God's. Berkeley: 'to be is to be perceived'. Falling trees, Johnson kicking stones: draw?",
-    german_idealism: "Fichte, Schelling and Hegel, children squabbling over Kant's critical legacy. Analytic judgment: German idealists are and aren't Kantians.",
+    "german idealism": "Fichte, Schelling and Hegel, children squabbling over Kant's critical legacy. Analytic judgment: German idealists are and aren't Kantians.",
     enlightenment: "Reason, science and rights against superstition and tyranny. Voltaire, Rousseau, Kant. The light of the 1700s burned so bright it blinded the 1900s. Reason alone: error.",
     mysticism: "Direct experience of the divine, beyond reason. Eckhart, Saint Teresa, parts of Wittgenstein. The highest lyricism about what's most ineffable.",
     existentialism: "Existence before essence: you exist first, then you become. Sartre, Camus, De Beauvoir. Nausea, Sisyphus smiling, hell as the others, woman as artifact.",
     phenomenology: "Back to the things themselves — describe the experiences themselves, sans biases. Husserl founded it; Heidegger hijacked it, entangled and got the prize.",
     hermeneutics: "Theory of interpretation: from sacred texts to history to human action. Gadamer: to understand is always to reinterpret. The hermeneutic circle has no exit.",
     structuralism: "Meaning arises from systems of negative differences, not positive essences. Saussure for language; Lévi-Strauss for myth. The 20th century for everything.",
-    post_structuralism: "Structures exist but are unstable, historical, shot through by power. Foucault archaeologized them; Lyotard declared the end of all metanarratives. And yet...",
+    "post structuralism": "Structures exist but are unstable, historical, shot through by power. Foucault archaeologized them; Lyotard declared the end of all metanarratives. And yet...",
     deconstructionism: "Trace it all back towards the origin — which is almost nothing — and watch the text undo its own certainties. Derrida, la *différance* is not a typo.",
     marxism: "History as history of class struggle. Matter determines spirit. Marx vs. Hegel; Lenin vs. Marx; Stalin vs. everybody: say, another purge?",
     materialism: "Reality is fundamentally physical: everything is atoms and void. Democritus came up with it; Hobbes systematized it; La Mettrie scandalized everyone with it.",
@@ -2700,14 +3357,14 @@ const CORRIENTES_FILOSOFICAS_EN = crearBiblioteca({
     hedonism: "Pleasure as the highest good — a wide umbrella covering Aristippus (physical, immediate), Epicurus (tranquility) and Onfray (all of the above, without guilt).",
     pessimism: "The will is suffering, not vital impulse. Schopenhauer: long quadruple terms for what Buddhism neither wants nor can say. Anti-Pangloss.",
     positivism: "If not empirically verifiable, it doesn't count as knowledge. The naive 1800s: Comte invented sociology and wanted a religion of Humanity. It didn't go well.",
-    logical_positivism: "Metaphysics isn't even false — it's meaningless. Vienna Circle: Carnap, Schlick, Neurath. The war scattered them; Wittgenstein dismantled them.",
+    "logical positivism": "Metaphysics isn't even false — it's meaningless. Vienna Circle: Carnap, Schlick, Neurath. The war scattered them; Wittgenstein dismantled them.",
   },
   synonyms: {
     enlightenment: ["the enlightenment", "age of enlightenment", "age of reason"],
-    german_idealism: ["german idealism"],
-    post_structuralism: ["post-structuralism", "poststructuralism"],
+    "german idealism": ["german idealism"],
+    "post structuralism": ["post-structuralism", "poststructuralism"],
     deconstructionism: ["deconstruction", "deconstructivism"],
-    logical_positivism: ["logical positivism", "logical empiricism"],
+    "logical positivism": ["logical positivism", "logical empiricism"],
     postcolonialism: ["post-colonialism", "postcolonial theory"],
     cyrenaicism: ["cyrenaism"],
     peripateticism: ["peripatetic school"],
@@ -2721,77 +3378,77 @@ const HABIA_UNA_VEZ_EN = crearBiblioteca({
   dificultad: 3, lejania: 2,
   facts: {
     cinderella: "Rhodopis was the first — Greek-Egyptian, sandal stolen by an eagle. Perrault made it glass; the masses preferred gold. The pumpkin coach was Disney's.",
-    snow_white: "Grimm, 1812. The Evil Queen didn't want her heart — but her lungs and liver, vanity or anemia? Her sister, Rose Red didn't make the cut.",
-    sleeping_beauty: "Pregnant for two centuries, unknowingly because of deep sleep. Consensus: zero consent. Her alarm clock: a kiss (Grimm) or a splinter.",
-    little_red_riding_hood: "Perrault gives a banquet to the wolf: grandma as an entrée, the girl as the main. Zero saviors/page in the classic. Don't trust strangers. Or anyone.",
-    hansel_and_gretel: "Famine, Little Ice Age, forest abandonment, a witch and a lifesaving oven. Were they bounty hunters? Are you really asking that about children?",
-    little_mermaid: "For him, she walked as if on broken glass. He picked the other girl; she dissolved into sea foam. Given it's Andersen's, it feels almost happy.",
+    "snow white": "Grimm, 1812. The Evil Queen didn't want her heart — but her lungs and liver, vanity or anemia? Her sister, Rose Red didn't make the cut.",
+    "sleeping beauty": "Pregnant for two centuries, unknowingly because of deep sleep. Consensus: zero consent. Her alarm clock: a kiss (Grimm) or a splinter.",
+    "little red riding hood": "Perrault gives a banquet to the wolf: grandma as an entrée, the girl as the main. Zero saviors/page in the classic. Don't trust strangers. Or anyone.",
+    "hansel and gretel": "Famine, Little Ice Age, forest abandonment, a witch and a lifesaving oven. Were they bounty hunters? Are you really asking that about children?",
+    "little mermaid": "For him, she walked as if on broken glass. He picked the other girl; she dissolved into sea foam. Given it's Andersen's, it feels almost happy.",
     rapunzel: "The Grimms pull no punches: pregnancy revealed by tight clothes, exile, and a prince blinded by thorns. Happy ending anyways and great conditioner.",
     rumpelstiltskin: "Gold for firstborns (DO read the fine print). The horror isn't the imp — it's the contractual law that followed it. At least Shylock was naive.",
-    puss_in_boots: "Perrault, 1697. A cat with nothing to his name invents the Marquis of Carabas from scratch. Fraud as art form and political theory.",
-    beauty_and_the_beast: "Madame de Villeneuve, 1740 — not Disney's, not Beaumont's, both were mere summarizers. Unabridged: much longer, much weirder.",
+    "puss in boots": "Perrault, 1697. A cat with nothing to his name invents the Marquis of Carabas from scratch. Fraud as art form and political theory.",
+    "beauty and the beast": "Madame de Villeneuve, 1740 — not Disney's, not Beaumont's, both were mere summarizers. Unabridged: much longer, much weirder.",
     pinocchio: "Collodi, 1883, Italian. The talking cricket dies on page 3 — squashed by Pinocchio. Returns as a ghost conscience. Also, the boy was the villain.",
     thumbelina: "Andersen, 1835: Girl the size of a thumb, kidnapped by toads, engaged to a mole, saved by a swallow. Nobody asked what she wanted.",
-    ugly_duckling: "Too much suffering, and then selfknowledge. Some say all's well that ends well, but poor swan. The literal rara avis that ended up happy in Andersen.",
-    emperors_new_clothes: "Andersen, 1837. Con artists, politics and fashion as insights into what truth actually is. Oversight in both senses started here.",
-    jack_and_the_beanstalk: "English oral tradition. Magic beans, sleeping giant, a singing harp. Thieves robbing thieves: the OG entrepreneurship.",
+    "ugly duckling": "Too much suffering, and then selfknowledge. Some say all's well that ends well, but poor swan. The literal rara avis that ended up happy in Andersen.",
+    "emperors new clothes": "Andersen, 1837. Con artists, politics and fashion as insights into what truth actually is. Oversight in both senses started here.",
+    "jack and the beanstalk": "English oral tradition. Magic beans, sleeping giant, a singing harp. Thieves robbing thieves: the OG entrepreneurship.",
     goldilocks: "Breaking and entering with a succession of suspects: old woman, fox, blonde girl. The bears: victims if a bit radical. The girl: guilty of mediocrity.",
     bluebeard: "Perrault, 1697. Serial wife-killer, forbidden room, notable beard. Gilles de Rais? —No way, slander: his thing was children.",
-    snow_queen: "Andersen, 1844: Kay and Gerda. A broken mirror, a splinter in the eye, a heart of ice. Inspired Narnia and Frozen. Both omitted the pain.",
-    frog_prince: "It evolved alongside love: the spell, traditionally broken by throwing the frog against the wall, now operates via kiss. Progress is undeniable.",
-    little_match_girl: "No wolves, no witches, barely any grandmothers — and still the most terrible. A girl dying alone of cold and hunger on Christmas Eve. Andersen: enough!",
-    tin_soldier: "An impossible love: a one-legged tin soldier and a paper dancer. Love burns — as do they. Is it better to have loved and burned or to not have loved at all?",
+    "snow queen": "Andersen, 1844: Kay and Gerda. A broken mirror, a splinter in the eye, a heart of ice. Inspired Narnia and Frozen. Both omitted the pain.",
+    "frog prince": "It evolved alongside love: the spell, traditionally broken by throwing the frog against the wall, now operates via kiss. Progress is undeniable.",
+    "little match girl": "No wolves, no witches, barely any grandmothers — and still the most terrible. A girl dying alone of cold and hunger on Christmas Eve. Andersen: enough!",
+    "tin soldier": "An impossible love: a one-legged tin soldier and a paper dancer. Love burns — as do they. Is it better to have loved and burned or to not have loved at all?",
     vasilisa: "The Russian Cinderella, costarring Baba Yaga. Darker, stranger, more chicken legs. The doll inherited from her dead mother: the thread that saves her.",
     firebird: "Russian folklore: a luminous bird both blesses and curses its captors. Stravinsky turned it into ballet and Paris into a riot. As Paris usually does.",
     momotaro: "The Peach Boy, Japan's most beloved hero — born from a giant peach, raised by old folks, conqueror of Demon Island. No irony, no added sugar.",
-    white_cat: "Madame d'Aulnoy, 1698. The OG once upon a time. A queen transformed into a cat; subtle fabrics, tiny seeds and tiny pets. The most precious style.",
-    ali_baba: "One Thousand and One Nights. Forty thieves, a cave, the most famous password ever (just don't use it online). Early opening between east and west.",
+    "white cat": "Madame d'Aulnoy, 1698. The OG once upon a time. A queen transformed into a cat; subtle fabrics, tiny seeds and tiny pets. The most precious style.",
+    "ali baba": "One Thousand and One Nights. Forty thieves, a cave, the most famous password ever (just don't use it online). Early opening between east and west.",
     aladdin: "Originally set in China, not Arabia — one of translator Galland's many delightful errors. Another one: inventing the genie of the lamp.",
     sinbad: "Seven voyages, each more impossible than the last. The Arabic Odyssey: monsters, shipwrecks, riches. Baghdad pre-Mongol: the original fantastic port.",
     donkeyskin: "Perrault, 1694. A father who courts his daughter with dresses the color of time, the moon and the sun. She flees in a donkey skin with a Cinderella-ish ring.",
-    princess_and_the_pea: "Andersen, 1835. A queen wants a real princess for her son. The test? A pea under twenty mattresses. Felt it? Welcome, your majesty.",
-    red_shoes: "Andersen: Shoes that make you dance. Always, irreversibly. Between raves and Kate Bush. Too horrible for Disney. Andersen, you went too far!",
-    pied_piper: "Music: between rat extermination and literal kidnappings. The Middle Ages were odd: pick your poison — rats or missing children, Saxons.",
-    three_little_pigs: "English folklore: architecture as character and destiny. Brick beats wood and straw — wolf, idem. Ownership and brick as the ultimate happy ending.",
-    musicians_of_bremen: "Grimm: a donkey, a dog, a cat and a rooster — old and worn out — form a band and take over a house. Subversive and a very old cadavre exquis.",
-    tom_thumb: "Perrault, 1697 — no relation to Andersen's tiny girl. Small boy, famine, abandonment, cannibal ogre. Breadcrumbs: the first failure of future-proofing.",
+    "princess and the pea": "Andersen, 1835. A queen wants a real princess for her son. The test? A pea under twenty mattresses. Felt it? Welcome, your majesty.",
+    "red shoes": "Andersen: Shoes that make you dance. Always, irreversibly. Between raves and Kate Bush. Too horrible for Disney. Andersen, you went too far!",
+    "pied piper": "Music: between rat extermination and literal kidnappings. The Middle Ages were odd: pick your poison — rats or missing children, Saxons.",
+    "three little pigs": "English folklore: architecture as character and destiny. Brick beats wood and straw — wolf, idem. Ownership and brick as the ultimate happy ending.",
+    "musicians of bremen": "Grimm: a donkey, a dog, a cat and a rooster — old and worn out — form a band and take over a house. Subversive and a very old cadavre exquis.",
+    "tom thumb": "Perrault, 1697 — no relation to Andersen's tiny girl. Small boy, famine, abandonment, cannibal ogre. Breadcrumbs: the first failure of future-proofing.",
   },
   synonyms: {
     cinderella: ["cinderella"],
-    snow_white: ["snow white", "snowwhite"],
-    sleeping_beauty: ["sleeping beauty", "aurora", "briar rose"],
-    little_red_riding_hood: ["little red riding hood", "red riding hood"],
-    hansel_and_gretel: ["hansel and gretel", "hansel", "gretel"],
-    little_mermaid: ["little mermaid", "the little mermaid", "ariel"],
+    "snow white": ["snow white", "snowwhite"],
+    "sleeping beauty": ["sleeping beauty", "aurora", "briar rose"],
+    "little red riding hood": ["little red riding hood", "red riding hood"],
+    "hansel and gretel": ["hansel and gretel", "hansel", "gretel"],
+    "little mermaid": ["little mermaid", "the little mermaid", "ariel"],
     rapunzel: ["rapunzel"],
     rumpelstiltskin: ["rumpelstiltskin", "rumplestiltskin"],
-    puss_in_boots: ["puss in boots"],
-    beauty_and_the_beast: ["beauty and the beast"],
+    "puss in boots": ["puss in boots"],
+    "beauty and the beast": ["beauty and the beast"],
     pinocchio: ["pinocchio"],
     thumbelina: ["thumbelina"],
-    ugly_duckling: ["ugly duckling", "the ugly duckling"],
-    emperors_new_clothes: ["the emperor's new clothes", "emperor's new clothes", "emperors new clothes"],
-    jack_and_the_beanstalk: ["jack and the beanstalk", "jack and the bean stalk"],
+    "ugly duckling": ["ugly duckling", "the ugly duckling"],
+    "emperors new clothes": ["the emperor's new clothes", "emperor's new clothes", "emperors new clothes"],
+    "jack and the beanstalk": ["jack and the beanstalk", "jack and the bean stalk"],
     goldilocks: ["goldilocks", "goldilocks and the three bears"],
     bluebeard: ["bluebeard", "blue beard"],
-    snow_queen: ["the snow queen", "snow queen"],
-    frog_prince: ["the frog prince", "frog prince"],
-    little_match_girl: ["the little match girl", "little match girl"],
-    tin_soldier: ["the tin soldier", "tin soldier", "the steadfast tin soldier"],
+    "snow queen": ["the snow queen", "snow queen"],
+    "frog prince": ["the frog prince", "frog prince"],
+    "little match girl": ["the little match girl", "little match girl"],
+    "tin soldier": ["the tin soldier", "tin soldier", "the steadfast tin soldier"],
     vasilisa: ["vasilisa", "vasilisa the beautiful"],
     firebird: ["the firebird", "firebird"],
     momotaro: ["momotaro", "the peach boy"],
-    white_cat: ["the white cat", "white cat"],
-    ali_baba: ["ali baba", "ali baba and the forty thieves", "open sesame"],
+    "white cat": ["the white cat", "white cat"],
+    "ali baba": ["ali baba", "ali baba and the forty thieves", "open sesame"],
     aladdin: ["aladdin", "aladdin and the magic lamp"],
     sinbad: ["sinbad", "sinbad the sailor"],
     donkeyskin: ["donkeyskin", "donkey skin", "peau d'ane"],
-    princess_and_the_pea: ["the princess and the pea", "princess and the pea"],
-    red_shoes: ["the red shoes", "red shoes"],
-    pied_piper: ["the pied piper", "pied piper", "pied piper of hamelin"],
-    three_little_pigs: ["the three little pigs", "three little pigs"],
-    musicians_of_bremen: ["the musicians of bremen", "musicians of bremen", "town musicians of bremen"],
-    tom_thumb: ["tom thumb"],
+    "princess and the pea": ["the princess and the pea", "princess and the pea"],
+    "red shoes": ["the red shoes", "red shoes"],
+    "pied piper": ["the pied piper", "pied piper", "pied piper of hamelin"],
+    "three little pigs": ["the three little pigs", "three little pigs"],
+    "musicians of bremen": ["the musicians of bremen", "musicians of bremen", "town musicians of bremen"],
+    "tom thumb": ["tom thumb"],
   }
 });
 
@@ -3422,65 +4079,65 @@ const VANISHED_STATES_EN = crearBiblioteca({
   total: 96, metmin: 20,
   dificultad: 4, lejania: 4,
   facts: {
-    soviet_union: "1917-1991. The largest and loudest communist experiment. Russia still keeps Lenin's embalmed body and over 50% Soviet nostalgia.",
-    austria_hungary: "1867-1918. Modern, cultured, multicultural. Dissolved after WWI into smaller ethnic states. Loos, Klimt, Freud: the last throes of empire as civilization.",
-    east_germany: "1949-1990. Soviet sphere. Ground zero of contemporary Ostalgie — underdeveloped, underpopulated, overenvied.",
-    ottoman_empire: "1299-1922. One of history's longest and most powerful empires — later nicknamed 'the sick man of Europe', then dead in WWI.",
-    gran_colombia: "1819-1831. Bolívar's dream: Colombia, Venezuela, Ecuador, Panama, parts of Peru and Brazil. Twelve years. Most dreams are shorter/worse than his.",
-    byzantine_empire: "330-1453. The Roman Empire survived a thousand years after Rome's fall, until the Ottomans took Constantinople. Their endonym: Romans, never Byzantines.",
-    republic_of_venice: "697-1797. Glass, lions, Titian. Eleven hundred years of trade, intrigue and masks, ended by Napoleon without a single important shot fired.",
-    mughal_empire: "1526-1857. The Taj Mahal, hookahs and an obsession with harems and pigeons. Rembrandt loved them; the Brits dissolved them after a failed rebellion.",
-    confederate_states: "1861-1865. Years of existence: 4; international recognition: none. Atlanta on fire, a flag that lives on as anachronism and offense.",
-    kingdom_of_hawaii: "1795-1893. First colonized militarily — then with pineapples. Legitimacy? The most directly affected deny it. Rulers with the most mellifluous names.",
-    austrian_empire: "1804-1867. Lasted only 63 years before taking its married name and becoming Austria-Hungary. Metternich, pastries, and Strauss's Blue Danube.",
-    polish_lithuanian_commonwealth: "1569-1795. Huge union of Poland and Lithuania. Paradisium Iudaeorum. Despite the awesomely named Winged Hussars, partitioned by Russia, Prussia and Austria.",
-    kingdom_of_the_two_sicilies: "1816-1861. The largest kingdom in Italy (Naples and the island) before unification, dissolved by Garibaldi. The Mediterranean as polity.",
-    papal_states: "754-1870. Over a thousand years under direct papal rule — the Pope moved to Avignon in the 1300s and forgot to pack his land. Gone with Italian unification.",
-    republic_of_florence: "1115-1532. Cradle of the Renaissance, governed by guilds and bankers before falling to the Medici and rising again, better, higher.",
-    republic_of_genoa: "1099-1797. Gave us both Columbus and pesto. The everlasting commercial rival of la Serenissima, until Napoleon got them both in the same year.",
-    duchy_of_burgundy: "1032-1477. Squeezed between France and the HRE. Dead with Charles the Bold, but it lives on in great wine and one of the noblest colors.",
-    inca_empire: "c.1438-1533. The largest pre-Columbian empire. Pizarro captured Atahualpa, collected his ransom in gold and executed him anyway. Unfairest game.",
-    kingdom_of_aksum: "c.100-940. Horn of Africa (Ethiopia), parts of Yemen. The prophet Mani said: one of the four great powers of antiquity — alongside Rome, Persia and China.",
-    mali_empire: "c.1235-1610. Mansa Musa, maybe the wealthiest person in history, caused the first known inflation crisis. How? By giving golden alms on his way to Mecca.",
-    songhai_empire: "c.1400-1591. Fell to Morocco at the Battle of Tondibi: 40k Songhai soldiers without gunpowder didn't stand a chance against 4k Moroccans... with cannons.",
+    "soviet union": "1917-1991. The largest and loudest communist experiment. Russia still keeps Lenin's embalmed body and over 50% Soviet nostalgia.",
+    "austria hungary": "1867-1918. Modern, cultured, multicultural. Dissolved after WWI into smaller ethnic states. Loos, Klimt, Freud: the last throes of empire as civilization.",
+    "east germany": "1949-1990. Soviet sphere. Ground zero of contemporary Ostalgie — underdeveloped, underpopulated, overenvied.",
+    "ottoman empire": "1299-1922. One of history's longest and most powerful empires — later nicknamed 'the sick man of Europe', then dead in WWI.",
+    "gran colombia": "1819-1831. Bolívar's dream: Colombia, Venezuela, Ecuador, Panama, parts of Peru and Brazil. Twelve years. Most dreams are shorter/worse than his.",
+    "byzantine empire": "330-1453. The Roman Empire survived a thousand years after Rome's fall, until the Ottomans took Constantinople. Their endonym: Romans, never Byzantines.",
+    "republic of venice": "697-1797. Glass, lions, Titian. Eleven hundred years of trade, intrigue and masks, ended by Napoleon without a single important shot fired.",
+    "mughal empire": "1526-1857. The Taj Mahal, hookahs and an obsession with harems and pigeons. Rembrandt loved them; the Brits dissolved them after a failed rebellion.",
+    "confederate states": "1861-1865. Years of existence: 4; international recognition: none. Atlanta on fire, a flag that lives on as anachronism and offense.",
+    "kingdom of hawaii": "1795-1893. First colonized militarily — then with pineapples. Legitimacy? The most directly affected deny it. Rulers with the most mellifluous names.",
+    "austrian empire": "1804-1867. Lasted only 63 years before taking its married name and becoming Austria-Hungary. Metternich, pastries, and Strauss's Blue Danube.",
+    "polish lithuanian commonwealth": "1569-1795. Huge union of Poland and Lithuania. Paradisium Iudaeorum. Despite the awesomely named Winged Hussars, partitioned by Russia, Prussia and Austria.",
+    "kingdom of the two sicilies": "1816-1861. The largest kingdom in Italy (Naples and the island) before unification, dissolved by Garibaldi. The Mediterranean as polity.",
+    "papal states": "754-1870. Over a thousand years under direct papal rule — the Pope moved to Avignon in the 1300s and forgot to pack his land. Gone with Italian unification.",
+    "republic of florence": "1115-1532. Cradle of the Renaissance, governed by guilds and bankers before falling to the Medici and rising again, better, higher.",
+    "republic of genoa": "1099-1797. Gave us both Columbus and pesto. The everlasting commercial rival of la Serenissima, until Napoleon got them both in the same year.",
+    "duchy of burgundy": "1032-1477. Squeezed between France and the HRE. Dead with Charles the Bold, but it lives on in great wine and one of the noblest colors.",
+    "inca empire": "c.1438-1533. The largest pre-Columbian empire. Pizarro captured Atahualpa, collected his ransom in gold and executed him anyway. Unfairest game.",
+    "kingdom of aksum": "c.100-940. Horn of Africa (Ethiopia), parts of Yemen. The prophet Mani said: one of the four great powers of antiquity — alongside Rome, Persia and China.",
+    "mali empire": "c.1235-1610. Mansa Musa, maybe the wealthiest person in history, caused the first known inflation crisis. How? By giving golden alms on his way to Mecca.",
+    "songhai empire": "c.1400-1591. Fell to Morocco at the Battle of Tondibi: 40k Songhai soldiers without gunpowder didn't stand a chance against 4k Moroccans... with cannons.",
     tibet: "1912-1951. Framed by the Qing collapse and Chinese annexation. The dispute endures. Lhasa remains dreamlike: lofty, distant, unreal.",
-    kingdom_of_tahiti: "1788-1880. King Pomaré V sold sovereignty to France for a pension and a title — and died of alcoholism shortly after.",
-    kingdom_of_kongo: "c.1390-1914. 500+ years of history. Declined so slowly the title of Manikongo survived as an empty honorific for decades after the state was gone.",
-    kingdom_of_benin: "c.1180-1897. 700+ years of power and art — ended in a single British expedition. Their treasures fill western museums, chanting: restitution.",
-    crown_of_aragon: "1035-1707. A fifth of Spain and half the Mediterranean under one crown. Sicily came via Constance's inheritance; Sardinia, Naples and even Athens followed. Jaume conquered; the sea remained.",
-    west_germany: "1949-1990. Reunified with East Germany in 1990: down came the Berlin Wall, up went David Hasselhoff's fame. Brought the Wind of Change to the east.",
-    achaemenid_empire: "c.550-330 BC. Inventors of religious freedom and postal services. Cyrus, King of Kings. Conquered by Alexander the Great in 330 BC.",
-    modern_persia: "Renamed Iran by the Shah in 1935 — Persians always called themselves Iranians (Aryans). Global name change; sustained local identity.",
-    south_vietnam: "1955-1975. Reunited with its northern sister in 1975. Saigon became Ho Chi Minh City. Its Pho is sweeter, denser — the south always was.",
-    north_vietnam: "1945-1975. Nothing beats winning — and Vietnam has triumphed over the unimaginable. Its Pho: more star anise, much clearer.",
-    south_yemen: "1967-1990. The only communist state in the Arab world — aligned with the USSR, Cuba and East Germany, until the reunification with North Yemen.",
+    "kingdom of tahiti": "1788-1880. King Pomaré V sold sovereignty to France for a pension and a title — and died of alcoholism shortly after.",
+    "kingdom of kongo": "c.1390-1914. 500+ years of history. Declined so slowly the title of Manikongo survived as an empty honorific for decades after the state was gone.",
+    "kingdom of benin": "c.1180-1897. 700+ years of power and art — ended in a single British expedition. Their treasures fill western museums, chanting: restitution.",
+    "crown of aragon": "1035-1707. A fifth of Spain and half the Mediterranean under one crown. Sicily came via Constance's inheritance; Sardinia, Naples and even Athens followed. Jaume conquered; the sea remained.",
+    "west germany": "1949-1990. Reunified with East Germany in 1990: down came the Berlin Wall, up went David Hasselhoff's fame. Brought the Wind of Change to the east.",
+    "achaemenid empire": "c.550-330 BC. Inventors of religious freedom and postal services. Cyrus, King of Kings. Conquered by Alexander the Great in 330 BC.",
+    "modern persia": "Renamed Iran by the Shah in 1935 — Persians always called themselves Iranians (Aryans). Global name change; sustained local identity.",
+    "south vietnam": "1955-1975. Reunited with its northern sister in 1975. Saigon became Ho Chi Minh City. Its Pho is sweeter, denser — the south always was.",
+    "north vietnam": "1945-1975. Nothing beats winning — and Vietnam has triumphed over the unimaginable. Its Pho: more star anise, much clearer.",
+    "south yemen": "1967-1990. The only communist state in the Arab world — aligned with the USSR, Cuba and East Germany, until the reunification with North Yemen.",
     ceylon: "1948-1972. One of the great homelands of cinnamon, it is known today as Sri Lanka. First country to elect a woman head of government — Bandaranaike, 1960.",
     rhodesia: "1965-1980. Named after Cecil Rhodes. As Zimbabwe, it printed 100-trillion-dollar bills. Hungary holds the inflation record, but winning at inflation = losing at everything else.",
-    gold_coast: "1957. Became Ghana, a country without any overlap with the old empire of the same name (shhh, no hints). Trailblazer of the independence of sub-Saharan Africa.",
+    "gold coast": "1957. Became Ghana, a country without any overlap with the old empire of the same name (shhh, no hints). Trailblazer of the independence of sub-Saharan Africa.",
     abyssinia: "c.1270-1936. The only African country never colonized — except briefly by Italy (1936-1941). Coffee, rock-hewn churches, and possibly the Ark of the Covenant.",
     burma: "1948-1989. Their sittuyin looks like chess, but, in the setup phase, pieces are placed at the player's discretion. Renamed Myanmar in 1989.",
-    belgian_congo: "1908-1960. The worst fact in all of Aris. Leopold II's colonial system: rubber quotas or amputations. Our voice cracks.",
+    "belgian congo": "1908-1960. The worst fact in all of Aris. Leopold II's colonial system: rubber quotas or amputations. Our voice cracks.",
     manchuria: "1932-1945. Japanese puppet state (Manchukuo) during WWII. Site of the atrocious Unit 731. Portrayed literarily by both Murakami and Ken Liu.",
     tanganyika: "1961-1964. Merged with Zanzibar in 1964 to form Tanzania. Lake Tanganyika still carries its name. Geography outlasting politics.",
     nyasaland: "1907-1964. Present-day Malawi ('land of flames') once meant 'land of the lake'. Africa's second deepest lake — and the world's most diverse in cichlids (mbuna).",
-    northern_rhodesia: "1924-1964. Cecil J. Rhodes named two states: this one, now Zambia, contains Victoria Falls — one of the last colonial eponyms standing.",
+    "northern rhodesia": "1924-1964. Cecil J. Rhodes named two states: this one, now Zambia, contains Victoria Falls — one of the last colonial eponyms standing.",
     bechuanaland: "1885-1966. Rags to riches, African political edition. Poor before, wealthy now as Botswana. Diamonds: not always forever, but, boy, they do deliver.",
     basutoland: "1884-1966. Present-day Lesotho: the only country entirely above 1000m. Crossed on pony. The kingdom in the sky — no metaphor.",
     dahomey: "1960-1975. Distinct from the pre-colonial kingdom of the same name. Renamed Benin in 1975. The Dahomey Amazons: real-life warriors, not mere drawings.",
-    upper_volta: "1958-1984. Renamed Burkina Faso in 1984 — 'Land of Incorruptible People'. Clearly not an Elizabethan dance.",
+    "upper volta": "1958-1984. Renamed Burkina Faso in 1984 — 'Land of Incorruptible People'. Clearly not an Elizabethan dance.",
     sumer: "c.4500-1900 BC. Almost everything starts here: writing, the calendar, almost everything that comes in groups of 7 or 60. Clearly not aliens.",
     akkad: "c.2334-2154 BC. Invented the concept of empire. Enheduanna, daughter of Sargon, is the first author whose name survives to this day.",
     babylon: "539 BC. Legendary but real. Conquered by Cyrus the Great. Its famous hanging gardens were likely Sennacherib's, in Nineveh. Its lottery was Borges' and ours.",
     assyria: "612 BC. Military power — and accidental library. When Nineveh burned, Ashurbanipal's clay tablets were fired and thus preserved to today. We owe it Gilgamesh.",
     carthage: "146 BC. Delenda est? Yes it was but, sorry, Cato — Carthage was razed, but its memory endures. And the salt sown in its ruins: a myth.",
     phoenicia: "c.1500-332 BC. Analphabetism everywhere, and then: the Phoenician alphabet gave birth to all the others. We owe it purple and a tiny book: the 'Bible' comes from Byblos.",
-    dutch_east_indies: "1800-1949. The spice islands. So valuable that a single one of them — Run — was traded for Manhattan in 1667.",
-    french_indochina: "1887-1954. Beyond mon amour: France left behind condensed-milk coffee, the banh mi sandwich, the Vietnamese alphabet, and the pho.",
-    tannu_tuva: "1921-1944. Absorbed by the USSR in 1944. Feynman desperately wanted to visit; the Soviet bureaucracy had many other plans.",
-    weimar_republic: "1919-1933. Hitler's first great victim. Cabarets, Bauhaus, Hirschfeld, and cocaine in a milieu of hyperinflation and post-Versailles unsustainability.",
-    third_reich: "1933-1945. Third time, the charmless. Lebensraum-hungry Germany craved 1000 years of glory, 80+ years later it remains a popular synonym of evil and infamy.",
-    british_raj: "1858-1947. After WWII and the Bengal famine, India achieved independence alongside Pakistan — and later Bangladesh.",
-    mongol_empire: "1206-1368. By far the largest contiguous empire in history: 24 million km². Inventors of the highway in a way, a long one, the Silk Route.",
+    "dutch east indies": "1800-1949. The spice islands. So valuable that a single one of them — Run — was traded for Manhattan in 1667.",
+    "french indochina": "1887-1954. Beyond mon amour: France left behind condensed-milk coffee, the banh mi sandwich, the Vietnamese alphabet, and the pho.",
+    "tannu tuva": "1921-1944. Absorbed by the USSR in 1944. Feynman desperately wanted to visit; the Soviet bureaucracy had many other plans.",
+    "weimar republic": "1919-1933. Hitler's first great victim. Cabarets, Bauhaus, Hirschfeld, and cocaine in a milieu of hyperinflation and post-Versailles unsustainability.",
+    "third reich": "1933-1945. Third time, the charmless. Lebensraum-hungry Germany craved 1000 years of glory, 80+ years later it remains a popular synonym of evil and infamy.",
+    "british raj": "1858-1947. After WWII and the Bengal famine, India achieved independence alongside Pakistan — and later Bangladesh.",
+    "mongol empire": "1206-1368. By far the largest contiguous empire in history: 24 million km². Inventors of the highway in a way, a long one, the Silk Route.",
     lydia: "c.1200-546 BC. Invented coinage, hoarded it. Their king, Croesus, turned out to be less happy than he thought. Solon had warned him.",
     bophuthatswana: "1977-1994. A Bantustan: the apartheid fiction of a homeland where Black majorities were confined without full citizenship. Reintegrated in 1994.",
     transkei: "1976-1994. Another Bantustan, same system: apartheid's geography of dispossession. Reintegrated in 1994.",
@@ -3488,53 +4145,53 @@ const VANISHED_STATES_EN = crearBiblioteca({
     yugoslavia: "1918-1992. The southern (yugo-) union of Slavs dissolved into ethnic wars in the 90s. Tito was the glue. After Tito, everything fell apart.",
     biafra: "1967-1970. Igbo secession from southeast Nigeria. Recognized by 5 countries, defeated after a devastating civil war and famine.",
     crimea: "1992, 2014. Declared independence twice in three decades — the second time ended in a still disputed Russian annexation.",
-    holy_roman_empire: "800/962-1806. Voltaire: neither holy, nor Roman, nor an empire. Sometimes Germanic. Frederick Barbarossa: far better than the mustachioed operation.",
-    roman_empire: "27 BC–476 AD. From Augustus to Romulus Augustulus: their names together sound as bad as the empire's end. The East carried on for a thousand more years.",
+    "holy roman empire": "800/962-1806. Voltaire: neither holy, nor Roman, nor an empire. Sometimes Germanic. Frederick Barbarossa: far better than the mustachioed operation.",
+    "roman empire": "27 BC–476 AD. From Augustus to Romulus Augustulus: their names together sound as bad as the empire's end. The East carried on for a thousand more years.",
     mesopotamia: "c.3500-539 BC. Cradle of almost everything: writing, the wheel, law, beer and written complaints. Today: Iraq, always between rivers.",
-    vichy_france: "1940-1944. Pétain: Nazi collaboration at a spa resort. French shame, casino parliament, and globally famous fancy water.",
-    new_spain: "1521-1821. 300+ years of viceroyalty: Tenochtitlan became Mexico City. Larger and richer than Spain itself. Hispanic epicenter for centuries.",
-    new_granada: "1717-1819. The viceroyalty of Colombia, Venezuela, Panama and Ecuador. Bolívar turned it into another state we won't reveal here.",
-    kingdom_of_kush: "c.1070 BC–350 AD. Nubia conquered Egypt, ruling it as Dynasty XXV. Their own pyramids: smaller, steeper, prouder, more abundant.",
-    carolingian_empire: "800-843. Western Europe reunited by Charlemagne (unseen since Rome). Verdun split it in three: France, Germany and an open wound of sauerkraut/choucroute.",
-    kalmar_union: "1397-1523. Denmark, Sweden and Norway under one crown, created by Margaret I of Denmark. From Greenland to Finland — thinly peopled.",
-    khwarazmian_empire: "c.1077-1231. Genghis Khan requested trade; the Shah sent back his ambassador's head. Result: a case study in obliteration.",
-    republic_of_ragusa: "1358-1808. Better known today as King's Landing or Dubrovnik — dissolved by Napoleon alongside two rivals. Now impossible to visit: always full.",
-    empire_of_trebizond: "1204-1461. The last drop of Rome's last successor. A drop that took 8 years to fall, after Constantinople.",
-    ptolemaic_egypt: "305-30 BC. Greek face, Egyptian ka. Ptolemy I took Alexander's corpse and the country: centuries of incest culminated in Cleopatra VII.",
-    kingdom_of_bohemia: "c.1198-1918. Prague, Kafka and all the Pilsners of the world. Tricultural: German, Jewish, Slavic. Inventor of defenestration and its own spring.",
-    duchy_of_savoy: "1416-1860. From Alpine state to the seed of unified Italy: its king was Italy's first, Vittorio Emanuele II. Also gave us the Savoiardo (ladyfinger).",
-    great_moravia: "c.833-907. First great Slavic state. Cyril and Methodius invented the Glagolitic alphabet here — grandfather of Cyrillic. Without Great Moravia: zero Russian writing.",
-    hanseatic_league: "c.1356-1669. Neither kingdom nor empire: a Baltic and North Sea trade network. Multinational and stronger than most states. Lübeck, Hamburg, Bergen, Gdańsk.",
-    seleucid_empire: "312-63 BC. Alexander's hardest conquest, enjoyed by Seleucus — from Syria to Persia — until Rome swallowed it piece by piece.",
-    parthian_empire: "247 BC–224 AD. Iran's empire, Rome's Achilles' heel for centuries. At Carrhae, they reportedly killed Crassus by pouring molten gold down his throat.",
-    greco_bactrian_kingdom: "256-120 BC. The last Hellenistic frontier: Buddhist and adjacent to India from Afghanistan. Bilingual coins: Greek on one side, Prakrit on the other.",
-    kingdom_of_macedonia: "c.808-168 BC. Grew with Philip II, exploded with Alexander. Briefly the center of almost everything. Never Yugoslav. Never northern.",
+    "vichy france": "1940-1944. Pétain: Nazi collaboration at a spa resort. French shame, casino parliament, and globally famous fancy water.",
+    "new spain": "1521-1821. 300+ years of viceroyalty: Tenochtitlan became Mexico City. Larger and richer than Spain itself. Hispanic epicenter for centuries.",
+    "new granada": "1717-1819. The viceroyalty of Colombia, Venezuela, Panama and Ecuador. Bolívar turned it into another state we won't reveal here.",
+    "kingdom of kush": "c.1070 BC–350 AD. Nubia conquered Egypt, ruling it as Dynasty XXV. Their own pyramids: smaller, steeper, prouder, more abundant.",
+    "carolingian empire": "800-843. Western Europe reunited by Charlemagne (unseen since Rome). Verdun split it in three: France, Germany and an open wound of sauerkraut/choucroute.",
+    "kalmar union": "1397-1523. Denmark, Sweden and Norway under one crown, created by Margaret I of Denmark. From Greenland to Finland — thinly peopled.",
+    "khwarazmian empire": "c.1077-1231. Genghis Khan requested trade; the Shah sent back his ambassador's head. Result: a case study in obliteration.",
+    "republic of ragusa": "1358-1808. Better known today as King's Landing or Dubrovnik — dissolved by Napoleon alongside two rivals. Now impossible to visit: always full.",
+    "empire of trebizond": "1204-1461. The last drop of Rome's last successor. A drop that took 8 years to fall, after Constantinople.",
+    "ptolemaic egypt": "305-30 BC. Greek face, Egyptian ka. Ptolemy I took Alexander's corpse and the country: centuries of incest culminated in Cleopatra VII.",
+    "kingdom of bohemia": "c.1198-1918. Prague, Kafka and all the Pilsners of the world. Tricultural: German, Jewish, Slavic. Inventor of defenestration and its own spring.",
+    "duchy of savoy": "1416-1860. From Alpine state to the seed of unified Italy: its king was Italy's first, Vittorio Emanuele II. Also gave us the Savoiardo (ladyfinger).",
+    "great moravia": "c.833-907. First great Slavic state. Cyril and Methodius invented the Glagolitic alphabet here — grandfather of Cyrillic. Without Great Moravia: zero Russian writing.",
+    "hanseatic league": "c.1356-1669. Neither kingdom nor empire: a Baltic and North Sea trade network. Multinational and stronger than most states. Lübeck, Hamburg, Bergen, Gdańsk.",
+    "seleucid empire": "312-63 BC. Alexander's hardest conquest, enjoyed by Seleucus — from Syria to Persia — until Rome swallowed it piece by piece.",
+    "parthian empire": "247 BC–224 AD. Iran's empire, Rome's Achilles' heel for centuries. At Carrhae, they reportedly killed Crassus by pouring molten gold down his throat.",
+    "greco bactrian kingdom": "256-120 BC. The last Hellenistic frontier: Buddhist and adjacent to India from Afghanistan. Bilingual coins: Greek on one side, Prakrit on the other.",
+    "kingdom of macedonia": "c.808-168 BC. Grew with Philip II, exploded with Alexander. Briefly the center of almost everything. Never Yugoslav. Never northern.",
     lotharingia: "843-959. The awkward piece of Verdun: neither France nor Germany. Its name survives in Lorraine. Alsace, Burgundy, Provence: all its, all fleeting.",
-    merovingian_kingdom: "c.481-751. The pre-Carolingian Franks. Clovis founded it; the 'do-nothing kings' sank it. The Carolingians didn't even say thank you.",
+    "merovingian kingdom": "c.481-751. The pre-Carolingian Franks. Clovis founded it; the 'do-nothing kings' sank it. The Carolingians didn't even say thank you.",
     vinland: "c.1000. The Norse beat Columbus by five centuries. L'Anse aux Meadows (Newfoundland): the only confirmed Norse site in North America.",
     austrasia: "c.511-751. The eastern half of the Franks. Reims, Metz, Cologne. From here came the Pippinids — and from them, Charlemagne and many immature jokes.",
     neustria: "c.511-751. The western half of the Franks. Paris, Soissons, Tours. Eternal rival of Austrasia — both consumed by the Carol-whatevers.",
-    volga_bulgaria: "c.660-1236. Muslim Turkic state on the Volga — ancestor of modern Tatarstan. Genghis Khan (oh, surprise!) erased it from the map.",
-    duchy_of_tuscany: "1569-1861. Florence as Medici capital: the Uffizi built. Renaissance as export quality. Dissolved into Italian unification with barely a murmur.",
-    kingdom_of_sukhothai: "c.1238-1438. The first Thai kingdom, whose script and culture founded modern Thailand. Sukhothai: 'dawn of happiness'. We add: delight.",
-    kingdom_of_ayutthaya: "1351-1767. Four centuries of commercial dominance in Southeast Asia. Burma sacked it in 1767: one of Asia's richest cities, razed in weeks.",
+    "volga bulgaria": "c.660-1236. Muslim Turkic state on the Volga — ancestor of modern Tatarstan. Genghis Khan (oh, surprise!) erased it from the map.",
+    "duchy of tuscany": "1569-1861. Florence as Medici capital: the Uffizi built. Renaissance as export quality. Dissolved into Italian unification with barely a murmur.",
+    "kingdom of sukhothai": "c.1238-1438. The first Thai kingdom, whose script and culture founded modern Thailand. Sukhothai: 'dawn of happiness'. We add: delight.",
+    "kingdom of ayutthaya": "1351-1767. Four centuries of commercial dominance in Southeast Asia. Burma sacked it in 1767: one of Asia's richest cities, razed in weeks.",
   },
   synonyms: {
-    third_reich: ["nazi germany", "nazi deutschland", "third reich"],
-    soviet_union: ["ussr", "cccp"],
-    byzantine_empire: ["eastern roman empire", "byzantium"],
-    holy_roman_empire: ["hre"],
-    ptolemaic_egypt: ["ptolemaic kingdom"],
+    "third reich": ["nazi germany", "nazi deutschland", "third reich"],
+    "soviet union": ["ussr", "cccp"],
+    "byzantine empire": ["eastern roman empire", "byzantium"],
+    "holy roman empire": ["hre"],
+    "ptolemaic egypt": ["ptolemaic kingdom"],
     czechoslovakia: ["czech republic and slovakia"],
     yugolslavia: ["sfry"],
-    dutch_east_indies: ["netherlands east indies"],
-    french_indochina: ["indochina"],
-    mongol_empire: ["mongolia"],
-    carolingian_empire: ["empire of charlemagne"],
-    hanseatic_league: ["hansa", "the hanse"],
+    "dutch east indies": ["netherlands east indies"],
+    "french indochina": ["indochina"],
+    "mongol empire": ["mongolia"],
+    "carolingian empire": ["empire of charlemagne"],
+    "hanseatic league": ["hansa", "the hanse"],
     greek_bactrian_kingdom: ["greco-bactrian kingdom"],
     vinland: ["vinlandia"],
-    volga_bulgaria: ["volga-ural bulgaria"],
+    "volga bulgaria": ["volga-ural bulgaria"],
   }
 });
 
@@ -3733,7 +4390,7 @@ const PHD = {
         { _id: "rousseau", name: "Rousseau", flavor: "Nacemos bueno y la sociedad nos corrompe. Tratadista sobre educación (con cinco hijos abandonados). Falso armenio en UK." , flavor_en: "Born good, corrupted by society. Theorist of education (with five abandoned children). Fake Armenian in the UK." },
         { _id: "epicuro", name: "Epicuro", flavor: "El placer es ausencia de dolor y turbación, o la amistad o el conocimiento. Lo demás: falso o mal placer. El más famoso hedonista vivía como un monje." , flavor_en: "Pleasure is absence of pain and anxiety — or friendship, or knowledge. Everything else: false or bad pleasure. History's most famous hedonist lived like a monk." },
         { _id: "seneca", name: "Séneca", flavor: "Estoico e imperial: millonario, preceptor de Nerón, suicida por orden del mismo, hispano. Cartas a Lucilio: el primer \"podcast\" de Roma (en calidad y fecha)." },
-        { _id: "marco_aurelio", name: "Marco Aurelio", flavor: "El gran emperador filósofo, tal vez el mejor regente-pensador de la historia — rara et magna avis. Sus Meditaciones: íntimas y sin intención de publicar." , flavor_en: "The great philosopher-emperor, perhaps history's best ruler-thinker — rara et magna avis. His Meditations: intimate, never meant to be published." },
+        { _id: "marco aurelio", name: "Marco Aurelio", flavor: "El gran emperador filósofo, tal vez el mejor regente-pensador de la historia — rara et magna avis. Sus Meditaciones: íntimas y sin intención de publicar." , flavor_en: "The great philosopher-emperor, perhaps history's best ruler-thinker — rara et magna avis. His Meditations: intimate, never meant to be published." },
         { _id: "berkeley", name: "Berkeley", flavor: "Ser es ser percibido. ¿Nadie te ve? ¡Dejas de existir! Aunque, Dios... El solipsismo más piadoso. Imposible de creer y de dudar." , flavor_en: "To be is to be perceived. Nobody's watching? You cease to exist! Unless God... The most pious solipsism. Impossible to believe — or to doubt." },
         { _id: "voltaire", name: "Voltaire", flavor: "Anagramático antagonista de la superstición, la intolerancia y el optimismo leibniziano. Cándido, la mejor introducción a la filosofía. Corresponsal de Catota." , flavor_en: "Anagrammatic antagonist of superstition, intolerance and Leibnizian optimism. Candide: the best introduction to philosophy. Catherine the Great's pen pal." },
         { _id: "san_agustin", name: "San Agustín", flavor: "Fiestero converso, africano Doctor de la Iglesia y águila. Platón + San Pablo = teología occidental. Sus Confesiones inventaron la introspección." , flavor_en: "Reformed party-goer, African Doctor of the Church, Eagle of Hippo. Plato + Saint Paul = Western theology. His Confessions invented introspection." },
@@ -6255,7 +6912,8 @@ function ArisStamp() {
 function App() {
   const guardado = cargarProgreso(BIBLIOTECAS_CATALOGO);
 
-  const [pantalla, setPantalla] = useState(PANTALLAS.CHAR_TEST);  // ⚠️ era: guardado ? PANTALLAS.VASTO_VACIO : PANTALLAS.EXAMEN
+  const tieneProgreso = guardado?.progreso?.some(b => b.tipoComplecion !== null) ?? false;
+  const [pantalla, setPantalla] = useState(tieneProgreso ? PANTALLAS.VASTO_VACIO : PANTALLAS.CHAR_TEST);
   const [examenBibliotecas, setExamenBibliotecas] = useState([]);
   const [indiceExamenActual, setIndiceExamenActual] = useState(0);
   const [bibliotecaJugando, setBibliotecaJugando] = useState(null);
